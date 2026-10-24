@@ -1,0 +1,19 @@
+run_name: 'sat_vidr1_zebra_sft'
+
+train_dataset_args:
+  split: train
+  mix_datas:
+    'SAT': 0.6
+    'VideoR1': 0.2
+    'ZebraCOT': 0.2
+  sat_location: 'array/SAT'
+  video_r1_location: '/projectnb/ivc-ml/Datasets/MLM_datasets/Video-R1-data/Video-R1-COT-165k.json'
+  zebracot_location: 'multimodal-reasoning-lab/Zebra-CoT'
+  mode: 'train'
+  no_reason_mode: True
+
+freeze_vision: True
+
+model_name: Qwen2.5-VL-7B
+model_path: array/Qwen2.5-VL-SAT
+# model_path: /home/jupyter/data_files/Qwen2.5-VL-7B-Instruct

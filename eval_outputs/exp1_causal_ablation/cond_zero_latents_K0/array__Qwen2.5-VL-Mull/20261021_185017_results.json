@@ -1,0 +1,145 @@
+{
+  "results": {
+    "blink_jigsaw": {
+      "alias": "blink_jigsaw",
+      "blink_score_overall,flexible-extract": 0.62,
+      "blink_score_overall_stderr,flexible-extract": "N/A"
+    }
+  },
+  "group_subtasks": {
+    "blink_jigsaw": []
+  },
+  "configs": {
+    "blink_jigsaw": {
+      "task": "blink_jigsaw",
+      "dataset_path": "BLINK-Benchmark/BLINK",
+      "dataset_name": "Jigsaw",
+      "dataset_kwargs": {
+        "token": true
+      },
+      "test_split": "val",
+      "full_docs": false,
+      "process_results_use_image": false,
+      "doc_to_visual": "<function blink_doc_to_visual at 0x7fa9000a6320>",
+      "doc_to_text": "<function blink_doc_to_text at 0x7fa9000a69e0>",
+      "doc_to_target": "<function blink_doc_to_target at 0x7fa9000a7370>",
+      "process_results": "<function blink_process_results at 0x7fa9000a79a0>",
+      "description": "",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "num_fewshot": 0,
+      "metric_list": [
+        {
+          "metric": "blink_score_overall",
+          "aggregation": "<function blink_aggregation at 0x7fa9001280d0>",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "max_new_tokens": 1024,
+        "temperature": 0.0,
+        "do_sample": false,
+        "until": [
+          "\n\n"
+        ],
+        "prompt_mode": "mmlatent2",
+        "prompt_version": "new",
+        "num_latents": 0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "flexible-extract",
+          "filter": [
+            {
+              "function": "<class 'utils.MultiChoiceRegexFilter'>",
+              "group_select": 0,
+              "ignore_case": true,
+              "ignore_punctuation": true,
+              "regex_pattern": "([A-Z])\\."
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": [
+        {
+          "version": 0.0
+        }
+      ],
+      "lmms_eval_specific_kwargs": {
+        "default": {
+          "prompt_mode": "videor1"
+        },
+        "qwen2_5_vl_query": {
+          "prompt_mode": "latents"
+        },
+        "qwen2_5_vl_mmlatent": {
+          "prompt_mode": "latents"
+        },
+        "qwen2_5_vl_mmlatentsample": {
+          "prompt_mode": "latents"
+        },
+        "qwen2_5_vl_mmlatent_imonly": {
+          "prompt_mode": "latents"
+        },
+        "qwen2_5_vl_mmlatentdiscrete": {
+          "prompt_mode": "latents"
+        }
+      }
+    }
+  },
+  "versions": {
+    "blink_jigsaw": "Yaml"
+  },
+  "n-shot": {
+    "blink_jigsaw": 0
+  },
+  "higher_is_better": {
+    "blink_jigsaw": {
+      "blink_score_overall": true
+    }
+  },
+  "n-samples": {
+    "blink_jigsaw": {
+      "original": 150,
+      "effective": 150
+    }
+  },
+  "config": {
+    "model": "qwen2_5_vl_mmlatentdiscrete",
+    "model_args": "pretrained=array/Qwen2.5-VL-Mull,max_pixels=4194304,max_num_frames=16,attn_implementation=flash_attention_2,interleave_visuals=False",
+    "batch_size": "1",
+    "batch_sizes": [],
+    "device": null,
+    "use_cache": null,
+    "limit": null,
+    "bootstrap_iters": 100000,
+    "gen_kwargs": {
+      "prompt_mode": "mmlatent2",
+      "prompt_version": "new",
+      "num_latents": 0
+    },
+    "random_seed": 0,
+    "numpy_seed": 1234,
+    "torch_seed": 1234,
+    "fewshot_seed": 1234
+  },
+  "git_hash": "d8c6c23",
+  "date": "20261021_185017",
+  "task_hashes": {},
+  "model_source": "qwen2_5_vl_mmlatentdiscrete",
+  "model_name": "array/Qwen2.5-VL-Mull",
+  "model_name_sanitized": "array__Qwen2.5-VL-Mull",
+  "system_instruction": null,
+  "system_instruction_sha": null,
+  "fewshot_as_multiturn": false,
+  "chat_template": null,
+  "chat_template_sha": null,
+  "start_time": 17197955.97844804,
+  "end_time": 17199685.995098047,
+  "total_evaluation_time_seconds": "1730.016650006175"
+}

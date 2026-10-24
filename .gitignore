@@ -1,0 +1,34 @@
+# Virtual environments and dependencies
+.mtok/
+.venv/
+venv/
+env/
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Cloned third-party dependency (re-cloned and installed via setup_env.sh)
+Video-R1/
+
+# Large execution logs and runtime monitors
+*.log
+eval_outputs/**/*.log
+eval_outputs/*.log
+eval_outputs/watchdog.out
+eval_outputs/watchdog_status.json
+eval_outputs/exp5_latent_dynamics/Gitingest.txt
+
+# OS and Editor artifacts
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# HuggingFace & model cache
+.cache/
+*.safetensors
+*.ckpt

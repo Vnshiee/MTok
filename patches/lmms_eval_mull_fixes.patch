@@ -1,0 +1,338 @@
+diff --git a/lmms-eval/lmms_eval/models/chat/qwen2_5_vl_mmlatentdiscrete.py b/lmms-eval/lmms_eval/models/chat/qwen2_5_vl_mmlatentdiscrete.py
+index b5898e5..06eccd6 100644
+--- a/lmms-eval/lmms_eval/models/chat/qwen2_5_vl_mmlatentdiscrete.py
++++ b/lmms-eval/lmms_eval/models/chat/qwen2_5_vl_mmlatentdiscrete.py
+@@ -57,16 +57,22 @@ class LogExamples:
+ 
+         # Open a file to store the examples.
+         # Using .jsonl (JSON Lines) as the extension is standard for this format.
+-        output_dir = "/projectnb/ivc-ml/array/research/visual_reasoning/mull-tokens/eval_outputs"
+-        os.makedirs(output_dir, exist_ok=True)
+-        filepath = f"{output_dir}/examples_{self.run_id}.jsonl"
+-        self.file = open(filepath, "w")
+-        print(f"[LogExamples] Logger initialized. Writing to {filepath}")
++        output_dir = os.environ.get("LMMS_EVAL_OUTPUT_DIR", os.path.join(os.getcwd(), "eval_outputs"))
++        try:
++            os.makedirs(output_dir, exist_ok=True)
++            filepath = f"{output_dir}/examples_{self.run_id}.jsonl"
++            self.file = open(filepath, "w")
++            print(f"[LogExamples] Logger initialized. Writing to {filepath}")
++        except Exception as e:
++            print(f"[LogExamples] Warning: Could not initialize file logger at {output_dir}: {e}")
++            self.file = None
+ 
+     def log_examples(self, inputs, cont, answers, texts, image_inputs, video_inputs, task, split, doc_id, image_features=None, model=None, processor=None):
+         """
+         Logs the data for a single batch to the .jsonl file.
+         """
++        if self.file is None:
++            return
+ 
+         # --- 1. Get Prompt Hidden States from the model output container ---
+         prompt_hidden_states = cont.hidden_states[0]
+@@ -177,6 +183,7 @@ class Qwen2_5_VL_MMLatent_simple(lmms):
+         system_prompt: Optional[str] = "You are a helpful assistant.",
+         interleave_visuals: Optional[bool] = False,
+         reasoning_prompt: Optional[str] = None,
++        ablation_mode: Optional[str] = None,
+         **kwargs,
+     ) -> None:
+         super().__init__()
+@@ -215,6 +222,9 @@ class Qwen2_5_VL_MMLatent_simple(lmms):
+         if attn_implementation is not None:
+             model_kwargs["attn_implementation"] = attn_implementation
+ 
++        models_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../../models"))
++        if os.path.exists(models_dir) and models_dir not in sys.path:
++            sys.path.insert(0, models_dir)
+         sys.path.append("../models")
+         Qwen2_5_VLForConditionalGeneration = importlib.import_module("mmlatentdiscrete_qwen_vl").Qwen2_5_VLForConditionalGeneration
+         self._model = Qwen2_5_VLForConditionalGeneration.from_pretrained(pretrained, **model_kwargs).eval()
+@@ -247,6 +257,18 @@ class Qwen2_5_VL_MMLatent_simple(lmms):
+         # Only resize embeddings if new tokens were added
+         if num_added > 0:
+             self._model.resize_token_embeddings(len(self.processor.tokenizer))
++
++        if ablation_mode == "zeros":
++            with torch.no_grad():
++                self._model.get_input_embeddings().weight[int(latent_token_idx)].zero_()
++            print(f"[ABLATION] Successfully ZEROED OUT latent token embedding for ID {int(latent_token_idx)}")
++        elif ablation_mode == "random_noise":
++            with torch.no_grad():
++                emb_weight = self._model.get_input_embeddings().weight
++                std = emb_weight.std().item()
++                emb_weight[int(latent_token_idx)].normal_(mean=0.0, std=std)
++            print(f"[ABLATION] Successfully replaced latent token embedding with RANDOM NOISE (std={std:.4f}) for ID {int(latent_token_idx)}")
++
+         self._tokenizer = AutoTokenizer.from_pretrained(pretrained)
+         self.system_prompt = system_prompt
+         self.interleave_visuals = interleave_visuals
+@@ -335,6 +357,7 @@ class Qwen2_5_VL_MMLatent_simple(lmms):
+ 
+ 
+ @register_model("qwen2_5_vl_mmlatent")
++@register_model("qwen2_5_vl_mmlatentdiscrete")
+ class Qwen2_5_VL_MMLatentDiscrete(Qwen2_5_VL_MMLatent_simple):
+     is_simple = False
+ 
+@@ -400,16 +423,29 @@ class Qwen2_5_VL_MMLatentDiscrete(Qwen2_5_VL_MMLatent_simple):
+                         })
+                 else:
+                     if gen_kwargs.get("prompt_mode", "") == "mmlatent2":
+-                        chat_message.append(
+-                            {
+-                                "role": "assistant",
+-                                "content":
+-                                [{
+-                                    "type": "text",
+-                                    "text": "<think>" + "<|latent_pad|>"*gen_kwargs.get("num_latents", 20) + "</think>\n"
+-                                }]
+-                            }
+-                        )
++                        num_l = gen_kwargs.get("num_latents", 20)
++                        if num_l > 0:
++                            chat_message.append(
++                                {
++                                    "role": "assistant",
++                                    "content":
++                                    [{
++                                        "type": "text",
++                                        "text": "<think>" + "<|latent_pad|>"*num_l + "</think>\n"
++                                    }]
++                                }
++                            )
++                        else:
++                            chat_message.append(
++                                {
++                                    "role": "assistant",
++                                    "content":
++                                    [{
++                                        "type": "text",
++                                        "text": ""
++                                    }]
++                                }
++                            )
+                     elif gen_kwargs.get("prompt_mode", "") == "new_sepprompt":
+                         chat_message.append({
+                                 "role": "assistant",
+@@ -435,7 +471,14 @@ class Qwen2_5_VL_MMLatentDiscrete(Qwen2_5_VL_MMLatent_simple):
+             batched_messages = new_batched_messages
+             # pdb.set_trace()
+             texts = [self.processor.apply_chat_template(msg, tokenize=False, add_generation_prompt=False) for msg in batched_messages]
+-            texts = [text.replace("<|im_end|>\n", "") for text in texts]
++            clean_texts = []
++            for text in texts:
++                if text.endswith("<|im_end|>\n"):
++                    text = text[:-len("<|im_end|>\n")]
++                elif text.endswith("<|im_end|>"):
++                    text = text[:-len("<|im_end|>")]
++                clean_texts.append(text)
++            texts = clean_texts
+             image_inputs, video_inputs = process_vision_info(batched_messages)
+             if video_inputs is not None:
+                 total_frames = video_inputs[0].shape[0]
+diff --git a/lmms-eval/lmms_eval/tasks/blink_iqtest/blink_iqtest.yaml b/lmms-eval/lmms_eval/tasks/blink_iqtest/blink_iqtest.yaml
+index 5f32470..4ac01f1 100644
+--- a/lmms-eval/lmms_eval/tasks/blink_iqtest/blink_iqtest.yaml
++++ b/lmms-eval/lmms_eval/tasks/blink_iqtest/blink_iqtest.yaml
+@@ -1,4 +1,4 @@
+-dataset_path: /home/jupyter/data_files/BLINK
++dataset_path: BLINK-Benchmark/BLINK
+ dataset_name: "IQ_Test"
+ task: "blink_iqtest"
+ dataset_kwargs:
+diff --git a/lmms-eval/lmms_eval/tasks/blink_mv/blink_mv.yaml b/lmms-eval/lmms_eval/tasks/blink_mv/blink_mv.yaml
+index 1cff13e..a6ecfa9 100644
+--- a/lmms-eval/lmms_eval/tasks/blink_mv/blink_mv.yaml
++++ b/lmms-eval/lmms_eval/tasks/blink_mv/blink_mv.yaml
+@@ -1,4 +1,4 @@
+-dataset_path: /home/jupyter/data_files/BLINK
++dataset_path: BLINK-Benchmark/BLINK
+ dataset_name: "Multi-view_Reasoning"
+ task: "blink_mv"
+ dataset_kwargs:
+diff --git a/lmms-eval/lmms_eval/tasks/blink_reldepth/blink_reldepth.yaml b/lmms-eval/lmms_eval/tasks/blink_reldepth/blink_reldepth.yaml
+index 503f6f1..6d4e377 100644
+--- a/lmms-eval/lmms_eval/tasks/blink_reldepth/blink_reldepth.yaml
++++ b/lmms-eval/lmms_eval/tasks/blink_reldepth/blink_reldepth.yaml
+@@ -1,4 +1,4 @@
+-dataset_path: /home/jupyter/data_files/BLINK
++dataset_path: BLINK-Benchmark/BLINK
+ dataset_name: "Relative_Depth"
+ task: "blink_reldepth"
+ dataset_kwargs:
+diff --git a/lmms-eval/lmms_eval/tasks/blink_sprel/blink_sprel.yaml b/lmms-eval/lmms_eval/tasks/blink_sprel/blink_sprel.yaml
+index 893d866..807b4b8 100644
+--- a/lmms-eval/lmms_eval/tasks/blink_sprel/blink_sprel.yaml
++++ b/lmms-eval/lmms_eval/tasks/blink_sprel/blink_sprel.yaml
+@@ -1,4 +1,4 @@
+-dataset_path: /home/jupyter/data_files/BLINK
++dataset_path: BLINK-Benchmark/BLINK
+ dataset_name: "Spatial_Relation"
+ task: "blink_sprel"
+ dataset_kwargs:
+diff --git a/lmms-eval/lmms_eval/tasks/erqa/erqa.yaml b/lmms-eval/lmms_eval/tasks/erqa/erqa.yaml
+index 6f1fa75..d539bb8 100644
+--- a/lmms-eval/lmms_eval/tasks/erqa/erqa.yaml
++++ b/lmms-eval/lmms_eval/tasks/erqa/erqa.yaml
+@@ -1,8 +1,9 @@
+-dataset_path: /home/jupyter/data_files/ERQA
+-dataset_name: "erqa"
++dataset_path: RunsenXu/ERQA
++dataset_name: null
+ task: "erqa"
+ dataset_kwargs:
+   token: True
++  verification_mode: no_checks
+ 
+ test_split: test
+ output_type: generate_until
+diff --git a/lmms-eval/lmms_eval/tasks/erqa/utils.py b/lmms-eval/lmms_eval/tasks/erqa/utils.py
+index d69437d..9197551 100644
+--- a/lmms-eval/lmms_eval/tasks/erqa/utils.py
++++ b/lmms-eval/lmms_eval/tasks/erqa/utils.py
+@@ -2,6 +2,7 @@
+ import re
+ import pdb
+ import os
++import io
+ import random
+ import pandas as pd
+ from PIL import Image
+@@ -62,7 +63,21 @@ def erqa_doc_to_text(doc, lmms_eval_specific_kwargs=None):
+     return prompt
+ 
+ def erqa_doc_to_visual(doc):
+-    image_list = doc["images"]
++    if "images" in doc and doc["images"] is not None:
++        raw_images = doc["images"]
++    elif "images_encoded" in doc and doc["images_encoded"] is not None:
++        raw_images = doc["images_encoded"]
++    else:
++        raise KeyError(f"Neither 'images' nor 'images_encoded' found in doc: {list(doc.keys())}")
++
++    image_list = []
++    for img in raw_images:
++        if isinstance(img, Image.Image):
++            image_list.append(img.convert("RGB"))
++        elif isinstance(img, (bytes, bytearray)):
++            image_list.append(Image.open(io.BytesIO(img)).convert("RGB"))
++        else:
++            image_list.append(img)
+     return image_list
+ 
+ 
+diff --git a/lmms-eval/lmms_eval/tasks/sat_real/sat_real.yaml b/lmms-eval/lmms_eval/tasks/sat_real/sat_real.yaml
+index c37c4d3..4f56265 100644
+--- a/lmms-eval/lmms_eval/tasks/sat_real/sat_real.yaml
++++ b/lmms-eval/lmms_eval/tasks/sat_real/sat_real.yaml
+@@ -1,10 +1,10 @@
+ dataset_path: array/SAT-v2
+-dataset_name: "sat_real"
++dataset_name: null
+ task: "sat_real"
+ dataset_kwargs:
+   token: True
+ 
+-test_split: train # because it actually loads the test as "train"
++test_split: test
+ output_type: generate_until
+ process_docs: !function utils.process_docs
+ doc_to_visual: !function utils.sat_doc_to_visual
+diff --git a/lmms-eval/lmms_eval/tasks/sat_real/utils.py b/lmms-eval/lmms_eval/tasks/sat_real/utils.py
+index 8c7f211..d75edcf 100644
+--- a/lmms-eval/lmms_eval/tasks/sat_real/utils.py
++++ b/lmms-eval/lmms_eval/tasks/sat_real/utils.py
+@@ -2,6 +2,7 @@
+ import re
+ import pdb
+ import os
++import io
+ import random
+ import pandas as pd
+ from PIL import Image
+@@ -91,13 +92,34 @@ def sat_doc_to_text(doc, lmms_eval_specific_kwargs=None):
+     return prompt
+ 
+ def sat_doc_to_visual(doc):
+-    image_list = doc["image_paths"]
+-    im_paths = [os.path.join("/home/jupyter/data_files/SAT_new/", im_path.split("SAT_new/")[-1]) for im_path in image_list]
++    if "images" in doc and doc["images"] is not None:
++        images = []
++        for img in doc["images"]:
++            if isinstance(img, Image.Image):
++                images.append(img.convert("RGB"))
++            elif isinstance(img, (bytes, bytearray)):
++                images.append(Image.open(io.BytesIO(img)).convert("RGB"))
++            elif isinstance(img, str) and os.path.exists(img):
++                images.append(Image.open(img).convert("RGB"))
++            else:
++                images.append(img)
++        return images
++    elif "image_paths" in doc and doc["image_paths"] is not None:
++        image_list = doc["image_paths"]
++        images = []
++        for im_path in image_list:
++            if os.path.exists(im_path):
++                images.append(Image.open(im_path).convert("RGB"))
++            else:
++                # Try fallback relative to SAT_new if present
++                local_path = os.path.join("/home/jupyter/data_files/SAT_new/", im_path.split("SAT_new/")[-1])
++                if os.path.exists(local_path):
++                    images.append(Image.open(local_path).convert("RGB"))
++                else:
++                    raise FileNotFoundError(f"Cannot find image: {im_path}")
++        return images
++    raise ValueError(f"Neither 'images' nor 'image_paths' found in doc: {list(doc.keys())}")
+ 
+-    images = []
+-    for im_path in im_paths:
+-        images.append(Image.open(im_path))
+-    return images
+ 
+ 
+ def sat_doc_to_target(doc):
+diff --git a/lmms-eval/lmms_eval/tasks/vsibench/utils.py b/lmms-eval/lmms_eval/tasks/vsibench/utils.py
+index f7fc5f3..c73c575 100644
+--- a/lmms-eval/lmms_eval/tasks/vsibench/utils.py
++++ b/lmms-eval/lmms_eval/tasks/vsibench/utils.py
+@@ -247,17 +247,15 @@ def vsibench_aggregate_results(results):
+         else:
+             raise ValueError(f"Unknown question type: {question_type}")
+ 
+-    output["object_rel_direction_accuracy"] = (
+-        sum(
+-            [
+-                output.pop("object_rel_direction_easy_accuracy"),
+-                output.pop("object_rel_direction_medium_accuracy"),
+-                output.pop("object_rel_direction_hard_accuracy"),
+-            ]
+-        )
+-        / 3.0
+-    )
++    dir_accuracies = [
++        output.pop(k)
++        for k in ["object_rel_direction_easy_accuracy", "object_rel_direction_medium_accuracy", "object_rel_direction_hard_accuracy"]
++        if k in output
++    ]
++    if dir_accuracies:
++        output["object_rel_direction_accuracy"] = sum(dir_accuracies) / len(dir_accuracies)
+ 
+-    output["overall"] = sum([_ for _ in output.values()]) / len(output)
++    if len(output) > 0:
++        output["overall"] = sum([_ for _ in output.values()]) / len(output)
+     eval_logger.info(f"Evaluation results: {output}")
+     return output
+diff --git a/lmms-eval/lmms_eval/tasks/vsibench/vsibench.yaml b/lmms-eval/lmms_eval/tasks/vsibench/vsibench.yaml
+index 550b8d7..716f530 100644
+--- a/lmms-eval/lmms_eval/tasks/vsibench/vsibench.yaml
++++ b/lmms-eval/lmms_eval/tasks/vsibench/vsibench.yaml
+@@ -1,7 +1,7 @@
+ dataset_path: nyu-visionx/VSI-Bench
+ dataset_kwargs:
+   token: False
+-  cache_dir: /projectnb/ivc-ml/Datasets/MLM_datasets/VSI-Bench
++  cache_dir: VSI-Bench
+   video: True
+ task: vsibench
+ test_split: test

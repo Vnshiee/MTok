@@ -1,0 +1,362 @@
+[
+  {
+    "query_id": "spatial_rel_red_blue",
+    "task": "BLINK Spatial Relation",
+    "layer_stats": [
+      {
+        "layer": 0,
+        "mean_succ_euclidean_dist": 0.0,
+        "intra_latent_cosine_sim": 1.0,
+        "visual_grounding_cosine_sim": 0.0664
+      },
+      {
+        "layer": 1,
+        "mean_succ_euclidean_dist": 0.6139,
+        "intra_latent_cosine_sim": 0.9928,
+        "visual_grounding_cosine_sim": 0.4482
+      },
+      {
+        "layer": 2,
+        "mean_succ_euclidean_dist": 1.1068,
+        "intra_latent_cosine_sim": 0.9793,
+        "visual_grounding_cosine_sim": 0.5368
+      },
+      {
+        "layer": 3,
+        "mean_succ_euclidean_dist": 1.4783,
+        "intra_latent_cosine_sim": 0.9707,
+        "visual_grounding_cosine_sim": 0.5825
+      },
+      {
+        "layer": 4,
+        "mean_succ_euclidean_dist": 2.1884,
+        "intra_latent_cosine_sim": 0.9572,
+        "visual_grounding_cosine_sim": 0.5588
+      },
+      {
+        "layer": 5,
+        "mean_succ_euclidean_dist": 2.895,
+        "intra_latent_cosine_sim": 0.9495,
+        "visual_grounding_cosine_sim": 0.5813
+      },
+      {
+        "layer": 6,
+        "mean_succ_euclidean_dist": 3.4581,
+        "intra_latent_cosine_sim": 0.9467,
+        "visual_grounding_cosine_sim": 0.6318
+      },
+      {
+        "layer": 7,
+        "mean_succ_euclidean_dist": 4.6711,
+        "intra_latent_cosine_sim": 0.919,
+        "visual_grounding_cosine_sim": 0.6046
+      },
+      {
+        "layer": 8,
+        "mean_succ_euclidean_dist": 6.1283,
+        "intra_latent_cosine_sim": 0.8862,
+        "visual_grounding_cosine_sim": 0.5706
+      },
+      {
+        "layer": 9,
+        "mean_succ_euclidean_dist": 16.5073,
+        "intra_latent_cosine_sim": 0.8176,
+        "visual_grounding_cosine_sim": 0.5282
+      },
+      {
+        "layer": 10,
+        "mean_succ_euclidean_dist": 14.2486,
+        "intra_latent_cosine_sim": 0.8601,
+        "visual_grounding_cosine_sim": 0.5941
+      },
+      {
+        "layer": 11,
+        "mean_succ_euclidean_dist": 17.4253,
+        "intra_latent_cosine_sim": 0.8396,
+        "visual_grounding_cosine_sim": 0.591
+      },
+      {
+        "layer": 12,
+        "mean_succ_euclidean_dist": 24.0903,
+        "intra_latent_cosine_sim": 0.7879,
+        "visual_grounding_cosine_sim": 0.5698
+      },
+      {
+        "layer": 13,
+        "mean_succ_euclidean_dist": 27.7111,
+        "intra_latent_cosine_sim": 0.7812,
+        "visual_grounding_cosine_sim": 0.5724
+      },
+      {
+        "layer": 14,
+        "mean_succ_euclidean_dist": 31.1057,
+        "intra_latent_cosine_sim": 0.7475,
+        "visual_grounding_cosine_sim": 0.5441
+      },
+      {
+        "layer": 15,
+        "mean_succ_euclidean_dist": 33.7562,
+        "intra_latent_cosine_sim": 0.7583,
+        "visual_grounding_cosine_sim": 0.5443
+      },
+      {
+        "layer": 16,
+        "mean_succ_euclidean_dist": 38.4238,
+        "intra_latent_cosine_sim": 0.7551,
+        "visual_grounding_cosine_sim": 0.5553
+      },
+      {
+        "layer": 17,
+        "mean_succ_euclidean_dist": 40.842,
+        "intra_latent_cosine_sim": 0.7485,
+        "visual_grounding_cosine_sim": 0.5415
+      },
+      {
+        "layer": 18,
+        "mean_succ_euclidean_dist": 46.6573,
+        "intra_latent_cosine_sim": 0.7194,
+        "visual_grounding_cosine_sim": 0.5154
+      },
+      {
+        "layer": 19,
+        "mean_succ_euclidean_dist": 50.1011,
+        "intra_latent_cosine_sim": 0.6983,
+        "visual_grounding_cosine_sim": 0.4833
+      },
+      {
+        "layer": 20,
+        "mean_succ_euclidean_dist": 55.4413,
+        "intra_latent_cosine_sim": 0.7106,
+        "visual_grounding_cosine_sim": 0.5487
+      },
+      {
+        "layer": 21,
+        "mean_succ_euclidean_dist": 66.9101,
+        "intra_latent_cosine_sim": 0.7017,
+        "visual_grounding_cosine_sim": 0.5759
+      },
+      {
+        "layer": 22,
+        "mean_succ_euclidean_dist": 78.1572,
+        "intra_latent_cosine_sim": 0.7311,
+        "visual_grounding_cosine_sim": 0.6421
+      },
+      {
+        "layer": 23,
+        "mean_succ_euclidean_dist": 88.7564,
+        "intra_latent_cosine_sim": 0.7198,
+        "visual_grounding_cosine_sim": 0.6131
+      },
+      {
+        "layer": 24,
+        "mean_succ_euclidean_dist": 102.773,
+        "intra_latent_cosine_sim": 0.7394,
+        "visual_grounding_cosine_sim": 0.6082
+      },
+      {
+        "layer": 25,
+        "mean_succ_euclidean_dist": 123.1629,
+        "intra_latent_cosine_sim": 0.736,
+        "visual_grounding_cosine_sim": 0.6066
+      },
+      {
+        "layer": 26,
+        "mean_succ_euclidean_dist": 146.357,
+        "intra_latent_cosine_sim": 0.736,
+        "visual_grounding_cosine_sim": 0.5793
+      },
+      {
+        "layer": 27,
+        "mean_succ_euclidean_dist": 177.9283,
+        "intra_latent_cosine_sim": 0.7825,
+        "visual_grounding_cosine_sim": 0.5564
+      },
+      {
+        "layer": 28,
+        "mean_succ_euclidean_dist": 135.3573,
+        "intra_latent_cosine_sim": 0.668,
+        "visual_grounding_cosine_sim": 0.164
+      }
+    ]
+  },
+  {
+    "query_id": "spatial_shapes_layout",
+    "task": "BLINK Relative Depth",
+    "layer_stats": [
+      {
+        "layer": 0,
+        "mean_succ_euclidean_dist": 0.0,
+        "intra_latent_cosine_sim": 1.0,
+        "visual_grounding_cosine_sim": 0.0664
+      },
+      {
+        "layer": 1,
+        "mean_succ_euclidean_dist": 0.573,
+        "intra_latent_cosine_sim": 0.9929,
+        "visual_grounding_cosine_sim": 0.4458
+      },
+      {
+        "layer": 2,
+        "mean_succ_euclidean_dist": 1.0706,
+        "intra_latent_cosine_sim": 0.9789,
+        "visual_grounding_cosine_sim": 0.5345
+      },
+      {
+        "layer": 3,
+        "mean_succ_euclidean_dist": 1.4909,
+        "intra_latent_cosine_sim": 0.9684,
+        "visual_grounding_cosine_sim": 0.5794
+      },
+      {
+        "layer": 4,
+        "mean_succ_euclidean_dist": 2.2626,
+        "intra_latent_cosine_sim": 0.9548,
+        "visual_grounding_cosine_sim": 0.5558
+      },
+      {
+        "layer": 5,
+        "mean_succ_euclidean_dist": 2.95,
+        "intra_latent_cosine_sim": 0.9467,
+        "visual_grounding_cosine_sim": 0.5807
+      },
+      {
+        "layer": 6,
+        "mean_succ_euclidean_dist": 3.5476,
+        "intra_latent_cosine_sim": 0.9439,
+        "visual_grounding_cosine_sim": 0.626
+      },
+      {
+        "layer": 7,
+        "mean_succ_euclidean_dist": 4.7857,
+        "intra_latent_cosine_sim": 0.9142,
+        "visual_grounding_cosine_sim": 0.5958
+      },
+      {
+        "layer": 8,
+        "mean_succ_euclidean_dist": 6.302,
+        "intra_latent_cosine_sim": 0.8802,
+        "visual_grounding_cosine_sim": 0.5642
+      },
+      {
+        "layer": 9,
+        "mean_succ_euclidean_dist": 19.1668,
+        "intra_latent_cosine_sim": 0.7922,
+        "visual_grounding_cosine_sim": 0.5254
+      },
+      {
+        "layer": 10,
+        "mean_succ_euclidean_dist": 16.5203,
+        "intra_latent_cosine_sim": 0.8393,
+        "visual_grounding_cosine_sim": 0.5905
+      },
+      {
+        "layer": 11,
+        "mean_succ_euclidean_dist": 19.9726,
+        "intra_latent_cosine_sim": 0.8202,
+        "visual_grounding_cosine_sim": 0.5942
+      },
+      {
+        "layer": 12,
+        "mean_succ_euclidean_dist": 26.7945,
+        "intra_latent_cosine_sim": 0.7712,
+        "visual_grounding_cosine_sim": 0.5712
+      },
+      {
+        "layer": 13,
+        "mean_succ_euclidean_dist": 29.6645,
+        "intra_latent_cosine_sim": 0.7745,
+        "visual_grounding_cosine_sim": 0.5772
+      },
+      {
+        "layer": 14,
+        "mean_succ_euclidean_dist": 32.4392,
+        "intra_latent_cosine_sim": 0.7478,
+        "visual_grounding_cosine_sim": 0.5524
+      },
+      {
+        "layer": 15,
+        "mean_succ_euclidean_dist": 35.1732,
+        "intra_latent_cosine_sim": 0.7604,
+        "visual_grounding_cosine_sim": 0.5479
+      },
+      {
+        "layer": 16,
+        "mean_succ_euclidean_dist": 40.1022,
+        "intra_latent_cosine_sim": 0.7569,
+        "visual_grounding_cosine_sim": 0.5561
+      },
+      {
+        "layer": 17,
+        "mean_succ_euclidean_dist": 42.4627,
+        "intra_latent_cosine_sim": 0.752,
+        "visual_grounding_cosine_sim": 0.5452
+      },
+      {
+        "layer": 18,
+        "mean_succ_euclidean_dist": 48.7282,
+        "intra_latent_cosine_sim": 0.7206,
+        "visual_grounding_cosine_sim": 0.523
+      },
+      {
+        "layer": 19,
+        "mean_succ_euclidean_dist": 52.6666,
+        "intra_latent_cosine_sim": 0.6969,
+        "visual_grounding_cosine_sim": 0.495
+      },
+      {
+        "layer": 20,
+        "mean_succ_euclidean_dist": 58.6901,
+        "intra_latent_cosine_sim": 0.7054,
+        "visual_grounding_cosine_sim": 0.5526
+      },
+      {
+        "layer": 21,
+        "mean_succ_euclidean_dist": 70.7092,
+        "intra_latent_cosine_sim": 0.6979,
+        "visual_grounding_cosine_sim": 0.5761
+      },
+      {
+        "layer": 22,
+        "mean_succ_euclidean_dist": 81.6128,
+        "intra_latent_cosine_sim": 0.7364,
+        "visual_grounding_cosine_sim": 0.6513
+      },
+      {
+        "layer": 23,
+        "mean_succ_euclidean_dist": 92.4335,
+        "intra_latent_cosine_sim": 0.728,
+        "visual_grounding_cosine_sim": 0.6272
+      },
+      {
+        "layer": 24,
+        "mean_succ_euclidean_dist": 105.6436,
+        "intra_latent_cosine_sim": 0.7462,
+        "visual_grounding_cosine_sim": 0.6235
+      },
+      {
+        "layer": 25,
+        "mean_succ_euclidean_dist": 126.1132,
+        "intra_latent_cosine_sim": 0.7402,
+        "visual_grounding_cosine_sim": 0.615
+      },
+      {
+        "layer": 26,
+        "mean_succ_euclidean_dist": 149.4067,
+        "intra_latent_cosine_sim": 0.7361,
+        "visual_grounding_cosine_sim": 0.574
+      },
+      {
+        "layer": 27,
+        "mean_succ_euclidean_dist": 181.7372,
+        "intra_latent_cosine_sim": 0.7794,
+        "visual_grounding_cosine_sim": 0.552
+      },
+      {
+        "layer": 28,
+        "mean_succ_euclidean_dist": 135.1414,
+        "intra_latent_cosine_sim": 0.6434,
+        "visual_grounding_cosine_sim": 0.1617
+      }
+    ]
+  }
+]
