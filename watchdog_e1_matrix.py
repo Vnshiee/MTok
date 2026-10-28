@@ -33,6 +33,12 @@ ROWS = [
     {"row": 7, "dir": "row7_mull_sft_latents", "desc": "Mull | sft | think + 20 latents (Mull w/ SFT prompt)"},
     {"row": 8, "dir": "row8_sat_sft_empty", "desc": "SAT | sft | empty (Direct SAT SFT baseline)"},
     {"row": 9, "dir": "row9_sat_latents_empty", "desc": "SAT | latents | empty (SAT w/ latent prompt)"},
+    {"row": 10, "dir": "row10_mull_grpo_k20", "desc": "Mull-GRPO | latents | think + 20 latents (Stage 3 GRPO)"},
+    {"row": 11, "dir": "row11_mull_k1", "desc": "Mull | latents | think + 1 latent (K=1)"},
+    {"row": 12, "dir": "row12_mull_k5", "desc": "Mull | latents | think + 5 latents (K=5)"},
+    {"row": 13, "dir": "row13_mull_k10", "desc": "Mull | latents | think + 10 latents (K=10)"},
+    {"row": 14, "dir": "row14_mull_k40", "desc": "Mull | latents | think + 40 latents (K=40)"},
+    {"row": 15, "dir": "row15_mull_warm_k20", "desc": "Mull | latents | think + 20 latents (Warm GPU Ref)"},
 ]
 
 TASKS = ["blink_sprel", "blink_reldepth", "blink_jigsaw", "blink_mv", "blink_iqtest"]

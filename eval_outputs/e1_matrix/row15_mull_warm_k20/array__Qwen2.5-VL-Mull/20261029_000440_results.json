@@ -1,0 +1,152 @@
+{
+  "results": {
+    "blink_mv": {
+      "alias": "blink_mv",
+      "blink_score_overall,flexible-extract": 0.6390977443609023,
+      "blink_score_overall_stderr,flexible-extract": "N/A"
+    }
+  },
+  "group_subtasks": {
+    "blink_mv": []
+  },
+  "configs": {
+    "blink_mv": {
+      "task": "blink_mv",
+      "dataset_path": "BLINK-Benchmark/BLINK",
+      "dataset_name": "Multi-view_Reasoning",
+      "dataset_kwargs": {
+        "token": true
+      },
+      "test_split": "val",
+      "full_docs": false,
+      "process_results_use_image": false,
+      "doc_to_visual": "<function blink_doc_to_visual at 0x7f4bf032e5f0>",
+      "doc_to_text": "<function blink_doc_to_text at 0x7f4bf032eb90>",
+      "doc_to_target": "<function blink_doc_to_target at 0x7f4bf032f370>",
+      "process_results": "<function blink_process_results at 0x7f4bf032f9a0>",
+      "description": "",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "num_fewshot": 0,
+      "metric_list": [
+        {
+          "metric": "blink_score_overall",
+          "aggregation": "<function blink_aggregation at 0x7f4bf01580d0>",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "max_new_tokens": 1024,
+        "temperature": 0.0,
+        "do_sample": false,
+        "until": [
+          "\n\n"
+        ],
+        "custom_prefill": "mmlatent2",
+        "prompt_mode": "mmlatent2",
+        "prompt_version": "new",
+        "num_latents": 20
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "flexible-extract",
+          "filter": [
+            {
+              "function": "<class 'utils.MultiChoiceRegexFilter'>",
+              "group_select": 0,
+              "ignore_case": true,
+              "ignore_punctuation": true,
+              "regex_pattern": "([A-Z])\\."
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": [
+        {
+          "version": 0.0
+        }
+      ],
+      "lmms_eval_specific_kwargs": {
+        "default": {
+          "prompt_mode": "videor1"
+        },
+        "qwen2_5_vl": {
+          "prompt_mode": "sft"
+        },
+        "qwen2_5_vl_query": {
+          "prompt_mode": "latents"
+        },
+        "qwen2_5_vl_mmlatent": {
+          "prompt_mode": "latents"
+        },
+        "qwen2_5_vl_mmlatentsample": {
+          "prompt_mode": "latents"
+        },
+        "qwen2_5_vl_mmlatent_imonly": {
+          "prompt_mode": "latents"
+        },
+        "qwen2_5_vl_mmlatentdiscrete": {
+          "prompt_mode": "latents"
+        }
+      }
+    }
+  },
+  "versions": {
+    "blink_mv": "Yaml"
+  },
+  "n-shot": {
+    "blink_mv": 0
+  },
+  "higher_is_better": {
+    "blink_mv": {
+      "blink_score_overall": true
+    }
+  },
+  "n-samples": {
+    "blink_mv": {
+      "original": 133,
+      "effective": 133
+    }
+  },
+  "config": {
+    "model": "qwen2_5_vl_mmlatentdiscrete",
+    "model_args": "pretrained=array/Qwen2.5-VL-Mull,max_pixels=4194304,max_num_frames=16,attn_implementation=flash_attention_2,interleave_visuals=False",
+    "batch_size": "1",
+    "batch_sizes": [],
+    "device": null,
+    "use_cache": null,
+    "limit": null,
+    "bootstrap_iters": 100000,
+    "gen_kwargs": {
+      "custom_prefill": "mmlatent2",
+      "prompt_mode": "mmlatent2",
+      "prompt_version": "new",
+      "num_latents": 20
+    },
+    "random_seed": 0,
+    "numpy_seed": 1234,
+    "torch_seed": 1234,
+    "fewshot_seed": 1234
+  },
+  "git_hash": "fc263df",
+  "date": "20261029_000440",
+  "task_hashes": {
+    "blink_mv": "9a82ad3f1a5cab3583a7e8b0fcfe626381d3637b7aa46e1c5d21e1a40307d527"
+  },
+  "model_source": "qwen2_5_vl_mmlatentdiscrete",
+  "model_name": "array/Qwen2.5-VL-Mull",
+  "model_name_sanitized": "array__Qwen2.5-VL-Mull",
+  "system_instruction": null,
+  "system_instruction_sha": null,
+  "fewshot_as_multiturn": false,
+  "chat_template": null,
+  "chat_template_sha": null,
+  "start_time": 17821619.02624298,
+  "end_time": 17821696.57923715,
+  "total_evaluation_time_seconds": "77.55299416929483"
+}

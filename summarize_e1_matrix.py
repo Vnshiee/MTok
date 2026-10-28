@@ -26,6 +26,12 @@ ROWS_CONFIG = [
     {"row": 7, "dir": "row7_mull_sft_latents", "model": "Mull", "prompt": "sft", "prefill": "think + 20 latents", "notes": "Mull with SFT prompt"},
     {"row": 8, "dir": "row8_sat_sft_empty", "model": "SAT", "prompt": "sft", "prefill": "empty", "notes": "Direct SAT SFT baseline (DirAns)"},
     {"row": 9, "dir": "row9_sat_latents_empty", "model": "SAT", "prompt": "latents", "prefill": "empty", "notes": "SAT with latent prompt"},
+    {"row": 10, "dir": "row10_mull_grpo_k20", "model": "Mull-GRPO", "prompt": "latents", "prefill": "think + 20 latents", "notes": "Stage 3 GRPO model"},
+    {"row": 11, "dir": "row11_mull_k1", "model": "Mull", "prompt": "latents", "prefill": "think + 1 latent", "notes": "Budget scaling K=1"},
+    {"row": 12, "dir": "row12_mull_k5", "model": "Mull", "prompt": "latents", "prefill": "think + 5 latents", "notes": "Budget scaling K=5"},
+    {"row": 13, "dir": "row13_mull_k10", "model": "Mull", "prompt": "latents", "prefill": "think + 10 latents", "notes": "Budget scaling K=10"},
+    {"row": 14, "dir": "row14_mull_k40", "model": "Mull", "prompt": "latents", "prefill": "think + 40 latents", "notes": "Budget scaling K=40"},
+    {"row": 15, "dir": "row15_mull_warm_k20", "model": "Mull", "prompt": "latents", "prefill": "think + 20 latents", "notes": "Warm pure GPU reference"},
 ]
 
 TASKS = ["blink_sprel", "blink_reldepth", "blink_jigsaw", "blink_mv", "blink_iqtest"]

@@ -51,7 +51,7 @@ if [ ${#CUSTOM_TASKS[@]} -gt 0 ]; then
 fi
 
 if [ ${#SELECTED_ROWS[@]} -eq 0 ]; then
-    SELECTED_ROWS=(1 2 3 4 5 6 7 8 9)
+    SELECTED_ROWS=(1 2 3 4 5 6 7 8 9 10 11 12 13 14)
 fi
 
 echo "=============================================================================="
@@ -171,6 +171,30 @@ for row in "${SELECTED_ROWS[@]}"; do
         9)
             # Row 9: SAT | latents | empty (SAT evaluated under latent user prompt)
             run_row 9 "array/Qwen2.5-VL-SAT" "latents" "empty" 0 "row9_sat_latents_empty"
+            ;;
+        10)
+            # Row 10: Mull-GRPO | latents | think + 20 latents (Stage 3 GRPO evaluation)
+            run_row 10 "array/Qwen2.5-VL-MullGRPO" "latents" "mmlatent2" 20 "row10_mull_grpo_k20"
+            ;;
+        11)
+            # Row 11: Mull | latents | think + 1 latent (K=1 budget scaling)
+            run_row 11 "array/Qwen2.5-VL-Mull" "latents" "mmlatent2" 1 "row11_mull_k1"
+            ;;
+        12)
+            # Row 12: Mull | latents | think + 5 latents (K=5 budget scaling)
+            run_row 12 "array/Qwen2.5-VL-Mull" "latents" "mmlatent2" 5 "row12_mull_k5"
+            ;;
+        13)
+            # Row 13: Mull | latents | think + 10 latents (K=10 budget scaling)
+            run_row 13 "array/Qwen2.5-VL-Mull" "latents" "mmlatent2" 10 "row13_mull_k10"
+            ;;
+        14)
+            # Row 14: Mull | latents | think + 40 latents (K=40 budget scaling)
+            run_row 14 "array/Qwen2.5-VL-Mull" "latents" "mmlatent2" 40 "row14_mull_k40"
+            ;;
+        15)
+            # Row 15: Mull | latents | think + 20 latents (Warm pure GPU reference)
+            run_row 15 "array/Qwen2.5-VL-Mull" "latents" "mmlatent2" 20 "row15_mull_warm_k20"
             ;;
         *)
             echo "Unknown row: $row"

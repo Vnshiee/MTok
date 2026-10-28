@@ -15,6 +15,12 @@
 | **7** | Mull | `sft` | `think + 20 latents` | 85.31% | 84.68% | 77.33% | 59.40% | 29.33% | **57.80%** | **66.57%** | -1.14% |
 | **8** | SAT | `sft` | `empty` | 81.82% | 79.03% | 68.00% | 63.91% | 27.33% | **56.76%** | **63.29%** | -4.43% |
 | **9** | SAT | `latents` | `empty` | 81.82% | 79.84% | 68.00% | 68.42% | 28.00% | **58.75%** | **64.43%** | -3.29% |
+| **10** | Mull-GRPO | `latents` | `think + 20 latents` | 86.01% | 84.68% | 78.67% | 65.41% | 31.33% | **60.47%** | **68.57%** | +0.86% |
+| **11** | Mull | `latents` | `think + 1 latent` | 84.62% | 83.87% | 78.00% | 60.15% | 28.67% | **57.56%** | **66.43%** | -1.29% |
+| **12** | Mull | `latents` | `think + 5 latents` | 85.31% | 86.29% | 77.33% | 60.90% | 30.00% | **59.06%** | **67.29%** | -0.43% |
+| **13** | Mull | `latents` | `think + 10 latents` | 85.31% | 85.48% | 76.67% | 60.15% | 29.33% | **58.32%** | **66.71%** | -1.00% |
+| **14** | Mull | `latents` | `think + 40 latents` | 85.31% | 83.87% | 76.67% | 62.41% | 31.33% | **59.20%** | **67.29%** | -0.43% |
+| **15** | Mull | `latents` | `think + 20 latents` | 85.31% | 85.48% | 76.67% | 63.91% | 30.67% | **60.02%** | **67.71%** | +0.00% |
 
 ## 2. Statistical Significance vs. Row 1 Reference (N=700)
 
@@ -28,6 +34,12 @@
 | Row 7 | Mull / `sft` / `think + 20 latents` | 66.57% | -1.14% [-2.57%, +0.29%] | b=18, c=10 | p=0.1859 | No (p >= 0.05) |
 | Row 8 | SAT / `sft` / `empty` | 63.29% | -4.43% [-7.71%, -1.14%] | b=84, c=53 | p=0.0104 | **YES (Reject H0)** |
 | Row 9 | SAT / `latents` / `empty` | 64.43% | -3.29% [-6.57%, +0.00%] | b=82, c=59 | p=0.0639 | No (p >= 0.05) |
+| Row 10 | Mull-GRPO / `latents` / `think + 20 latents` | 68.57% | +0.86% [-1.00%, +2.71%] | b=20, c=26 | p=0.4610 | No (p >= 0.05) |
+| Row 11 | Mull / `latents` / `think + 1 latent` | 66.43% | -1.29% [-2.71%, +0.00%] | b=16, c=7 | p=0.0931 | No (p >= 0.05) |
+| Row 12 | Mull / `latents` / `think + 5 latents` | 67.29% | -0.43% [-1.71%, +0.86%] | b=12, c=9 | p=0.6636 | No (p >= 0.05) |
+| Row 13 | Mull / `latents` / `think + 10 latents` | 66.71% | -1.00% [-2.14%, +0.14%] | b=12, c=5 | p=0.1435 | No (p >= 0.05) |
+| Row 14 | Mull / `latents` / `think + 40 latents` | 67.29% | -0.43% [-1.86%, +1.00%] | b=15, c=12 | p=0.7003 | No (p >= 0.05) |
+| Row 15 | Mull / `latents` / `think + 20 latents` | 67.71% | +0.00% [+0.00%, +0.00%] | b=0, c=0 | p=1.0000 | No (p >= 0.05) |
 
 ## 3. Output Forensics & Generation Length Analysis
 
@@ -42,3 +54,9 @@
 | Row 7 | Mull with SFT prompt | 7.0 | 7.0 | 7.0 | 0.45s |
 | Row 8 | Direct SAT SFT baseline (DirAns) | 7.0 | 7.0 | 7.0 | 0.44s |
 | Row 9 | SAT with latent prompt | 7.0 | 7.0 | 7.0 | 0.44s |
+| Row 10 | Stage 3 GRPO model | 7.0 | 7.0 | 7.0 | 0.35s |
+| Row 11 | Budget scaling K=1 | 7.0 | 7.0 | 7.0 | 0.35s |
+| Row 12 | Budget scaling K=5 | 7.0 | 7.0 | 7.0 | 0.35s |
+| Row 13 | Budget scaling K=10 | 7.0 | 7.0 | 7.0 | 0.37s |
+| Row 14 | Budget scaling K=40 | 7.0 | 7.0 | 7.0 | 0.34s |
+| Row 15 | Warm pure GPU reference | 7.0 | 7.0 | 7.0 | 0.36s |
