@@ -12,27 +12,7 @@ import json
 import sys
 
 
-def extract_all_metrics_from_dir(dir_path):
-    if not os.path.isdir(dir_path):
-        return {}
-    files = glob.glob(os.path.join(dir_path, "**/results_*.json"), recursive=True)
-    if not files:
-        files = glob.glob(os.path.join(dir_path, "**/*result*.json"), recursive=True)
-    
-    all_scores = {}
-    for f_path in files:
-        try:
-            with open(f_path, "r") as f:
-                data = json.load(f)
-            results = data.get("results", {})
-            for task_name, task_metrics in results.items():
-                for k, v in task_metrics.items():
-                    if isinstance(v, (int, float)) and ("score" in k.lower() or "acc" in k.lower()) and "stderr" not in k.lower():
-                        all_scores[task_name] = round(v * 100.0, 2)
-                        break
-        except Exception as e:
-            print(f"Error reading {f_path}: {e}")
-    return all_scores
+from eval_metric_utils import extract_blink_metrics, BLINK_EXPECTED_N
 
 
 def main():
@@ -47,10 +27,10 @@ def main():
     cond_noise_dir = os.path.join(base_dir, "cond_random_noise_embeddings")
     attn_json = os.path.join(base_dir, "exp1_attention_distribution.json")
 
-    baseline_scores = extract_all_metrics_from_dir(baseline_dir)
-    k0_scores = extract_all_metrics_from_dir(cond_k0_dir)
-    zeros_scores = extract_all_metrics_from_dir(cond_zeros_dir)
-    noise_scores = extract_all_metrics_from_dir(cond_noise_dir)
+    baseline_scores = extract_blink_metrics(baseline_dir, require_all=True)
+    k0_scores = extract_blink_metrics(cond_k0_dir, require_all=True)
+    zeros_scores = extract_blink_metrics(cond_zeros_dir, require_all=True)
+    noise_scores = extract_blink_metrics(cond_noise_dir, require_all=True)
 
     print(f"Loaded scores:")
     print(f"  Baseline: {baseline_scores}")

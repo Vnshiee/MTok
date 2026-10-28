@@ -4,9 +4,9 @@
 
 | Benchmark Task | Mull-Tokens (`array/Qwen2.5-VL-Mull`) | Direct SFT Baseline (`array/Qwen2.5-VL-SAT`) | Difference (Mull Advantage) |
 | :--- | :---: | :---: | :---: |
-| **BLINK Spatial Relation (143)** | **85.31%** | **50.00%** | +35.31% |
+| **BLINK Spatial Relation (143)** | **85.31%** | **81.82%** | +3.49% |
 | **BLINK Relative Depth (124)** | **85.48%** | **79.84%** | +5.64% |
-| **BLINK Jigsaw Puzzles (150)** | **76.67%** | **50.00%** | +26.67% |
+| **BLINK Jigsaw Puzzles (150)** | **76.67%** | **68.00%** | +8.67% |
 | **BLINK Multi-View (133)** | **63.91%** | **68.42%** | -4.51% |
 | **BLINK IQ Test (150)** | **30.67%** | **28.00%** | +2.67% |
-| **BLINK Average (5 Tasks)** | **68.41%** | **55.25%** | **+13.16%** |
+| **BLINK Average (5 Tasks)** | **68.41%** | **65.22%** | **+3.19%** |

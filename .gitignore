@@ -20,6 +20,7 @@ eval_outputs/*.log
 eval_outputs/watchdog.out
 eval_outputs/watchdog_status.json
 eval_outputs/exp5_latent_dynamics/Gitingest.txt
+eval_outputs/examples_MMLatentDiscrete*.jsonl
 
 # OS and Editor artifacts
 .DS_Store

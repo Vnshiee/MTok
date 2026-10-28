@@ -31,33 +31,42 @@ This roadmap outlines the milestones, current completion status, and future rese
 - [x] **Experiment 1: Causal Necessity & Latent Ablation**:
   - [x] Evaluated Intact Baseline ($K=20$) vs. Zero Latents ($K=0$) vs. Zeroed Embeddings ($\mathbf{0}$) vs. Gaussian Noise ($\mathcal{N}$).
   - [x] Developed PyTorch attention allocation diagnostic (`experiment1_attention_diagnostic.py`).
-  - [x] Documented findings: 20 latents function as a *Pause Token / Compute Buffer* rather than semantic visual vectors.
+  - [x] Observed that zeroing or adding noise to embeddings produces minimal degradation (~1 point), supporting the hypothesis that latent tokens act as compute buffers or format conditions rather than semantic visual vectors.
 - [x] **Experiment 2: Stage 2 SFT vs. Stage 3 GRPO**:
   - [x] Evaluated `array/Qwen2.5-VL-Mull` vs. `array/Qwen2.5-VL-MullGRPO`.
-  - [x] Quantified that 50,000 RL steps yielded only +0.41% net gain due to $G=2$ dead updates.
+  - [x] Measured +0.81% average gain across 5 BLINK tasks (+1.39% on reasoning tasks), consistent with the paper's reported small delta.
 - [x] **Experiment 3: Confounding Data Leakage Test**:
   - [x] Evaluated `array/Qwen2.5-VL-Mull` vs. `array/Qwen2.5-VL-SAT` on identical test splits.
-  - [x] Proved +13.16% advantage of Mull latent architecture over direct domain fine-tuning.
+  - [x] Measured +3.19% overall advantage for Mull, while the SAT baseline outperformed Mull by +4.51% on Multi-View reasoning.
 - [x] **Experiment 4: Thinking Token Budget Scaling Curve**:
   - [x] Evaluated token budget performance across $K \in \{0, 1, 5, 10, 20, 40\}$.
-  - [x] Discovered scaling up to $K=40$ achieves peak accuracy of 75.81%.
-- [x] **Experiment 5: Latent Dynamics & Representational Drift**:
-  - [x] Measured Euclidean step size, intra-latent cosine similarity, and visual alignment across layers 0 to 28.
-  - [x] Documented decoupling of visual alignment in late decision heads (layers 24–28).
+  - [x] Observed a flat scaling curve between $K=1$ (67.06%) and $K=40$ (67.92%), indicating that a single latent token recovers ~89% of the K=0 to K=20 gap.
+- [x] **Experiment 5: Latent Dynamics & Pilot Geometry**:
+  - [x] Measured Euclidean step size, intra-latent cosine similarity, and visual alignment across layers 0 to 28 on a preliminary pilot query.
+  - [x] Identified that the layer 28 shift coincides with the final RMSNorm boundary in `Qwen2_5_VL`.
 - [x] **Master Synthesis**:
-  - [x] Consolidated all 5 experiment summaries into [`eval_outputs/ALL_EXPERIMENTS_MASTER_SUMMARY.md`](eval_outputs/ALL_EXPERIMENTS_MASTER_SUMMARY.md).
+  - [x] Consolidated all 5 experiment summaries into [`eval_outputs/ALL_EXPERIMENTS_MASTER_SUMMARY.md`](eval_outputs/ALL_EXPERIMENTS_MASTER_SUMMARY.md) and logged corrections in [`ERRATA.md`](ERRATA.md).
 
 ---
 
-## Phase 3: Architectural Extensions & Mechanistic Interventions (⏳ Next Steps)
+## Phase 3: The E1 Run Matrix & Format-vs-Content Diagnostics (⏳ In Progress)
 
-- [ ] **Milestone 3.1: Adaptive / Dynamic Thinking Budget ($K_{\text{adaptive}}$)**
-  - *Hypothesis*: Easy questions can terminate thinking in $K=2$ to $5$ tokens, while complex spatial puzzles benefit from scaling to $K=40$.
-  - *Action*: Train or calibrate a dynamic stopping token `<|end_of_thought|>` or monitor state-to-state convergence $\|\Delta h_t\|_2 < \tau$ during generation.
-  - *Target Metric*: Reduce average latency by >40% with zero loss in BLINK benchmark accuracy.
-
-- [ ] **Milestone 3.2: High-Group-Size GRPO Scaling ($G \ge 8$)**
-  - *Hypothesis*: The marginal +0.41% gain of Stage 3 RL was caused by the severe memory-constrained group size $G=2$.
+- [ ] **Milestone 3.1: Resolution Standardization & Image Audit**
+  - *Action*: Standardize on 4.19 MP across all evaluations and audit BLINK image resolutions.
+- [ ] **Milestone 3.2: The 9-Row Diagnostic Matrix (4.19 MP, All Logged)**
+  - *Hypotheses*: 
+    - H1 (Scratchpad computation): Performance scales with token budget and requires learned embeddings.
+    - H3 (Format conditioning / mode switching): Prefill tags suppress harmful verbal reasoning; empty think tags (`<think></think>\n`) or punctuation pause tokens recover performance.
+  - *Runs*:
+    - Row 1: Mull | latents | think + 20 latents (Clean 4.19 MP reference)
+    - Row 2: Mull | latents | empty (K=0 repeat with full token logging)
+    - Row 3: Mull | latents | `<think></think>\n` (Tags only)
+    - Row 4: Mull | latents | think + 20x`" ."` (Text pause tokens)
+    - Row 5: Mull | latents | think + 20x`<|latent_end|>` (Alternative special token)
+    - Row 6: Mull | sft | empty (Prompt sensitivity of K=0 drop)
+    - Row 7: Mull | sft | think + 20 latents (Prompt sensitivity of Mull)
+    - Row 8: SAT | sft | empty (True DirAns baseline setting)
+    - Row 9: SAT | latents | empty (SAT under Mull prompt)
   - *Action*: Implement DeepSpeed ZeRO-3 Offload or parameter-efficient LoRA training to scale group size to $G=8$ and $G=16$.
   - *Target Metric*: Eliminate dead updates and achieve statistically significant RL gains on spatial benchmarks.
 

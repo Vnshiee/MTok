@@ -39,6 +39,8 @@ metadata:
 lmms_eval_specific_kwargs:
   default:
     prompt_mode: "videor1"
+  qwen2_5_vl:
+    prompt_mode: "sft"
   qwen2_5_vl_query:
     prompt_mode: "latents"
   qwen2_5_vl_mmlatent:

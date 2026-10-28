@@ -2,6 +2,7 @@
 # modified from 
 # https://github.com/Efficient-Large-Model/lmms-eval/tree/ed9589a8dd0ff7d2f11f5679c4b3050104dccb8e/lmms_eval/tasks/blink
 
+import os
 import re
 import pdb
 
@@ -12,7 +13,13 @@ from lmms_eval.filters.transformation import MapFilter
 
 
 def blink_doc_to_text(doc, lmms_eval_specific_kwargs=None):
-    prompt_mode = lmms_eval_specific_kwargs["prompt_mode"]
+    override = os.environ.get("BLINK_PROMPT_MODE")
+    if override:
+        prompt_mode = override
+    elif lmms_eval_specific_kwargs and "prompt_mode" in lmms_eval_specific_kwargs:
+        prompt_mode = lmms_eval_specific_kwargs["prompt_mode"]
+    else:
+        prompt_mode = "videor1"
 
     QUESTION_TEMPLATE_R1 = (
         "{Question}\n"

@@ -9,27 +9,7 @@ import json
 import sys
 
 
-def extract_all_metrics_from_dir(dir_path):
-    if not os.path.isdir(dir_path):
-        return {}
-    files = glob.glob(os.path.join(dir_path, "**/results_*.json"), recursive=True)
-    if not files:
-        files = glob.glob(os.path.join(dir_path, "**/*result*.json"), recursive=True)
-    
-    all_scores = {}
-    for f_path in files:
-        try:
-            with open(f_path, "r") as f:
-                data = json.load(f)
-            results = data.get("results", {})
-            for task_name, task_metrics in results.items():
-                for k, v in task_metrics.items():
-                    if isinstance(v, (int, float)) and ("score" in k.lower() or "acc" in k.lower()) and "stderr" not in k.lower():
-                        all_scores[task_name] = round(v * 100.0, 2)
-                        break
-        except Exception as e:
-            print(f"Error reading {f_path}: {e}")
-    return all_scores
+from eval_metric_utils import extract_blink_metrics, BLINK_EXPECTED_N
 
 
 def main():
@@ -53,7 +33,7 @@ def main():
 
     scores_by_k = {}
     for k, d in k_dirs.items():
-        scores_by_k[k] = extract_all_metrics_from_dir(d)
+        scores_by_k[k] = extract_blink_metrics(d, require_all=True)
 
     display_tasks = [
         ("blink_sprel", "BLINK Spatial Relation (143)"),

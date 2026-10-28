@@ -218,6 +218,25 @@ class Qwen2_5_VL_MMLatent_simple(lmms):
             "device_map": self.device_map,
         }
 
+        # Safe dynamic memory allocation for shared GPU
+        if self.device_map == "auto" and torch.cuda.is_available():
+            try:
+                free_mem, total_mem = torch.cuda.mem_get_info()
+                # If GPU is shared (free VRAM < 90% of total), dynamically reserve 5.5 GiB for activations/KV
+                if free_mem < 0.90 * total_mem:
+                    activation_headroom = 5.5 * (1024**3)
+                    safe_gpu_gib = max(2, int((free_mem - activation_headroom) / (1024**3)))
+                    model_kwargs["max_memory"] = {
+                        0: f"{safe_gpu_gib}GiB",
+                        "cpu": "400GiB"
+                    }
+                    eval_logger.info(
+                        f"Shared GPU detected ({free_mem / 1024**3:.2f} GiB free of {total_mem / 1024**3:.2f} GiB). "
+                        f"Setting safe max_memory: {model_kwargs['max_memory']} (reserving {activation_headroom / 1024**3:.1f} GiB activation headroom)"
+                    )
+            except Exception as e:
+                eval_logger.warning(f"Could not compute safe max_memory: {e}")
+
         # Add attention implementation if specified
         if attn_implementation is not None:
             model_kwargs["attn_implementation"] = attn_implementation
@@ -402,71 +421,66 @@ class Qwen2_5_VL_MMLatentDiscrete(Qwen2_5_VL_MMLatent_simple):
                 video_kwargs["nframes"] = self.max_num_frames
             batched_messages = [chat_message.to_hf_messages(video_kwargs=video_kwargs) for chat_message in chat_messages]
 
-            # Add latent padding to the messages
+            # Determine assistant prefill string and mode
+            num_l = int(gen_kwargs.get("num_latents", 20))
+            custom_prefill = gen_kwargs.get("custom_prefill", None)
+
+            if custom_prefill is not None:
+                if custom_prefill in ["empty", "none", ""]:
+                    prefill_text = ""
+                    expected_prefill_len = 0
+                elif custom_prefill == "empty_think":
+                    prefill_text = "<think></think>\n"
+                    expected_prefill_len = 5
+                elif custom_prefill == "dot_pause":
+                    prefill_text = "<think>" + " ." * num_l + "</think>\n"
+                    expected_prefill_len = 6 + num_l
+                elif custom_prefill == "latent_end":
+                    prefill_text = "<think>" + "<|latent_end|>" * num_l + "</think>\n"
+                    expected_prefill_len = 6 + num_l
+                elif custom_prefill in ["latents", "mmlatent2"]:
+                    if num_l > 0:
+                        prefill_text = "<think>" + "<|latent_pad|>" * num_l + "</think>\n"
+                        expected_prefill_len = 6 + num_l
+                    else:
+                        prefill_text = ""
+                        expected_prefill_len = 0
+                else:
+                    prefill_text = custom_prefill
+                    expected_prefill_len = None
+            elif gen_kwargs.get("prompt_version", "old") == "new":
+                if gen_kwargs.get("prompt_mode", "") == "mmlatent2":
+                    if num_l > 0:
+                        prefill_text = "<think>" + "<|latent_pad|>" * num_l + "</think>\n"
+                        expected_prefill_len = 6 + num_l
+                    else:
+                        prefill_text = ""
+                        expected_prefill_len = 0
+                elif gen_kwargs.get("prompt_mode", "") == "new_sepprompt":
+                    prefill_text = " Think using both text and by imagining images to come up with the answer. <think>"
+                    expected_prefill_len = None
+                elif gen_kwargs.get("prompt_mode", "") == "new_wtxt":
+                    prefill_text = "<think>" + "<|latent_pad|>" * num_l
+                    expected_prefill_len = None
+                else:
+                    prefill_text = ""
+                    expected_prefill_len = 0
+            else: # old prompt_version
+                if gen_kwargs.get("prompt_mode", "") == "mmlatent2":
+                    prefill_text = "<think>" + "<|latent_pad|>" * num_l + "</think>"
+                    expected_prefill_len = None
+                else:
+                    prefill_text = ""
+                    expected_prefill_len = 0
+
             new_batched_messages = []
             for chat_message in batched_messages:
-                if gen_kwargs.get("prompt_version", "old") == "old":
-                    if gen_kwargs.get("prompt_mode", "") == "mmlatent2":
-                        chat_message.append(
-                            {
-                                "role": "assistant",
-                                "content":
-                                [{
-                                    "type": "text",
-                                    "text": "<think>" + "<|latent_pad|>"*gen_kwargs.get("num_latents", 20) + "</think>"
-                                }]
-                            }
-                        )
-                    chat_message.append({
-                            "role": "assistant",
-                            "content": [{"type": "text", "text": ""}]
-                        })
-                else:
-                    if gen_kwargs.get("prompt_mode", "") == "mmlatent2":
-                        num_l = gen_kwargs.get("num_latents", 20)
-                        if num_l > 0:
-                            chat_message.append(
-                                {
-                                    "role": "assistant",
-                                    "content":
-                                    [{
-                                        "type": "text",
-                                        "text": "<think>" + "<|latent_pad|>"*num_l + "</think>\n"
-                                    }]
-                                }
-                            )
-                        else:
-                            chat_message.append(
-                                {
-                                    "role": "assistant",
-                                    "content":
-                                    [{
-                                        "type": "text",
-                                        "text": ""
-                                    }]
-                                }
-                            )
-                    elif gen_kwargs.get("prompt_mode", "") == "new_sepprompt":
-                        chat_message.append({
-                                "role": "assistant",
-                                "content": [{"type": "text", "text": " Think using both text and by imagining images to come up with the answer. <think>"}]
-                            })
-                    elif gen_kwargs.get("prompt_mode", "") == "new_wtxt":
-                        chat_message.append({
-                                "role": "assistant",
-                                "content": [{"type": "text", "text": "<think>" + "<|latent_pad|>"*gen_kwargs.get("num_latents", 20)}]
-                            })
-                    else:
-                        chat_message.append(
-                            {
-                                "role": "assistant",
-                                "content":
-                                [{
-                                    "type": "text",
-                                    "text": ""
-                                }]
-                            }
-                        )
+                chat_message.append(
+                    {
+                        "role": "assistant",
+                        "content": [{"type": "text", "text": prefill_text}]
+                    }
+                )
                 new_batched_messages.append(chat_message)
             batched_messages = new_batched_messages
             # pdb.set_trace()
@@ -479,6 +493,25 @@ class Qwen2_5_VL_MMLatentDiscrete(Qwen2_5_VL_MMLatent_simple):
                     text = text[:-len("<|im_end|>")]
                 clean_texts.append(text)
             texts = clean_texts
+
+            # Prefill assertions: verify assistant turn tail and token count
+            for text in texts:
+                if prefill_text:
+                    assert text.endswith(prefill_text), (
+                        f"Prefill assertion failed! Text does not end with expected prefill {prefill_text!r}. "
+                        f"Tail: {text[-max(len(prefill_text)+25, 40):]!r}"
+                    )
+                else:
+                    assert text.endswith("<|im_start|>assistant\n") or text.endswith("<|im_start|>assistant"), (
+                        f"Empty prefill assertion failed! Expected assistant turn header, got tail: {text[-30:]!r}"
+                    )
+
+            if expected_prefill_len is not None:
+                encoded_prefill = self.tokenizer.encode(prefill_text, add_special_tokens=False) if prefill_text else []
+                assert len(encoded_prefill) == expected_prefill_len, (
+                    f"Prefill token length assertion failed! Expected {expected_prefill_len} tokens for {prefill_text!r}, "
+                    f"got {len(encoded_prefill)}: {encoded_prefill}"
+                )
             image_inputs, video_inputs = process_vision_info(batched_messages)
             if video_inputs is not None:
                 total_frames = video_inputs[0].shape[0]
@@ -535,6 +568,7 @@ class Qwen2_5_VL_MMLatentDiscrete(Qwen2_5_VL_MMLatent_simple):
             else: 
                 generated_ids_trimmed = [out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, cont)]
             answers = self.processor.batch_decode(generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False)
+            raw_answers = self.processor.batch_decode(generated_ids_trimmed, skip_special_tokens=False, clean_up_tokenization_spaces=False)
             
             ### log all the raw inputs and outputs for analysis if output hidden states###
             if current_gen_kwargs.get("output_hidden_states", False):
@@ -563,9 +597,44 @@ class Qwen2_5_VL_MMLatentDiscrete(Qwen2_5_VL_MMLatent_simple):
             e2e_latency += end_time - start_time
             total_tokens += sum(len(ids) for ids in generated_ids_trimmed)
 
-            for ans, context in zip(answers, texts):
+            # Per-sample logging (raw tokens, lengths, timing, raw and parsed text)
+            sample_log_dir = (
+                os.environ.get("LMMS_EVAL_SAMPLE_LOG_DIR")
+                or os.environ.get("LMMS_EVAL_OUTPUT_DIR")
+                or gen_kwargs.get("sample_log_dir")
+                or os.path.join(os.getcwd(), "eval_outputs", "sample_logs")
+            )
+            batch_dur = end_time - start_time
+            per_sample_latency = batch_dur / len(generated_ids_trimmed) if generated_ids_trimmed else 0.0
+
+            for ans, raw_ans, gen_ids, t_name, s_name, d_id, context in zip(
+                answers, raw_answers, generated_ids_trimmed, task, split, doc_id, texts
+            ):
                 clean_ans = parse_reasoning_model_answer(ans)
-                
+                gen_ids_list = gen_ids.tolist() if hasattr(gen_ids, "tolist") else list(gen_ids)
+
+                sample_entry = {
+                    "task": str(t_name),
+                    "split": str(s_name),
+                    "doc_id": int(d_id) if isinstance(d_id, (int, np.integer)) else str(d_id),
+                    "custom_prefill": str(custom_prefill if custom_prefill is not None else "mmlatent2"),
+                    "prefill_tokens_count": int(expected_prefill_len if expected_prefill_len is not None else len(self.tokenizer.encode(prefill_text, add_special_tokens=False))),
+                    "gen_tokens_count": len(gen_ids_list),
+                    "latency_sec": round(float(per_sample_latency), 4),
+                    "gen_token_ids": gen_ids_list,
+                    "raw_text_decoded": raw_ans,
+                    "decoded_skip_special": ans,
+                    "clean_ans": clean_ans,
+                }
+
+                try:
+                    os.makedirs(sample_log_dir, exist_ok=True)
+                    log_file = os.path.join(sample_log_dir, f"per_sample_details_{t_name}.jsonl")
+                    with open(log_file, "a", encoding="utf-8") as f_log:
+                        f_log.write(json.dumps(sample_entry) + "\n")
+                except Exception as e:
+                    eval_logger.warning(f"Failed to log per-sample details: {e}")
+
                 res.append(clean_ans)
                 self.cache_hook.add_partial("generate_until", (context, gen_kwargs), clean_ans)
                 pbar.update(1)

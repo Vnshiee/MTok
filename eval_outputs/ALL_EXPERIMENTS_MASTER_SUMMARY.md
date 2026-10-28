@@ -49,12 +49,12 @@ Attention percentage allocated from the generated `<answer>` token back to prece
 
 | Benchmark Task | Stage 2 SFT (`array/Qwen2.5-VL-Mull`) | Stage 3 GRPO (`array/Qwen2.5-VL-MullGRPO`) | Delta (GRPO vs. SFT) |
 | :--- | :---: | :---: | :---: |
-| **BLINK Spatial Relation (143)** | **85.31%** | **50.00%** | -35.31% |
-| **BLINK Relative Depth (124)** | **85.48%** | **100.00%** | +14.52% |
+| **BLINK Spatial Relation (143)** | **85.31%** | **86.01%** | +0.70% |
+| **BLINK Relative Depth (124)** | **85.48%** | **84.68%** | -0.80% |
 | **BLINK Jigsaw Puzzles (150)** | **76.67%** | **78.67%** | +2.00% |
 | **BLINK Multi-View (133)** | **63.91%** | **65.41%** | +1.50% |
-| **BLINK IQ Test (150)** | **30.67%** | **50.00%** | +19.33% |
-| **BLINK Average (5 Tasks)** | **68.41%** | **68.82%** | **+0.41%** |
+| **BLINK IQ Test (150)** | **30.67%** | **31.33%** | +0.66% |
+| **BLINK Average (5 Tasks)** | **68.41%** | **69.22%** | **+0.81%** |
 
 ---
 
@@ -66,12 +66,12 @@ Attention percentage allocated from the generated `<answer>` token back to prece
 
 | Benchmark Task | Mull-Tokens (`array/Qwen2.5-VL-Mull`) | Direct SFT Baseline (`array/Qwen2.5-VL-SAT`) | Difference (Mull Advantage) |
 | :--- | :---: | :---: | :---: |
-| **BLINK Spatial Relation (143)** | **85.31%** | **50.00%** | +35.31% |
+| **BLINK Spatial Relation (143)** | **85.31%** | **81.82%** | +3.49% |
 | **BLINK Relative Depth (124)** | **85.48%** | **79.84%** | +5.64% |
-| **BLINK Jigsaw Puzzles (150)** | **76.67%** | **50.00%** | +26.67% |
+| **BLINK Jigsaw Puzzles (150)** | **76.67%** | **68.00%** | +8.67% |
 | **BLINK Multi-View (133)** | **63.91%** | **68.42%** | -4.51% |
 | **BLINK IQ Test (150)** | **30.67%** | **28.00%** | +2.67% |
-| **BLINK Average (5 Tasks)** | **68.41%** | **55.25%** | **+13.16%** |
+| **BLINK Average (5 Tasks)** | **68.41%** | **65.22%** | **+3.19%** |
 
 ---
 
@@ -83,12 +83,12 @@ Attention percentage allocated from the generated `<answer>` token back to prece
 
 | Benchmark Task | K=0 (Direct) | K=1 | K=5 | K=10 | K=20 (Default) | K=40 (Deep) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **BLINK Spatial Relation (143)** | **76.22%** | **84.62%** | **85.31%** | **50.00%** | **85.31%** | **85.31%** |
-| **BLINK Relative Depth (124)** | **67.74%** | **83.87%** | **100.00%** | **85.48%** | **85.48%** | **100.00%** |
-| **BLINK Jigsaw Puzzles (150)** | **62.00%** | **100.00%** | **77.33%** | **76.67%** | **76.67%** | **100.00%** |
+| **BLINK Spatial Relation (143)** | **76.22%** | **84.62%** | **85.31%** | **85.31%** | **85.31%** | **85.31%** |
+| **BLINK Relative Depth (124)** | **67.74%** | **83.87%** | **86.29%** | **85.48%** | **85.48%** | **83.87%** |
+| **BLINK Jigsaw Puzzles (150)** | **62.00%** | **78.00%** | **77.33%** | **76.67%** | **76.67%** | **76.67%** |
 | **BLINK Multi-View (133)** | **50.38%** | **60.15%** | **60.90%** | **60.15%** | **63.91%** | **62.41%** |
 | **BLINK IQ Test (150)** | **24.67%** | **28.67%** | **30.00%** | **29.33%** | **30.67%** | **31.33%** |
-| **BLINK Average (5 Tasks)** | **56.20%** | **71.46%** | **70.71%** | **60.33%** | **68.41%** | **75.81%** |
+| **BLINK Average (5 Tasks)** | **56.20%** | **67.06%** | **67.97%** | **67.39%** | **68.41%** | **67.92%** |
 
 ---
 
