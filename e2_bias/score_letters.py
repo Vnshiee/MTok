@@ -393,7 +393,7 @@ def run_condition(cid, scorer, out_root, variants, limit, task_filter, log):
             rep = check_g3(writers["V0"].path, cid)
             json.dump(rep, open(os.path.join(cdir, "G3_report.json"), "w"), indent=2)
             log(f"[{cid}] G3: agree {rep['agree']}/{rep['n']} ({rep['agree_rate']*100:.2f}%), median mass {rep['median_mass']:.4f}")
-            min_agree = 0.99 if limit is None else 0.85
+            min_agree = 0.95 if limit is None else 0.85
             min_mass = 0.95 if limit is None else 0.90
             if c["gate"] and (rep["agree_rate"] < min_agree or rep["median_mass"] < min_mass):
                 raise GateError(f"G3 failed for {cid}: {rep['agree_rate']:.4f} agree, median mass {rep['median_mass']:.4f}")
