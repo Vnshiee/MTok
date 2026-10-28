@@ -1,0 +1,356 @@
+{
+  "T1": {
+    "per_task": {
+      "blink_sprel": {
+        "raw_acc": 0.839161,
+        "calib_acc": 0.72028,
+        "pred_b_frac": 0.594406,
+        "mean_margin": 2.891608,
+        "median_margin": 2.375,
+        "auc": 0.960645,
+        "n": 143
+      },
+      "blink_reldepth": {
+        "raw_acc": 0.846774,
+        "calib_acc": 0.620968,
+        "pred_b_frac": 0.41129,
+        "mean_margin": 0.875,
+        "median_margin": 0.875,
+        "auc": 0.930599,
+        "n": 124
+      },
+      "blink_jigsaw": {
+        "raw_acc": 0.753333,
+        "calib_acc": 0.513333,
+        "pred_b_frac": 0.52,
+        "mean_margin": 0.438333,
+        "median_margin": 0.375,
+        "auc": 0.824479,
+        "n": 150
+      },
+      "blink_mv": {
+        "raw_acc": 0.631579,
+        "calib_acc": 0.556391,
+        "pred_b_frac": 0.879699,
+        "mean_margin": 0.080827,
+        "median_margin": 0.125,
+        "auc": 0.657123,
+        "n": 133
+      },
+      "blink_iqtest": {
+        "raw_acc": 0.3,
+        "calib_acc": 0.293333,
+        "pred_b_frac": null,
+        "mean_margin": -0.647083,
+        "median_margin": -0.625,
+        "auc": null,
+        "n": 150
+      }
+    },
+    "micro": {
+      "raw_acc": 0.667143,
+      "calib_acc": 0.535714,
+      "mean_margin": 0.716339
+    },
+    "macro": {
+      "raw_acc": 0.674169,
+      "calib_acc": 0.540861
+    },
+    "debiased_2x2": {
+      "overall_debiased_acc": 0.749091,
+      "mean_L": 0.098068,
+      "mean_P": 0.190682,
+      "mean_s": -0.020341,
+      "per_task": {
+        "blink_sprel": {
+          "debiased_acc": 0.853147,
+          "mean_L": 0.047203,
+          "mean_P": 0.27972,
+          "mean_s": 0.329983
+        },
+        "blink_reldepth": {
+          "debiased_acc": 0.822581,
+          "mean_L": 0.054435,
+          "mean_P": 0.316028,
+          "mean_s": -0.514113
+        },
+        "blink_jigsaw": {
+          "debiased_acc": 0.746667,
+          "mean_L": 0.086875,
+          "mean_P": 0.146458,
+          "mean_s": -0.041458
+        },
+        "blink_mv": {
+          "debiased_acc": 0.571429,
+          "mean_L": 0.206062,
+          "mean_P": 0.027961,
+          "mean_s": 0.087171
+        }
+      }
+    },
+    "blind": {
+      "blink_sprel": {
+        "blind_acc": 0.468531,
+        "blind_auc": 0.602027,
+        "n": 143
+      },
+      "blink_reldepth": {
+        "blind_acc": 0.516129,
+        "blind_auc": 0.484375,
+        "n": 124
+      },
+      "blink_jigsaw": {
+        "blind_acc": 0.473333,
+        "blind_auc": 0.490462,
+        "n": 150
+      },
+      "blink_mv": {
+        "blind_acc": 0.556391,
+        "blind_auc": 0.5,
+        "n": 133
+      },
+      "blink_iqtest": {
+        "blind_acc": 0.28,
+        "blind_auc": null,
+        "n": 150
+      }
+    },
+    "priors": {}
+  },
+  "T3": {
+    "per_task": {
+      "blink_sprel": {
+        "raw_acc": 0.846154,
+        "calib_acc": 0.741259,
+        "pred_b_frac": 0.601399,
+        "mean_margin": 2.850524,
+        "median_margin": 2.5,
+        "auc": 0.959858,
+        "n": 143
+      },
+      "blink_reldepth": {
+        "raw_acc": 0.854839,
+        "calib_acc": 0.612903,
+        "pred_b_frac": 0.403226,
+        "mean_margin": 0.930444,
+        "median_margin": 0.875,
+        "auc": 0.930469,
+        "n": 124
+      },
+      "blink_jigsaw": {
+        "raw_acc": 0.78,
+        "calib_acc": 0.52,
+        "pred_b_frac": 0.466667,
+        "mean_margin": 0.455,
+        "median_margin": 0.375,
+        "auc": 0.83883,
+        "n": 150
+      },
+      "blink_mv": {
+        "raw_acc": 0.601504,
+        "calib_acc": 0.556391,
+        "pred_b_frac": 0.924812,
+        "mean_margin": 0.069549,
+        "median_margin": 0.125,
+        "auc": 0.610513,
+        "n": 133
+      },
+      "blink_iqtest": {
+        "raw_acc": 0.293333,
+        "calib_acc": 0.286667,
+        "pred_b_frac": null,
+        "mean_margin": -0.675833,
+        "median_margin": -0.625,
+        "auc": null,
+        "n": 150
+      }
+    },
+    "micro": {
+      "raw_acc": 0.668571,
+      "calib_acc": 0.538571,
+      "mean_margin": 0.713036
+    },
+    "macro": {
+      "raw_acc": 0.675166,
+      "calib_acc": 0.543444
+    },
+    "debiased_2x2": {
+      "overall_debiased_acc": 0.738182,
+      "mean_L": 0.11983,
+      "mean_P": 0.183011,
+      "mean_s": -0.044602,
+      "per_task": {
+        "blink_sprel": {
+          "debiased_acc": 0.839161,
+          "mean_L": 0.048295,
+          "mean_P": 0.268138,
+          "mean_s": 0.319712
+        },
+        "blink_reldepth": {
+          "debiased_acc": 0.790323,
+          "mean_L": 0.068296,
+          "mean_P": 0.338962,
+          "mean_s": -0.563256
+        },
+        "blink_jigsaw": {
+          "debiased_acc": 0.733333,
+          "mean_L": 0.13125,
+          "mean_P": 0.104583,
+          "mean_s": -0.0975
+        },
+        "blink_mv": {
+          "debiased_acc": 0.586466,
+          "mean_L": 0.231908,
+          "mean_P": 0.034539,
+          "mean_s": 0.106908
+        }
+      }
+    },
+    "blind": {
+      "blink_sprel": {
+        "blind_acc": 0.461538,
+        "blind_auc": 0.597009,
+        "n": 143
+      },
+      "blink_reldepth": {
+        "blind_acc": 0.516129,
+        "blind_auc": 0.485938,
+        "n": 124
+      },
+      "blink_jigsaw": {
+        "blind_acc": 0.473333,
+        "blind_auc": 0.5,
+        "n": 150
+      },
+      "blink_mv": {
+        "blind_acc": 0.556391,
+        "blind_auc": 0.5,
+        "n": 133
+      },
+      "blink_iqtest": {
+        "blind_acc": 0.273333,
+        "blind_auc": null,
+        "n": 150
+      }
+    },
+    "priors": {}
+  },
+  "T8": {
+    "per_task": {
+      "blink_sprel": {
+        "raw_acc": 0.825175,
+        "calib_acc": 0.755245,
+        "pred_b_frac": 0.538462,
+        "mean_margin": 1.932692,
+        "median_margin": 2.0,
+        "auc": 0.902401,
+        "n": 143
+      },
+      "blink_reldepth": {
+        "raw_acc": 0.790323,
+        "calib_acc": 0.58871,
+        "pred_b_frac": 0.306452,
+        "mean_margin": 0.573589,
+        "median_margin": 0.5,
+        "auc": 0.886068,
+        "n": 124
+      },
+      "blink_jigsaw": {
+        "raw_acc": 0.68,
+        "calib_acc": 0.613333,
+        "pred_b_frac": 0.26,
+        "mean_margin": 0.241667,
+        "median_margin": 0.25,
+        "auc": 0.759226,
+        "n": 150
+      },
+      "blink_mv": {
+        "raw_acc": 0.631579,
+        "calib_acc": 0.556391,
+        "pred_b_frac": 0.894737,
+        "mean_margin": 0.092105,
+        "median_margin": 0.125,
+        "auc": 0.715644,
+        "n": 133
+      },
+      "blink_iqtest": {
+        "raw_acc": 0.286667,
+        "calib_acc": 0.306667,
+        "pred_b_frac": null,
+        "mean_margin": -0.73375,
+        "median_margin": -0.5,
+        "auc": null,
+        "n": 150
+      }
+    },
+    "micro": {
+      "raw_acc": 0.635714,
+      "calib_acc": 0.561429,
+      "mean_margin": 0.408482
+    },
+    "macro": {
+      "raw_acc": 0.642749,
+      "calib_acc": 0.564069
+    },
+    "debiased_2x2": {
+      "overall_debiased_acc": 0.725455,
+      "mean_L": -0.124716,
+      "mean_P": 0.184602,
+      "mean_s": -0.150511,
+      "per_task": {
+        "blink_sprel": {
+          "debiased_acc": 0.804196,
+          "mean_L": -0.163243,
+          "mean_P": 0.271198,
+          "mean_s": -0.132212
+        },
+        "blink_reldepth": {
+          "debiased_acc": 0.758065,
+          "mean_L": -0.14995,
+          "mean_P": 0.288558,
+          "mean_s": -0.508317
+        },
+        "blink_jigsaw": {
+          "debiased_acc": 0.68,
+          "mean_L": -0.132292,
+          "mean_P": -0.006042,
+          "mean_s": -0.104792
+        },
+        "blink_mv": {
+          "debiased_acc": 0.661654,
+          "mean_L": -0.051222,
+          "mean_P": 0.209586,
+          "mean_s": 0.111842
+        }
+      }
+    },
+    "blind": {
+      "blink_sprel": {
+        "blind_acc": 0.447552,
+        "blind_auc": 0.609307,
+        "n": 143
+      },
+      "blink_reldepth": {
+        "blind_acc": 0.483871,
+        "blind_auc": 0.508464,
+        "n": 124
+      },
+      "blink_jigsaw": {
+        "blind_acc": 0.526667,
+        "blind_auc": 0.499287,
+        "n": 150
+      },
+      "blink_mv": {
+        "blind_acc": 0.556391,
+        "blind_auc": 0.5,
+        "n": 133
+      },
+      "blink_iqtest": {
+        "blind_acc": 0.26,
+        "blind_auc": null,
+        "n": 150
+      }
+    },
+    "priors": {}
+  }
+}
