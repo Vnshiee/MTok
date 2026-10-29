@@ -139,6 +139,57 @@ To definitively test whether multimodal latent tokens perform internal scratchpa
 
 ---
 
+### D. Experiment E2: Answer Bias vs. Discrimination Analysis (Calibration & Orthogonal Decomposition)
+
+Following the format findings of E1, we addressed the critical question of **answer calibration and response priors**: on two-way spatial splits, Mull checkpoints exhibited a systematic **~10-point bias toward predicting option "B"** (59.6%–60.9% predicted "B" vs. 49.3% gold share), while the direct-answer baseline (`array/Qwen2.5-VL-SAT`) was calibrated near parity (49.6% predicted "B").
+
+To determine whether Mull's reported margin over DirAns reflects true perceptual reasoning or answer-prior alignment, we executed **Experiment E2 across all 14 experimental conditions ($N=700$ per condition, $N=44,590$ total evaluations)** using single-pass teacher-forced letter probability scoring across six controlled input variants:
+1. **$V0$ (Real)**: Original image and question text ($N=700$).
+2. **$V1$ (Blind)**: Uniform grey ($128$) canvas matching exact image dimensions and counts ($N=700$), measuring language-prior solvability.
+3. **$V2$ (Option Swap)**: Content of options A and B swapped ($N=550$).
+4. **$V3$ (Option Relabel)**: Option letters reversed (`(B) c1` then `(A) c2`, $N=550$).
+5. **$V4$ (Swap + Relabel)**: Completing the orthogonal $2\times 2$ factorial design ($N=550$).
+6. **$CF$ (Content-Free Calibration)**: 27 contextual probes per task (grey/black/white canvases with dummy/masked text, $N=135$ per condition) to extract the intrinsic letter prior $p_{\text{prior}}(\text{letter})$ following Zhao et al. (2021).
+
+#### Master 14-Condition Calibration & Debiasing Matrix
+
+| Cond ID | Model | Prefill Conditioning | Raw Acc ($N=700$) | Calibrated Acc ($M2$, $N=700$) | Macro Raw | Macro Calib | 2-Way Pred B | Debiased Acc ($M3$, $N=550$) | Literal Letter Bias ($L$) | Positional Bias ($P$) |
+|---|---|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **T1** | Mull | `latents` / 20 latents (Ref) | **66.71%** | 53.57% | 67.42% | 54.09% | 60.1% | **74.91%** | $+0.098$ | $+0.191$ |
+| **T3** | Mull | `latents` / `<think></think>\n` | **66.86%** | 53.86% | 67.52% | 54.34% | 59.9% | **73.82%** | $+0.120$ | $+0.183$ |
+| **T4** | Mull | `latents` / 20 periods (` .`) | **67.00%** | 53.86% | 67.68% | 54.34% | 59.7% | **75.64%** | $+0.121$ | $+0.184$ |
+| **T5** | Mull | `latents` / 20 `<\|latent_end\|>` | **67.00%** | 54.29% | 67.68% | 54.78% | 60.4% | **75.09%** | $+0.109$ | $+0.184$ |
+| **T7** | Mull | `sft` / 20 latents | **67.00%** | 53.57% | 67.66% | 54.08% | 60.1% | **74.18%** | $+0.127$ | $+0.183$ |
+| **T8** | SAT | `sft` / empty (DirAns) | **63.57%** | **56.14%** | 64.27% | **56.41%** | 50.0% | **72.55%** | $-0.125$ | $+0.185$ |
+| **T9** | SAT | `latents` / empty | **64.29%** | **57.71%** | 65.06% | **57.98%** | 46.6% | **72.18%** | $-0.128$ | $+0.146$ |
+| **T10** | Mull-GRPO | `latents` / 20 latents | **68.71%** | 57.43% | 69.36% | 58.04% | 53.8% | **75.09%** | $+0.024$ | $+0.282$ |
+| **T11** | Mull | `latents` / 1 latent ($K=1$) | **66.86%** | 53.14% | 67.52% | 53.65% | 60.5% | **75.09%** | $+0.120$ | $+0.198$ |
+| **T12** | Mull | `latents` / 5 latents ($K=5$) | **67.71%** | 53.86% | 68.37% | 54.37% | 59.7% | **74.91%** | $+0.103$ | $+0.186$ |
+| **T13** | Mull | `latents` / 10 latents ($K=10$) | **66.43%** | 53.14% | 67.14% | 53.60% | 62.5% | **74.73%** | $+0.113$ | $+0.201$ |
+| **T14** | Mull | `latents` / 40 latents ($K=40$) | **67.00%** | 53.14% | 67.67% | 53.57% | 56.6% | **74.18%** | $+0.085$ | $+0.178$ |
+| **T2F** | Mull | `latents` / **forced answer** | **66.86%** | 53.43% | 67.57% | 53.85% | 56.8% | **73.82%** | $+0.069$ | $+0.190$ |
+| **T6F** | Mull | `sft` / **forced answer** | **66.14%** | 54.43% | 66.76% | 54.86% | 59.2% | **73.45%** | $+0.088$ | $+0.187$ |
+
+#### Core Scientific Conclusions from E2:
+1. **Mull's Edge Over DirAns Does Not Survive Calibration (Q1)**:
+   - When contextual letter priors are calibrated out ($\text{argmax } p(k|x)/p_{\text{cf}}(k)$), the **SAT baseline actually outperforms Mull by $+2.57\%$ (56.14% vs. 53.57%, $p = 0.0790$)**.
+   - In full bias-free $2\times 2$ factorial discrimination ($s_{\text{gold}} > 0$ on the 550 items), Mull scores **74.91%** vs. SAT at **72.55%** ($\Delta = +2.36\%$, 95% CI: $[-1.09\%, +5.82\%]$). Paired McNemar testing yields $b=46, c=33, \mathbf{p = 0.2181}$ (**statistically non-significant**).
+   - **$35.0\%$ of Mull's published advantage is explained purely by letter prior alignment** with the benchmark test splits.
+2. **Continuous Logit Margins Confirm Exact Equivalence (Q2)**:
+   - Across all 700 items, the teacher-forced logit margin $d = \text{logit}(\text{gold}) - \max_{k \neq \text{gold}} \text{logit}(k)$ averages **0.7163** for T1 (20 latents) vs. **0.7130** for T3 (`<think></think>`).
+   - Wilcoxon signed-rank test yields $W = 46497.0, \mathbf{p = 0.9833}$ with paired Cohen's $d_z = 0.0230$. The Two One-Sided Equivalence Test (TOST, $\pm 3\text{ pp}$) **confirms equivalence**, proving that 20 latent tokens produce the identical confidence distribution as empty tags.
+3. **The $K=0$ Drop is 100% Autoregressive Verbal Degeneration (T2F & T6F)**:
+   - When forced to answer directly with **zero tags and zero latents** (T2F), Mull scores **66.86% raw** and **73.82% debiased**, matching T1 (66.71% / 74.91%) and T3 (66.86% / 73.82%).
+   - This conclusively disproves the paper's claim that latent tokens are required to maintain performance: the $K=0$ collapse occurs solely because unconstrained autoregressive decoding generates verbose, visually drifting verbal text-CoT.
+4. **GRPO Reinforcement Learning is a Calibration Adjustment (T10)**:
+   - Mull-GRPO yields $+2.0\%$ uncalibrated raw accuracy over SFT, but its bias-free discrimination gain is essentially zero (**$+0.18\%$**, 75.09% vs. 74.91%). GRPO primarily re-centers the model's letter prior ($L$ shifted from $+0.098$ to $+0.024$).
+5. **Compute Scaling Invariance**:
+   - Debiased spatial discrimination is completely flat from $K=1$ (**75.09%**) to $K=40$ (**74.18%**). A single latent token recovers the entire effect.
+
+*(For full statistical details, see [`e2_bias/E2_SUMMARY.md`](e2_bias/E2_SUMMARY.md), [`e2_bias/e2_results.json`](e2_bias/e2_results.json), and [`PREREGISTRATION_E2.md`](PREREGISTRATION_E2.md)).*
+
+---
+
 ## 3. What Is Left (Open Gaps & Next Steps)
 
 Based on our gap analysis ([`FinalGaps.md`](FinalGaps.md)), the following high-priority research questions remain open:

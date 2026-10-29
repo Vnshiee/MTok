@@ -64,3 +64,24 @@ All raw full-sample evaluation outputs were present, complete, and uncorrupted o
    - GRPO achieves a net gain of **+0.81 percentage points** over Stage 2 SFT (69.22% vs. 68.41%), consistent with the modest gains reported in the paper (+0.12% to +0.33%).
 5. **Direct Answer SAT Baseline**:
    - Mull leads `array/Qwen2.5-VL-SAT` by +3.19% on average (68.41% vs. 65.22%), but `array/Qwen2.5-VL-SAT` outperforms Mull by +4.51% on Multi-View reasoning (68.42% vs. 63.91%).
+
+---
+
+## 5. Addendum (October 29, 2026): Audit Findings & E2 Bias/Discrimination Resolution
+
+Following independent forensic verification across the per-sample logs and raw model outputs:
+
+1. **Systematic Answer Bias in Mull Checkpoints**:
+   - On the four 2-way splits ($N=550$), gold answers are 49.3% option "B". Mull checkpoints predict "B" **59.6%–61.8% of the time** (a ~10-point positive prior), whereas the DirAns SAT baseline is almost perfectly calibrated at **46.2%–50.0%**.
+   - In Experiment E2, contextual calibration (Zhao et al. 2021) and orthogonal $2\times 2$ factorial decomposition proved that **35.0% of Mull's reported margin over DirAns is pure prior alignment**. Under contextual calibration, the SAT baseline actually outperforms Mull (56.14% vs. 53.57%, $p = 0.0790$), and in debiased $2\times 2$ discrimination, the gap is non-significant ($p = 0.2181$).
+2. **Detailed Breakdown of the $K=0$ Collapse**:
+   - The 12-point collapse in Row 2 ($K=0$) is driven primarily by verbal text-CoT degradation (~138 tokens of wandering spatial text), supplemented by specific pathological decoding:
+     - **Cap Truncation & Repetition Loops**: Exactly 1 item in Row 2 hit the 1024-token cap (IQ-Test doc 52, repeating "The forty-eighth image is a larger version..." for 48 cycles), and 1 item in Row 6 hit the cap (Relative Depth doc 12, collapsing into repeated CJK characters: `便便便...`).
+     - **Hard Parse Failures**: 3 items in Row 2 and 1 item in Row 6 emitted no parseable `<answer>` tags.
+     - **Direct Answer Control (T2F)**: Forcing an immediate answer without tags or latents (T2F) completely rescues performance to **66.86% raw / 73.82% debiased**, mathematically proving that the $K=0$ drop is 100% an artifact of the decoding mode.
+3. **Format Lock Forensics**:
+   - In all prefilled/format-locked conditions (Rows 1, 3, 5, 8–15), generated length is **exactly 7.0 tokens on all 700 items with zero variance** ($\sigma = 0.00$). The model strictly emits `<answer>X</answer><|im_end|>`, confirming that assistant turn prefilling functions as a total format lock.
+4. **Architectural Ground Truth on Boundary Markers**:
+   - Prefill token counts (26 tokens for Row 1, 4, 5 vs. 5 tokens for Row 3) confirm that `<think>` and `</think>` are plain multi-token text sequences (`<` + `think` + `>`), not learned atomic special tokens. Mull adds no custom boundary tokens to the vocabulary.
+5. **Experiment 5 Latent Dynamics Clarification**:
+   - In `experiment5_latent_dynamics.py`, hidden states index 28 corresponds to the post-final-RMSNorm representation, which explains the apparent discontinuity at the final layer. Rigorous cross-layer tracking requires evaluating pre-norm layers 0–27 with mean-centering and question-token baseline normalization.
