@@ -1,0 +1,21 @@
+{
+  "cond": "T12",
+  "model": "mull",
+  "prompt": "latents",
+  "prefill": "<think><|latent_pad|><|latent_pad|><|latent_pad|><|latent_pad|><|latent_pad|></think>\n",
+  "plen": 11,
+  "e1": "row12_mull_k5",
+  "gate": true,
+  "tier": "C",
+  "model_path": "array/Qwen2.5-VL-Mull",
+  "max_pixels": 4194304,
+  "min_pixels": 200704,
+  "letter_ids": {
+    "A": 23465,
+    "B": 36721,
+    "C": 25630,
+    "D": 36495
+  },
+  "tokens_added": 0,
+  "seed": 20261028
+}

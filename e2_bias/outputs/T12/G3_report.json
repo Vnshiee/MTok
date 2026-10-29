@@ -1,0 +1,65 @@
+{
+  "cond": "T12",
+  "n": 700,
+  "agree": 692,
+  "agree_rate": 0.9885714285714285,
+  "median_mass": 0.9990068674087524,
+  "mismatches": [
+    [
+      "blink_reldepth",
+      15,
+      "B",
+      "A",
+      0.125
+    ],
+    [
+      "blink_reldepth",
+      42,
+      "A",
+      "B",
+      0.0
+    ],
+    [
+      "blink_jigsaw",
+      102,
+      "B",
+      "A",
+      0.125
+    ],
+    [
+      "blink_mv",
+      83,
+      "A",
+      "B",
+      0.0
+    ],
+    [
+      "blink_mv",
+      104,
+      "A",
+      "B",
+      0.0
+    ],
+    [
+      "blink_iqtest",
+      14,
+      "A",
+      "D",
+      0.0
+    ],
+    [
+      "blink_iqtest",
+      22,
+      "D",
+      "B",
+      0.0
+    ],
+    [
+      "blink_iqtest",
+      87,
+      "B",
+      "C",
+      0.125
+    ]
+  ]
+}
