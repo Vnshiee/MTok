@@ -1,0 +1,106 @@
+\documentclass{article}
+
+
+% to avoid loading the natbib package, add option nonatbib:
+\usepackage[preprint]{neurips_2025}
+
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage[pagebackref=true,colorlinks,citecolor=brown]{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+\usepackage{xspace}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{bm}
+\usepackage{pifont}
+\usepackage{amsmath}
+\usepackage{todonotes}
+\usepackage{longtable}
+\usepackage{arydshln}
+\usepackage{makecell}
+\usepackage{amssymb}
+
+\usepackage{wrapfig}
+\usepackage{lipsum}
+\usepackage{caption}
+
+\definecolor{darkred}{RGB}{196,0,0}
+
+\newcommand{\Model}{Mirage\xspace}
+
+\makeatletter
+\def\@fnsymbol#1{\ensuremath{\ifcase#1\or \dagger\or \ddagger\or
+\mathsection\or \mathparagraph\or \|\or **\or \dagger\dagger
+\or \ddagger\ddagger \else\@ctrerr\fi}}
+\newcommand{\printfnsymbol}[1]{%
+  \textsuperscript{\@fnsymbol{#1}}%
+}
+\makeatother
+
+\title{Machine Mental Imagery: Empower Multimodal Reasoning with Latent Visual Tokens}
+
+
+
+\newcommand*{\affmark}[1][*]{\textsuperscript{#1}}
+
+\author{
+Zeyuan Yang\affmark[1]\thanks{Equal contribution}~~~ 
+Xueyang Yu\affmark[1]\footnotemark[1]~~~
+Delin Chen\affmark[1]~~~
+Maohao Shen\affmark[2]~~~
+Chuang Gan\affmark[1]~~~
+\\ \\
+$^1$University of Massachusetts, Amherst~~~~~~
+$^2$Massachusetts Institute of Technology \\ \\
+% {\tt \{zeyuanyang, xueyangyu\}@umass.edu} \\ \\
+\begin{tabular}{@{}ll@{}}
+\textbf{Project Page:} & \url{https://vlm-mirage.github.io} \\
+\textbf{Code:} & \url{https://github.com/UMass-Embodied-AGI/Mirage} \\
+\end{tabular}
+}
+
+\begin{document}
+
+
+\maketitle
+
+
+\begin{abstract}
+Vision-language models (VLMs) excel at multimodal understanding, yet their text-only decoding forces them to verbalize visual reasoning, limiting performance on tasks that demand visual imagination.
+Recent attempts train VLMs to render explicit images, but the heavy image-generation pre-training often hinders the reasoning ability.
+Inspired by the way humans reason with mental imagery—the internal construction and manipulation of visual cues—we investigate whether VLMs can reason through interleaved multimodal trajectories without producing explicit images.
+To this end, we present a Machine Mental Imagery framework, dubbed as \textbf{\Model}, which augments VLM decoding with latent visual tokens alongside ordinary text.
+Concretely, whenever the model chooses to ``think visually'', it recasts its hidden states as next tokens, thereby continuing a multimodal trajectory without generating pixel-level images.
+Begin by supervising the latent tokens through distillation from ground-truth image embeddings, we then switch to text-only supervision to make the latent trajectory align tightly with the task objective. A subsequent reinforcement learning stage further enhances the multimodal reasoning capability.
+Experiments on diverse benchmarks demonstrate that \Model unlocks stronger multimodal reasoning without explicit image generation. 
+\end{abstract}
+
+
+
+\input{sec/1_intro}
+\input{sec/2_related}
+\input{sec/3_framework}
+\input{sec/4_experiments_arxiv}
+\input{sec/5_analysis_arxiv}
+\input{sec/6_conclusion}
+
+
+\clearpage
+{
+    \small
+    \bibliographystyle{plainnat}
+    \bibliography{neurips_2025}
+}
+
+\clearpage
+\input{sec/7_supp}
+
+
+\end{document}

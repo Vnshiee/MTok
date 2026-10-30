@@ -1,0 +1,145 @@
+\begin{table*}[t]
+    \centering
+    \caption{\textbf{Performance on real-world perception and reasoning benchmarks.} The best-performing open-source model for each dataset is highlighted in \textbf{bold}. Results marked with ``*'' are reported by other papers \citep{zhang2025thyme, li2025latent}, while the others are from our own evaluations.}
+    \label{tab:exp-id}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{lcccccccccccc}
+        \toprule
+        \multirow{2}{*}{\textbf{Model}} & \multicolumn{3}{c}{\textbf{V*}} & \multicolumn{3}{c}{\textbf{HRBench4K}} & \multicolumn{3}{c}{\textbf{HRBench8K}} & \multicolumn{3}{c}{\textbf{MME-RealWorld-Lite}} \\
+        \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(lr){11-13}
+        & Overall & Attribute & Spatial & Overall & FSP & FCP & Overall & FSP & FCP & Overall & Reasoning & Perception \\
+        \midrule \rowcolor{red4!20}
+        \multicolumn{13}{c}{\textit{\textbf{Proprietary Model}}}
+        \\
+        %Gemini 2.5 Pro~\cite{comanici2025gemini} &  &  &  &  &  &  &  &  &  &  &  &  \\
+        GPT-4o~\cite{gpt_4o} & 67.5* & 72.2* & 60.5* & 59.0* & 70.0* & 48.0* & 55.5* & 62.0* & 49.0* & 52.0* & 48.3* & 54.4* \\
+        \midrule \rowcolor{blue4!20}
+        \multicolumn{13}{c}{\textit{\textbf{Open-Source Model}}}
+        \\
+        Qwen2.5-VL-7B~\cite{bai2025qwen2} & 76.44 & 77.39 & 75.00 & 68.00 & 80.25 & 55.75 & 63.75 & 73.75 & 53.75 & 45.75 & 39.73 & 49.62 \\
+        \quad + vanilla SFT & 81.68 & \textbf{83.48} & 78.95 & 68.38 & 78.28 & 58.5 & 61.63 & 70.75 & 52.50 & 51.28 & 46.4 & 54.41 \\
+        \quad + vanilla SFT + GRPO & 78.53 & 78.26 & 78.95 & 70.00 & 83.25 & 56.75 & 66.75 & 78.00 & 55.50 & 52.42 & 48.13 & 55.18 \\
+        Deepeyes \citep{zheng2025deepeyes} & \textbf{83.25} & \textbf{84.35} & 81.58 & \textbf{71.25} & 83.75 & \textbf{58.75} & 65.13 & 77.00 & 53.25 & 54.28 & 50.53 & 56.63 \\
+        LVR \citep{li2025latent} & 80.6* & 81.7* & 79.0* & - & - & - & - & - & - & - & - & - \\
+        % \rowcolor{gray!20}
+        \midrule \rowcolor[HTML]{F5FFFA}
+        \multicolumn{13}{c}{\textit{\textbf{Our Model}}}
+        \\
+        \textbf{Monet-7B (SFT + VLPO)} & \textbf{83.25} & 83.48 & \textbf{82.89} & 71.00 & \textbf{85.25} & 56.75 & \textbf{68.00} & \textbf{79.75} & \textbf{56.25} & \textbf{55.50} & \textbf{51.07} & \textbf{58.34} \\
+        % \rowcolor{gray!20}
+        \textit{Relative Improvement} & \textcolor[rgb]{0,0.6,0}{+6.81} & \textcolor[rgb]{0,0.6,0}{+6.09} & \textcolor[rgb]{0,0.6,0}{+7.89} & \textcolor[rgb]{0,0.6,0}{+3.00} & \textcolor[rgb]{0,0.6,0}{+5.00} & \textcolor[rgb]{0,0.6,0}{+1.00} & \textcolor[rgb]{0,0.6,0}{+4.25} & \textcolor[rgb]{0,0.6,0}{+6.00} & \textcolor[rgb]{0,0.6,0}{+2.50} & \textcolor[rgb]{0,0.6,0}{+9.75} & \textcolor[rgb]{0,0.6,0}{+11.34} & \textcolor[rgb]{0,0.6,0}{+8.72} \\
+        \bottomrule
+    \end{tabular}%
+    }
+\end{table*}
+
+
+\section{Experiment}
+\label{sec:experiment}
+
+\subsection{Experiment Setup}
+\textbf{Training and Evaluation Setup.} In SFT Stage 1, we train the model for 4 epochs. For SFT stage 2 and 3, we train 1000 steps (about 1 epoch). For RL training, we adopt a 3.2K subset of Thyme-RL \citep{zhang2025thyme} and train for 1 epoch. For Monet-SFT model, we fix the training time latent size to 8; For \textbf{Monet-7B} (Monet-SFT + VLPO), we use a training latent size of 10. At test time, we select the best latent size from $\{8, 10, 12, 16\}$. The complete training and experimental setups are provided in the supplementary material.%\ref{app:implementation_details} and \ref{app:detailed_experimental_setup}, respectively. 
+
+
+\textbf{Evaluated Benchmarks.} We adopt the VLMEvalKit \citep{duan2024vlmevalkit} framework for fair evaluation. We evaluate Monet on V* \citep{wu2024v}, HRBench4k~\citep{wang2025divide}, HRBench8K \citep{wang2025divide}, MME-RealWorld \citep{zhang2024mme}, covering fine-grained perception and reasoning tasks on real-world, chart and OCR data. To evaluate OOD capabilities, we also evaluate on VisualPuzzles \citep{song2025visualpuzzles}, which includes visual logical puzzles that demands abstract visual reasoning abilities rather than prior knowledge.
+
+\textbf{Baselines.} We compare Monet against the following baselines: (1) \textbf{Qwen2.5-VL-7B}, the base model to train Monet-7B; (2) \textbf{Vanilla SFT}, which directly train Qwen2.5-VL-7B with Monet-SFT-125K; (3) \textbf{Vanilla SFT + GRPO}, which applies GRPO after Vanilla SFT; (4) \textbf{Deepeyes} \citep{zheng2025deepeyes}, a representative ``think with images'' approach that performs cropping to improve perception; (5) \textbf{LVR} \citep{li2025latent}, a recent work on latent visual reasoning that aligns the latent and auxiliary image embeddings; (6) other high-performance MLLMs, including Gemini 2.5 Pro \citep{comanici2025gemini}, GPT-4o \citep{gpt_4o}, Pangea-7B \citep{yue2024pangea}, and LLaVA-OneVision-72B \citep{li2024llava}.
+
+
+\subsection{Main Results}
+From Table \ref{tab:exp-id} and Tabel \ref{tab:exp-ood}, we can see that: (1) \textbf{Monet substantially enhances both perception and reasoning on real-world, chart, and OCR tasks, consistently outperforming the baselines.} It improves Qwen2.5-VL-7B by 4.25\%–9.75\%, surpasses both Vanilla SFT and SFT + GRPO trained on the same data, and outperforms Deepeyes and LVR on most benchmarks. (2) \textbf{Monet demonstrates strong OOD generalization.} It achieves the best performance on VisualPuzzles, which mainly contains abstract visual reasoning problems that are unseen during training.
+% Requires: \usepackage{multirow}
+
+
+
+\begin{table}[t]
+    \centering
+    \caption{\textbf{Performance on the VisualPuzzles benchmark (out-of-distribution).} The best-performing open-source model for each dataset is highlighted in \textbf{bold}. Results marked with ``*'' are taken from the original VisualPuzzles~\cite{song2025visualpuzzles} paper, while the others are obtained from our own evaluations.}
+    \label{tab:exp-ood}
+    \resizebox{0.48\textwidth}{!}{%
+    \begin{tabular}{lcccccc}
+        \toprule 
+        \multirow{2}{*}{\textbf{Model}} & \multicolumn{6}{c}{\textbf{VisualPuzzles}} \\
+        \cmidrule(lr){2-7}
+        & Overall & Algorithmic & Analogical & Deductive & Inductive & Spatial  \\
+        \midrule \rowcolor{red4!20}
+        \multicolumn{7}{c}{\textit{\textbf{Proprietary Models}}}
+        \\
+        Gemini 2.5 Pro \citep{comanici2025gemini} & 49.5* & 60.0* & 64.0* & 60.0* & 29.7* & 36.4* \\
+        GPT-4o \citep{gpt_4o} & 41.3* & 49.2* & 58.3* & 49.0* & 27.3* & 26.2* \\
+        \midrule \rowcolor{blue4!20}
+        \multicolumn{7}{c}{\textit{\textbf{Open-Source Models}}}
+        \\
+        Qwen2.5-VL-7B & 32.71 & 37.02 & 21.80 & 47.50 & 26.32 & 21.80  \\
+        \quad + vanilla SFT & 33.99 & 40.46 & \textbf{30.81} & 46.00 & 24.40 & \textbf{29.02}  \\
+        \quad + vanilla SFT + GRPO & 30.99 & 36.26 & 25.12 & 43.50 & 23.45 & 27.27 \\
+        Deepeyes \citep{zheng2025deepeyes} & 32.96 & 37.79 & 27.01 & 41.00 & 26.79 & 27.01 \\
+        Pangea-7B \citep{yue2024pangea} & 31.3* & 32.4* & 23.7* & 38.5* & \textbf{28.7}* & 32.5* \\
+        LLaVA-OneVision-72B \cite{li2024llava} & 30.8* & 34.7* & 26.5* & 37.0* & 27.3* & 28.7* \\
+        \midrule \rowcolor[HTML]{F5FFFA}
+        \multicolumn{7}{c}{\textit{\textbf{Our Model}}}
+        \\
+        \textbf{Monet-7B} & \textbf{35.02} & \textbf{45.80} & \textbf{30.81} & \textbf{47.50} & 26.79 & 25.52  \\
+        \textit{Relative Improvement} & \textcolor[rgb]{0,0.6,0}{+2.31} & \textcolor[rgb]{0,0.6,0}{+6.09} & \textcolor[rgb]{0,0.6,0}{+8.78} & \textcolor[rgb]{0,0.6,0}{+9.01} & \textcolor[rgb]{0,0.6,0}{+0.47} & \textcolor[rgb]{0,0.6,0}{+3.72} \\
+        \bottomrule
+    \end{tabular}%
+    }
+\end{table}
+
+
+
+\subsection{Analysis of the Role of the Components Design}
+\label{sec:ablation}
+In this section, we present ablation studies to assess the necessity and effectiveness of each component in our training framework (Table \ref{tab:ablation}). We also discuss several unsuccessful attempts from our early exploration of training objectives and pipeline designs, which we hope can provide insights for future advancements in latent reasoning for MLLMs.
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=1\linewidth]{figures/latent_size.pdf}
+    \caption{\textbf{Effect of the number of abstract visual embeddings used during training and inference on test accuracy.} The dashed line marks the accuracy of Qwen2.5-VL-7B. }
+    \label{fig:latent_size}
+    \vspace{-15pt}
+\end{figure*}
+
+\begin{table}[t]
+    \centering
+    \caption{\textbf{Ablation of the components of Monet.}}
+    \label{tab:ablation}
+    \resizebox{0.48\textwidth}{!}{%
+    \begin{tabular}{lccccc}
+        \toprule
+        \textbf{Model} & \textbf{V*} & \textbf{HRBench4K} & \textbf{HRBench8K} & \textbf{MME-RealWorld-Lite} & \textbf{VisualPuzzles}\\
+        \midrule
+        \rowcolor{gray!20}
+        \textbf{Monet-7B (full)} & \textbf{83.25} & \textbf{71.00} & \textbf{68.00} & \textbf{55.50} & \textbf{35.02} \\
+        Monet-SFT (w/o VLPO) & 82.20 & 68.50 & 66.00 & 52.68 & 30.48 \\
+        \quad + GRPO & 80.10 & 69.00 & 64.75 & 54.19 & 31.51 \\
+        \quad w/o latent-only BP & 46.07 & 40.13 & 39.00 & 38.67 &  33.65\\
+        \quad w/o auxiliary img & 73.30 & 63.88 & 57.63 & 39.66 & 28.60 \\
+        \quad w/o obs token align & 75.39 & 67.25 & 63.50 & 46.90 & 27.48 \\
+        \bottomrule
+    \end{tabular}%
+    }
+\end{table}
+
+\textbf{Takeaway 1. Single-signal supervision is less effective.} We remove the representation-alignment loss on observation tokens in SFT Stage 2 while retaining auxiliary-image embeddings in the student CoT under the ``image$\rightarrow$latent$\rightarrow$observation'' attention flow, which reflects our initial attempt. As shown by ``A-SFT w/o obs. token align'', removing the alignment loss causes a substantial drop in performance. This indicates that supervision from observation tokens is crucial. Similarly, removing the auxiliary images visible to latent embeddings while using the alignment loss alone (``w/o auxiliary img'') also significantly degrades performance, showing the importance of visual supervision on the latent embeddings. These two ablations demonstrate the necessity of the dual supervisions we use.
+
+\textbf{Takeaway 2. GRPO doesn't consistently improve Monet-SFT, whereas VLPO does.} This is evident when comparing ``Monet-SFT'' with ``Monet-SFT + GRPO'', indicating that GRPO is not well-suited for latent reasoning. In contrast, applying VLPO significantly enhances the performance of Monet-SFT.
+
+\textbf{Takeaway 3. Latent-related losses must backpropagate only through the latent embeddings.} ``w/o latent-only BP'' shows that when the alignment loss is allowed to update non-latent representations, performance drops sharply. This indicates that the model may otherwise exploit shortcut paths by minimizing the loss without actually improving the latent embeddings. Therefore, enforcing latent-only backpropagation is necessary.
+
+
+
+
+
+\subsection{Effect of the Number of the Latent Embeddings on Performance}
+\label{sec:latent_size}
+In this section, we analyze how training and test-time latent size ($K_{\text{train}}$ and $K_{\text{test}}$) affect performance. For Monet-SFT, we choose $K_{\text{train}}\in\{8, 10, 12\}$. For RL models, we take Monet-SFT with $K_{\text{train}}=8$ and further apply VLPO (with RL $K_{\text{train}}=10$) and GRPO. Results are shown in Figure \ref{fig:latent_size}.
+
+\textbf{Takeaway 1. For in-distribution tasks, improvements indeed come from using abstract visual embeddings; while for OOD tasks, only VLPO incentivizes useful latent reasoning.} Across all in-distribution tasks (V*, HRBench, MME-RealWorld), models perform worst when $K_{\text{test}}=0$. However, on the OOD task (VisualPuzzles), only the VLPO-enhanced model consistently benefits from latent reasoning, i.e., using a $K_{\text{test}}>0$ induces better performances than $K_{\text{test}}=0$, indicating that SFT alone cannot induce strong OOD generalization.
+
+\textbf{Takeaway 2. For in-distribution tasks, Monet-SFT enables test-time scaling of latent embeddings; VLPO further extends this trend to OOD scenarios.} On V*, HRBench, and MME-RealWorld, performance typically peaks at a test-time latent size $K_{\text{test}}$ larger than the training-time one $K_{\text{train}}$. Before the peak, the performance improves as $K_{\text{test}}$ increases. 
+
+
+\textbf{Takeaway 3. VLPO improves robustness to the choice of $K_{\text{test}}$.} Compared with other models, Monet-SFT + VLPO exhibits the most stable performance as $K_{\text{test}}$ varies.
+
+\textbf{Takeaway 4. GRPO mainly strengthens non-latent reasoning and provides limited benefits for latent reasoning.} When $K_{\text{test}}=0$, Monet-SFT ($K_{\text{train}}=8$) + GRPO is comparable to or better than Monet-SFT ($K_{\text{train}}=8$), showing gains in non-latent reasoning; However, when $K_{\text{test}}>0$, Monet-SFT + GRPO underperforms the SFT model for most $K_{\text{test}}$, suggesting minimal improvements to latent reasoning. This aligns with our analysis in Section \ref{sec:RL}: GRPO optimizes only text tokens and thus provides no direct supervision for latent embeddings.

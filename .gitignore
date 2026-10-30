@@ -33,3 +33,16 @@ eval_outputs/examples_MMLatentDiscrete*.jsonl
 .cache/
 *.safetensors
 *.ckpt
+
+# Submodules and large binary dumps from external audited models
+external_models/*/repo/
+external_models/**/*.pdf
+external_models/**/*.tar.gz
+external_models/**/hf_metadata/*/tokenizer.json
+external_models/**/hf_metadata/*/trainer_state.json
+external_models/**/hf_metadata/*/vocab.json
+external_models/**/hf_metadata/*/merges.txt
+
+# Local git ingest dumps
+GitIngest.txt
+digest.txt

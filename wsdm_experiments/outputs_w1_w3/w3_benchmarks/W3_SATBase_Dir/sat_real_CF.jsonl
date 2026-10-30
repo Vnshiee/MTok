@@ -1,0 +1,9 @@
+{"bench": "sat_real", "cond": "W3_SATBase_Dir", "filler": "N/A", "color": "grey", "letters": "AB", "logp": {"A": -0.006844764109700918, "B": -5.256844997406006}, "logit": {"A": 26.625, "B": 21.375}, "tf_pred": "A"}
+{"bench": "sat_real", "cond": "W3_SATBase_Dir", "filler": "", "color": "grey", "letters": "AB", "logp": {"A": -0.9761629104614258, "B": -0.4761628806591034}, "logit": {"A": 24.5, "B": 25.0}, "tf_pred": "B"}
+{"bench": "sat_real", "cond": "W3_SATBase_Dir", "filler": "[MASK]", "color": "grey", "letters": "AB", "logp": {"A": -0.8336488008499146, "B": -0.5836488008499146}, "logit": {"A": 23.0, "B": 23.25}, "tf_pred": "B"}
+{"bench": "sat_real", "cond": "W3_SATBase_Dir", "filler": "N/A", "color": "black", "letters": "AB", "logp": {"A": -0.006742583122104406, "B": -5.256742477416992}, "logit": {"A": 26.625, "B": 21.375}, "tf_pred": "A"}
+{"bench": "sat_real", "cond": "W3_SATBase_Dir", "filler": "", "color": "black", "letters": "AB", "logp": {"A": -0.9760042428970337, "B": -0.4760042428970337}, "logit": {"A": 24.375, "B": 24.875}, "tf_pred": "B"}
+{"bench": "sat_real", "cond": "W3_SATBase_Dir", "filler": "[MASK]", "color": "black", "letters": "AB", "logp": {"A": -0.9047286510467529, "B": -0.5297286510467529}, "logit": {"A": 23.0, "B": 23.375}, "tf_pred": "B"}
+{"bench": "sat_real", "cond": "W3_SATBase_Dir", "filler": "N/A", "color": "white", "letters": "AB", "logp": {"A": -0.0071404739283025265, "B": -5.257140636444092}, "logit": {"A": 26.375, "B": 21.125}, "tf_pred": "A"}
+{"bench": "sat_real", "cond": "W3_SATBase_Dir", "filler": "", "color": "white", "letters": "AB", "logp": {"A": -0.9756522178649902, "B": -0.47565218806266785}, "logit": {"A": 24.5, "B": 25.0}, "tf_pred": "B"}
+{"bench": "sat_real", "cond": "W3_SATBase_Dir", "filler": "[MASK]", "color": "white", "letters": "AB", "logp": {"A": -0.8308022022247314, "B": -0.5808022022247314}, "logit": {"A": 23.125, "B": 23.375}, "tf_pred": "B"}

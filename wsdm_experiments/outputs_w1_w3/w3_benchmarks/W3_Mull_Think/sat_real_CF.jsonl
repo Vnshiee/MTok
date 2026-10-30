@@ -1,0 +1,9 @@
+{"bench": "sat_real", "cond": "W3_Mull_Think", "filler": "N/A", "color": "grey", "letters": "AB", "logp": {"A": -0.020361684262752533, "B": -4.14536190032959}, "logit": {"A": 25.75, "B": 21.625}, "tf_pred": "A"}
+{"bench": "sat_real", "cond": "W3_Mull_Think", "filler": "", "color": "grey", "letters": "AB", "logp": {"A": -0.7730051279067993, "B": -0.6480051279067993}, "logit": {"A": 22.5, "B": 22.625}, "tf_pred": "B"}
+{"bench": "sat_real", "cond": "W3_Mull_Think", "filler": "[MASK]", "color": "grey", "letters": "AB", "logp": {"A": -0.5859228372573853, "B": -0.8359228372573853}, "logit": {"A": 21.875, "B": 21.625}, "tf_pred": "A"}
+{"bench": "sat_real", "cond": "W3_Mull_Think", "filler": "N/A", "color": "black", "letters": "AB", "logp": {"A": -0.014451480470597744, "B": -4.514451503753662}, "logit": {"A": 26.0, "B": 21.5}, "tf_pred": "A"}
+{"bench": "sat_real", "cond": "W3_Mull_Think", "filler": "", "color": "black", "letters": "AB", "logp": {"A": -0.7698362469673157, "B": -0.6448362469673157}, "logit": {"A": 22.625, "B": 22.75}, "tf_pred": "B"}
+{"bench": "sat_real", "cond": "W3_Mull_Think", "filler": "[MASK]", "color": "black", "letters": "AB", "logp": {"A": -0.6435348987579346, "B": -0.7685348987579346}, "logit": {"A": 21.625, "B": 21.5}, "tf_pred": "A"}
+{"bench": "sat_real", "cond": "W3_Mull_Think", "filler": "N/A", "color": "white", "letters": "AB", "logp": {"A": -0.018365688621997833, "B": -4.393365859985352}, "logit": {"A": 25.375, "B": 21.0}, "tf_pred": "A"}
+{"bench": "sat_real", "cond": "W3_Mull_Think", "filler": "", "color": "white", "letters": "AB", "logp": {"A": -0.707855224609375, "B": -0.707855224609375}, "logit": {"A": 22.875, "B": 22.875}, "tf_pred": "A"}
+{"bench": "sat_real", "cond": "W3_Mull_Think", "filler": "[MASK]", "color": "white", "letters": "AB", "logp": {"A": -0.6407047510147095, "B": -0.7657047510147095}, "logit": {"A": 21.75, "B": 21.625}, "tf_pred": "A"}

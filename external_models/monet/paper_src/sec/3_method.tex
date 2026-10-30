@@ -1,0 +1,201 @@
+\section{Method}
+\label{sec:method}
+
+\subsection{Overview}
+\label{sec:prelimiaries}
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=1\linewidth]{figures/overview.pdf}
+    \caption{\textbf{Method overview.} \textit{Left}: During inference, Monet can automatically decide when to start latent reasoning by outputting a special start embedding. We fix the output length of the latent embeddings. \textit{Right}: We propose a three-stage SFT (Section \ref{sec:SFT}) and RL (Section \ref{sec:RL}) framework. The SFT stages progressively warm up the model, generate high-quality latent embeddings, and distill latent reasoning ability. The RL stage further refines the model using our VLPO algorithm, specifically designed for latent reasoning.}
+    \label{fig:overview}
+\vspace{-1.5em}
+\end{figure*}
+\textbf{Inference.} As illustrated in Figure \ref{fig:overview} (left), given a question and its corresponding image, Monet generates text-latent interleaved reasoning chains. Specifically, it can automatically decide when to generate a special token, ``\verb|<latent>|'', to initiate latent reasoning during inference. We modify the decoding process so that the representation from the last layer of the MLLM decoder is fed back as the next input embedding. After generating a predefined number $K$ of latent embeddings, we insert a special stop token, ``\verb|</latent>|'', prompting the model to switch back to language-based reasoning. Consistent with the findings of \citet{li2025latent}, this fixed-length decoding strategy proves simple yet effective. We provide a comprehensive analysis of the effect of $K$ in Section \ref{sec:latent_size}.
+
+\textbf{Training.} The training of Monet includes a three-stage SFT and an RL stage. We briefly introduce the process and goal of each stage to provide an overview (Figure \ref{fig:overview} right).
+\begin{enumerate}
+    \item \textbf{SFT Stage 1.} Adapts the model to interleaved reasoning patterns. The warmed-up parameters $M_{\text{warm-up}}$ are used to initialize the teacher and student models in Stage 2.
+    \item \textbf{SFT Stage 2.} Generates high-quality target latent embeddings $\mathbf{h^*}_{\text{latent}}$ for Stage 3. The student model learns to produce these embeddings by: (2) aligning its key observational token representations with those of the fixed teacher model; and (2) making latent embeddings directly attend to auxiliary image embeddings through a controlled attention flow.
+    \item \textbf{SFT Stage 3.} Trains the model to generate latent embeddings without access to ground-truth auxiliary images. Initialized with $M_{\text{warm-up}}$, the model aligns the generated latent embeddings with the target embeddings $\mathbf{h^*}{\text{latent}}$ generated in Stage 2, resulting in the model $M_{\text{SFT}}$.
+    \item \textbf{RL Stage.} Further optimizes $M_{\text{SFT}}$ using VLPO.
+\end{enumerate}
+In the following sections, we will elaborate on the design of each component.
+
+\subsection{SFT Training Dataset Construction}
+\label{sec:dataset}
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/dataset_construction.pdf}
+    \caption{\textbf{Construction pipeline of Monet-SFT-125K}. Stage 1 filters hard samples (unsolvable from the original image). Stage 2 keeps those where auxiliary images lead to correct answers, ensuring their necessity and correctness. Stage 3 highlights key visual-observation tokens using advanced LLM judges, providing strong supervision for learning latent embeddings.}
+    \label{fig:data_construction}
+\end{figure*}
+
+To train Monet, we require a dataset with image–text interleaved CoTs that provide supervision for intermediate latent thinking steps. However, existing datasets exhibit three major limitations:
+(1) Many samples can be trivially solved by directly observing the input image, leading the model to bypass learning meaningful feature in the intermediate images.
+(2) The intermediate images are sometimes inaccurate, introducing noise into training.
+(3) All text tokens are treated equally, overlooking those that describe crucial visual information, which could serve as useful supervision signals \citep{fang2024wrong}.
+To overcome these issues, we design a three-stage data curation pipeline that ensures the necessity and correctness of auxiliary images (Figure \ref{fig:data_construction}).
+
+
+\textit{Stage 1}: We collect raw text-image interleaved CoT data from ReFocus \citep{fu2025refocus}, CogCoM \citep{qi2024cogcom}, Zebra-CoT \citep{li2025zebra}, and Visual-CoT \citep{shao2024visual}, and retain samples that Qwen2.5-VL-7B \cite{bai2025qwen2} \textbf{incorrectly} answers using only the question and the original image to ensure the necessity of auxiliary images. \textit{Stage 2}: From these samples, we keep those that Qwen2.5-VL-72B can \textbf{correctly} solve using only the auxiliary images, ensuring that the auxiliary images are accurate for reasoning. \textit{Stage 3}: We use Deepseek-V3.1 \citep{liu2024deepseek} and Gemini 2.5 Pro \citep{comanici2025gemini} to identify text tokens corresponding to crucial visual observations for answering the final question to provide fine-grained supervision for learning latent embeddings. These steps yield \textbf{Monet-SFT-125k}, in which the auxiliary images include cropping, grounding, highlighting, and operations that create new visual references for fine-grained perception and complex visual reasoning tasks. 
+Table \ref{tab:sft_data_statistics} presents the statistics of Monet-SFT-125k.
+
+\begin{table*}[htbp]
+\caption{\textbf{Statistics of the Monet-SFT-125K dataset.} It contains 125K real-world, document, chart, and geometry problems with image–text interleaved CoTs, featuring visual operations ranging from simple extractive steps such as cropping and grounding to more complex ones, including drawing auxiliary lines and creating entirely new images that represent intermediate visual states.}
+\label{tab:sft_data_statistics}
+\centering
+    \resizebox{0.9\textwidth}{!}{
+        \begin{tabular}{l l l r}
+        \hline
+        \textbf{Data Source} & \textbf{Problem Domain} & \textbf{Visual Operation Type} & \textbf{Amount} \\
+        \hline
+        ReFocus \citep{fu2025refocus} &  Chart  & Drawing bounding boxes, highlighting  & 0.4K \\
+        CogCoM \citep{qi2024cogcom}  & Real-world, chart  & Cropping, drawing auxiliary lines and bounding boxes          & 0.5K \\
+        Visual-CoT \citep{shao2024visual} & Real-world, documents, chart & Cropping, drawing bounding boxes  & 118.6K \\
+        Zebra-CoT visual search \citep{li2025zebra} & Real-world, documents, chart  & Cropping, drawing bounding boxes & 2.7K \\
+        Zebra-CoT geometry \citep{li2025zebra}  &   Geometry     & Drawing auxiliary lines, creating new geometric sketchpads & 0.1 K \\
+        Zebra-CoT count \citep{li2025zebra} &  3D object counting   & Creating new images with 3D objects removed or added      & 2.9K \\
+        \hline
+        \end{tabular}
+}
+\end{table*}
+
+
+
+
+
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/SFT2.pdf}
+    \vspace{-5pt}
+    \caption{\textbf{The proposed three-stage SFT pipeline:} warm-up, supervised latent–observation alignment with controlled attention flow, and latent generation without auxiliary-image access.}
+    \vspace{-15pt}
+    \label{fig:method}
+\end{figure*}
+
+\subsection{Supervised Fine-tuning}
+\label{sec:SFT}
+
+
+The SFT stage addresses two key challenges in latent reasoning training of MLLMs:\textbf{ (1) Latent–visual alignment is computationally expensive,} as auxiliary images contain hundreds or thousands of image embeddings. \textbf{(2) The next-token-prediction objective provides weak supervision for latent embeddings.} During SFT, current methods \citep{pham2025multimodal, yang2025machine, li2025latent} employ cross-entropy loss on text tokens following the latent embeddings, allowing gradients to flow back to the latent embeddings. However, the model can simply memorize the following tokens instead of learning effective latent representations.
+
+To overcome these issues, we introduce a three-stage SFT framework (Figure \ref{fig:method}) that enables the model to selectively encode useful visual features from auxiliary images while focusing on the downstream reasoning process, without incurring the cost of explicit latent–visual alignment. We now describe the design of each stage in detail.
+
+\subsubsection{SFT Stage 1: Warm up.}
+We first warm up the base model $M_{\text{base}}$ (Qwen2.5-VL-7B) by performing vanilla SFT on the image-text interleaved CoTs of Monet-SFT-125K, obtaining $M_{\text{warm-up}}$ (see Figure \ref{fig:method} upper left). This stage adapts the model to the image–text interleaved reasoning pattern so it can effectively leverage intermediate-step images when predicting subsequent tokens. Without this adaptation, the model tends to ignore auxiliary images, and the representations of observation tokens may fail to capture sufficient visual information.
+\begin{figure}[t]
+    \centering
+    % \vspace{-10pt}
+    \includegraphics[width=0.75\linewidth]{figures/obs_acc.pdf}
+    % \vspace{-10pt}
+    \caption{\textbf{Prediction accuracy of the observation tokens during warm-up.} Training on image–text interleaved data encourages the model to utilize intermediate visual cues.}
+    \label{fig:obs_acc}
+    \vspace{-1em}
+\end{figure}
+
+Figure \ref{fig:obs_acc} illustrates this behavior, in which we compare the token prediction accuracy of the observation tokens with/without the auxiliary images during this warm-up stage: for the unadapted base model, using auxiliary images yields almost no improvement in predicting observation tokens, indicating poor utilization of intermediate visual cues. As the warm-up proceeds, however, the accuracy gain from auxiliary images gradually increases. This demonstrates that SFT on image–text interleaved data drives the model to rely more on intermediate-step visual features rather than memorizing language patterns. Consequently, observation tokens encode meaningful visual information from the auxiliary images and serve as effective supervision signals.
+
+
+
+\subsubsection{SFT Stage 2: Obtain high-quality target latent embeddings.} In this stage, we train the model to generate latent embeddings that capture useful visual features from auxiliary images to support visual reasoning. We initialize both a teacher and a student model from $M_{\text{warm-up}}$. The teacher processes CoTs with ground-truth auxiliary images, while in the student CoT, each auxiliary image segment is followed by autoregressively-generated latent embeddings, and the auxiliary images are made visible only to these latent embeddings via a modified attention mask (Figure \ref{fig:method} right). Now we elaborate on our key designs as follows.
+
+\textbf{Alignment on Key Observation Tokens.} Since latent embeddings are intended to serve the role of auxiliary images in predicting observation tokens, the hidden representations of these tokens should match those obtained when the ground-truth auxiliary images are provided. Inspired by recent text–based latent reasoning work \citep{shen2025codi, wang2025synadapt}, we therefore align the hidden representations of observation tokens under these two conditions.
+
+Specifically, for each training sample, we freeze $M_{\text{warm-up}}$ and extract the observation-token representations from all layers when using auxiliary images, yielding $\mathcal{H}_{\text{obs}}^*=\{\mathbf{h^*}^{(i,l)}_{\text{obs}}\}_{i=1}^N$, where $i$ indexes samples and $l$ indexes layers, $N$ is the number of training samples. Let $\hat{\mathbf{h}}^{(i,l)}_{\text{obs}}$ denote the corresponding representations in the student CoT that uses generated latent embeddings. We fix $\mathbf{h^*}^{(i,l)}_{\text{obs}}$ and maximize their cosine similarity through the alignment loss:
+\begin{equation}
+    \mathcal{L}_{\text{align-obs}} = \frac{1}{N}\sum_i \sum_l \left(1-\cos ({\mathbf{h^*}^{(i, l)}_{\text{obs}}}.\operatorname{detach()}, ~{\hat{\mathbf{h}}^{(i, l)}_{\text{obs}}}) \right).
+\end{equation}
+ 
+To ensure that the observation alignment loss $\mathcal{L}_{\text{align-obs}}$ can only be minimized by optimizing the latent embeddings instead of through any undesired shortcuts, we restrict gradient flow from $\mathcal{L}_{\text{align-obs}}$ to pass solely through the generated latent embeddings to the model parameters. Implementation details are in the supplementary material. Empirically, removing this latent-only backpropagation leads to significant performance degradation (see Table \ref{tab:ablation_sft}, ``w/o latent-only BP'').
+
+\textbf{``Auxiliary image $\rightarrow$ latent $\rightarrow$ observation'' Attention Flow.}
+We observe that using the above alignment loss alone yields suboptimal performance (Table \ref{tab:ablation_sft}, “w/o auxiliary img”), as the observation-token representations may not encode sufficient visual information from the auxiliary images. To address this, for the student CoT, we insert the auxiliary image embeddings immediately before each latent-embedding segment and apply a modified attention mask that allows these image embeddings to be attended \textbf{only} by the latent embeddings, not by subsequent text tokens. This design offers two benefits:
+first, latent embeddings can directly access the visual features from auxiliary images without information loss;
+second, it enforces a structured flow of visual information, i.e., auxiliary images$\rightarrow$latent embeddings$\rightarrow$observation tokens, encouraging the latent embeddings to selectively encode the relevant visual cues.
+
+\textbf{Next-Token Prediction Loss.} We Additionally apply a standard next-token prediction loss on text tokens to optimize the latent embeddings. Denote the text tokens in student CoT $i$ as $\mathcal{T}^{(i)}=\{\mathbf{y}_t\}_{t=1}^{|\mathcal{T}^{(i)}|}$. For each $\mathbf{y}_t$, we use $\mathbf{y}_{<t}$ to represent the context, which includes the question text, question image, previous text responses, and latent embeddings (note that the auxiliary images are invisible to the text tokens under our attention design). Denote the output probability distribution as $p$, the next-token-prediction loss is:
+\begin{equation}
+\label{loss:ntp}
+    \mathcal{L}_{\text{NTP}} = -\frac{1}{N} \sum_i \sum_{\mathbf{y}_t\in \mathcal{T}^{(i)}} \log p (\mathbf{y}_t \mid \mathbf{y}_{<t} ).
+\end{equation}
+
+\textbf{Total Loss of SFT Stage 2.} The total loss is:
+\begin{equation}
+    \mathcal{L}_{\text{stage2}} = \mathcal{L}_{\text{NTP}} + \alpha \mathcal{L}_{\text{align-obs}},
+\end{equation}
+in which we set $\alpha=2.0$ in all experiments. We denote the student model after training as $M_{\text{stage2}}$. After this stage, we use $M_{\text{stage2}}$ to generate the latent embeddings, denoted as $\mathbf{h^*}^{(i)}_{\text{latent}}$, which serve as target latent embeddings used for the next stage.
+
+
+
+\begin{table}[t]
+    \centering
+    \caption{\textbf{Ablation of the components of the SFT Stage 2.} ``Monet-SFT'' denotes the full SFT pipeline. ``w/o latent-only BP'' represents without latent-only backpropagation for the alignment loss. ``w/o auxiliary img'' disables attention from latent embeddings to auxiliary-image embeddings in the student CoT. Both ablation lead to performance degradation on almost all tasks.}
+    \label{tab:ablation_sft}
+    \resizebox{0.48\textwidth}{!}{%
+    \begin{tabular}{lccccc}
+        \toprule
+        & \textbf{V*} & \textbf{HR4K} & \textbf{HR8K} & \textbf{MME-RealWorld} & \textbf{VisualPuzzles}\\
+        \midrule
+        \rowcolor{gray!20}
+        Monet-SFT & 82.20 & 68.50 & 66.00 & 55.03 & 30.48 \\
+        \quad w/o latent-only BP & 46.07 & 40.13 & 39.00 & 38.67 &  33.65\\
+        \quad w/o auxiliary img & 73.30 & 63.88 & 57.63 & 39.66 & 28.60 \\
+        \bottomrule
+    \end{tabular}%
+    }
+\end{table}
+
+
+
+\subsubsection{SFT Stage 3: Learn to generate latent embeddings without auxiliary images.} After Stage 2, we obtain target latent embeddings $\mathbf{h}^{*(i)}_{\text{latent}}$ that encode the information contained in auxiliary images. However, the model $M_{\text{stage2}}$ is trained in a setting where latent embeddings can still attend to auxiliary images, which is different from our ultimate goal of generating latent embeddings without ground-truth auxiliary images. To close this gap, we reinitialize the model with $M_{\text{warm-up}}$ and train it to produce latent embeddings $\hat{\mathbf{h}}^{(i)}_{\text{latent}}$ with auxiliary images removed in the CoT (Figure \ref{fig:method} bottom left). We then align them with the fixed target embeddings $\mathbf{h}^{*(i)}_{\text{latent}}$ using the following loss:
+
+\begin{equation}
+    \mathcal{L}_{\text{align-latent}} = \frac{1}{N}\sum_i \sum_l \left( 1-\cos ({\mathbf{h^*}^{(i, l)}_{\text{latent}}}.\operatorname{detach()}, ~{\hat{\mathbf{h}}^{(i, l)}_{\text{latent}}}) \right).
+\end{equation}
+Unlike previous latent-visual reasoning work \citep{yang2025machine, li2025latent}, which aligns only the final-layer representations, we align all layers to provide stronger supervision.
+
+We also apply a next-token-prediction loss $\mathcal{L}_{NTP}$ on the text tokens to let the latent embeddings benefit subsequent reasoning, which has the same form as Equation (\ref{loss:ntp}).
+
+\textbf{Total loss of SFT Stage 3.} The total loss of Stage 3 is:
+\begin{equation}
+    \mathcal{L}_{\text{stage3}} = \mathcal{L}_{\text{NTP}} + \beta \mathcal{L}_{\text{align-latent}}.
+\end{equation}
+in which we set $\beta=2.0$ in all our experiments.
+
+
+
+
+
+\subsection{VLPO: Visual-latent Policy Optimization}
+\label{sec:RL}
+\textbf{Limitations of GRPO on latent visual reasoning.} Prior latent visual reasoning works \citep{yang2025machine, li2025latent} apply GRPO \citep{Shao2024DeepSeekMathPT} after SFT. Given a question $Q$ and a question image $I$, the old policy model $\pi_{\text{old}}$ generates a group of responses $\{\mathbf{o}_1, \mathbf{o}_2, ..., \mathbf{o}_G\}$. Then GRPO updates the policy model $\pi_{\theta}$ by maximizing:
+\begin{equation}
+    \begin{aligned}
+        &\mathcal{J}_{GRPO}(\theta)=\mathbb{E}_{Q, I, o\sim \pi_{\text{old}}}\\
+        &\frac{1}{G} \sum_{i=1}^G \frac{1}{\left|\mathbf{o}_i\right|} \sum_{t=1}^{\left|\mathbf{o}_i\right|}\min \left[ r_{i,t}(\theta) \hat{A}_{i, t}, \operatorname{clip}\left(r_{i,t}(\theta), 1-\varepsilon, 1+\varepsilon\right) \hat{A}_{i, t}\right]\\
+        &-\beta \operatorname{K L}\left(\pi_\theta \| \pi_{\text{ref}}\right),
+    \end{aligned}
+\end{equation}
+
+where $r_{i,t}(\theta)=\frac{\pi_\theta\left(\mathbf{o}_{i, t} \mid Q, I, \mathbf{o}_{i,<t}\right)}{\pi_{\theta_{\text {old }}}\left(\mathbf{o}_{i, t} \mid Q, I, \mathbf{o}_{i,<t}\right)}$, $\mathbf{o}_{i,<t}$ are the response tokens before position $t$, $\hat{A}_{i, t}$ is the advantage computed based on the outcome rewards $\{r_1,r_2,...,r_G\}$ of the responses, i.e., $\hat{A}_{i, t}=\frac{r_i-\text{mean}(\{r_1,r_2,...,r_G\})}{\text{std}(\{r_1,r_2,...,r_G\})}$. $\pi_{\text{ref}}$ is the reference model. A critical limitation is that the GRPO objective \textbf{can only be computed on text tokens}. Since latent embeddings have no explicit probability distribution like text tokens, GRPO cannot directly optimize them, leaving the latent reasoning component largely untrained during RL.
+
+To address this limitation, we propose Visual–latent Policy Optimization (VLPO), a novel reinforcement learning objective tailored for latent reasoning. The key idea of VLPO is to estimate the \textbf{output probability of the continuous latent embeddings} collected during rollout to compute $r_{i,t}(\theta)$ for the latent embeddings. This enables latent embeddings to be optimized directly with outcome rewards, just like text tokens. Denote the latent embedding generated by $\pi_{\text{old}}$ at position $t$ of the $i$-th rollout as $\mathbf{h}^{\text{old}}_{i,t}$ with context $[Q,I,\mathbf{o}_{i,<t}]$. To compute $\pi_{\theta}(\mathbf{h}^{\text{old}}_{i,t}\mid Q,I,\mathbf{o}_{i,<t})$, we model $\mathbf{h}^{\text{old}}_{i,t}$ as a sample drawn from a latent Gaussian distribution whose mean is the latent embedding generated by $\pi_{\theta}$ given the same context. We denote this mean by $\mathbf{h}^{\theta}_{i,t}$. Under this assumption, $\pi_{\theta}(\mathbf{h}^{\text{old}}_{i,t} \mid Q,I,\mathbf{o}_{i,<t})$ can be computed as:
+\begin{equation}
+    \begin{aligned}
+        &\pi_{\theta}(\mathbf{h}^{\text{old}}_{i,t}\mid Q,I,\mathbf{o}_{i,<t}) = \exp\left( -\frac{1}{2\sigma^2}\|\mathbf{h}^{\text{old}}_{i,t}-\mathbf{h}^{\theta}_{i,t}\|^2 - const \right)
+    \end{aligned}
+\end{equation}
+where $\sigma$ is a predefined scalar hyperparameter and $const$ is a constant. $\pi_{\theta}(o^{\text{latent}}_{i,t} \mid Q,I,\mathbf{o}_{i,<t})$ measures the probability that $\pi_{\theta}$ chooses $o^{\text{latent}}_{i,t}$ as the ``action'' at position $t$ of response $i$, enabling us to compute $r_{i,t}(\theta)$ for a latent step:
+\begin{equation}
+\label{eq:vlpo}
+\begin{aligned}
+    r_{i,t}(\theta) = &  \frac{\pi_\theta\left(\mathbf{h}^{\text{old}}_{i,t} \mid Q, I, \mathbf{o}_{i,<t}\right)}{\pi_{\theta_{\text {old }}}\left(\mathbf{h}^{\theta}_{i,t} \mid Q, I, \mathbf{o}_{i,<t}\right)}=\exp \left(-\frac{1}{2\sigma^2}\|\mathbf{h}^{\text{old}}_{i,t}-\mathbf{h}^{\theta}_{i,t}\|^2 \right)
+\end{aligned}
+\end{equation}
+Replacing the original $r_{i,t}(\theta)$ for latent steps yields our VLPO objective. During optimization, we fix the rollout rollout $\mathbf{h}^{\text{old}}_{i,t}$ and optimize $\mathbf{h}^{\theta}_{i,t}$ generated by the policy.
+
+\textbf{Reward Design.} We use an accuracy reward (1 for a correct answer; 0 otherwise) and a format reward encouraging the model to place the final answer in ``\verb|\boxed{}|''. Importantly, we do not reward latent-reasoning behavior itself, as doing so would incentivize the model to invoke latent reasoning indiscriminately. We find this simple reward scheme yields strong empirical performance.
+
+\textbf{How does VLPO work?} When $\hat{A}_{i, t}>0$, maximizing the VLPO objective will increase $r_{i,t}(\theta)$. For text tokens, this means maximizing its output probability; For latent embeddings, Equation (\ref{eq:vlpo}) shows that maximizing this $r_{i,t}(\theta)$ equals to minimizing $\|\mathbf{h}^{\text{old}}_{i,t}-\mathbf{h}^{\theta}_{i,t}\|^2$, thereby \textbf{pulling the policy latent embeddings to a ``good-action'' latent embedding} $\mathbf{h}^{\theta}_{i,t}$ \textbf{that led to a positive outcome reward.} Thus, VLPO directly optimizes latent embeddings using reward signals—an ability that GRPO fundamentally lacks.

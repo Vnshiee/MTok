@@ -1,0 +1,47 @@
+
+
+
+\section{Introduction}
+
+% COT Reasoning + Multimodal Rasoning (COT)
+Multimodal Large Language Models (MLLMs)~\citep{li2024llava_ov,bai2025qwen2_5,wang2025internvl3_5} have shown remarkable capability in jointly understanding visual and textual content. By leveraging the generative capabilities of their backbone Large Language Models (LLMs), MLLMs extend the expressiveness of visual encoders beyond simple perception tasks. This advancement has enabled the integration of Chain-of-Thought (CoT) reasoning into MLLMs, allowing them to perform structured textual reasoning in response to complex multimodal queries. In this paradigm, the LLM decomposes a query into intermediate steps and resolves each step while conditioning on static visual inputs. This approach, referred to as “Thinking about Images” by \citep{su2025thinking}, has proven effective across diverse domains, including scientific visual question answering \citep{zhang2023multicot}, mathematics \citep{visionr1}, and visual grounding \citep{bai2025univg}.
+
+
+
+% Thinking with images
+Further research has expanded the multimodal reasoning workspace by enabling active editing of input images alongside textual reasoning trajectories. Such editing includes drawing auxiliary lines \citep{hu2024visual}, zooming in \citep{shao2024visual,pixelreasoner,surismenon2023vipergpt}, shifting image styles \citep{liu2025Visual}, highlighting sub-regions \citep{fu2025refocus}, and more. During intermediate CoT steps, methods in this paradigm either call external tools or generate programs to manipulate images, re-encode the edited outputs, and inject the new image tokens as visual enhancements into subsequent textual reasoning. In this way,  the salient visual information is actively incorporated throughout the reasoning process. These methods are commonly termed as ``Thinking with images''.
+
+Both ``Thinking about Images'' and ``Thinking with Images'' aim to address a core limitation in current MLLMs: despite sophisticated visual encoders projecting visual information into text spaces, backbone LLMs often fail to capture the visual details most relevant to the text query. This shortcoming arises from factors such as modality projection bias \citep{VLMClassifier,liu2023llava}, modality interference \citep{cai2025diagnosingmitigatingmodalityinterference,wang2025text,pezeshkpour2025mixedsignalsdecodingvlms,deng2025wordsvisionvisionlanguagemodels}, and cross-modality attention bias \citep{zhang2025vispruner}. ``Thinking about Images'' addresses these issues by generating additional task-relevant text tokens in the context window, thereby increasing the likelihood of correct answers. However, excessive token generation may cause the textual context to dominate, overshadowing essential visual inputs \citep{huang2024opera}. In contrast, ``Thinking with Images'' leverages external tools to inject visual information during text generation, calibrating the alignment between generated text and the original visual input. Yet these approaches often bypass the newly injected sub-images due to training data bias, or remain constrained by the predefined operations of the tools \citep{pixelreasoner}. In short, both categories primarily refine text generation to improve cross-modality understanding, yet a fundamental gap persists between visual inputs and text generation in producing the final answer.
+
+A parallel line of research explores omni-modality foundation models that accept both text and visual inputs and generate outputs in both modalities simultaneously \citep{chameleon,bagel,xie2025showo2}. Some subsequent works attempt to exploit image generation capabilities for multimodal reasoning, but effectiveness has so far been demonstrated only in specific downstream tasks such as navigation and maze solving \citep{mvot,visualplanning}. Moreover, it remains unclear whether visual inputs, once decoded and re-encoded by such models, can still faithfully preserve the original information.
+% latent reasoning
+% Your cat stepping on keyboard??????lol
+Rethinking the input of MLLMs, where continuous visual tokens and discrete text tokens are embedded in a shared latent semantic space, we ask the following question:
+\begin{tcolorbox}[title={}]
+\emph{If visual and textual tokens are embedded in a joint semantics space within an MLLM, why not reasoning over both jointly as well?}
+\end{tcolorbox}
+It is both natural and efficient to extend reasoning beyond discrete text tokens to include visual tokens that directly encode visual information. However, conventional LLMs are limited to operating on discrete tokens due to their next-token prediction training objective. To address this, \citeauthor{coconut} proposed passing last hidden states rather than text tokens, enabling more efficient expression of complex thoughts through latent reasoning. Building on this idea, we introduce \modelfullname (\modelname), a novel paradigm for multimodal reasoning (see Fig.~\ref{fig:teaser}). Our approach involves a simple yet fundamental modification to the conventional Vision–Projector–LLM structure: the LLM is able to perform hybrid reasoning that alternates between LVR and standard text generation.  In the LVR phase, the LLM leverages the last hidden state to approximate the question-relevant visual tokens within the visual inputs. During the text generation phase, the model predicts the next text token in sequence. Both phases operate in an auto-regressive manner. 
+
+\begin{figure*}[t]
+    \centering
+	\includegraphics[width=\linewidth]{./figures/lvr-teaser.pdf}
+    \caption{\small \textbf{Conceptual illustration of \modelfullname (\modelname).} We compare \modelname with two paradigms: ``Think about images,'' which performs multimodal reasoning entirely in text space, and ``Think with images'', which leverages external visual tools to highlight regions of interest (ROIs). In contrast, \modelname leverages the LLM’s latent space to reconstruct the semantics of ROIs, enabling \textbf{seamless cross-modal reasoning.}}
+
+    
+
+\label{fig:teaser}
+\vspace{-0.15in}
+\end{figure*}
+
+We propose a two-stage training pipeline for \modelname. The first stage is Supervised Finetuning (SFT), which jointly optimizes \modelname’s internal processes alongside next-token prediction for text generation. The second stage applies Reinforcement Learning (RL), allowing \modelname to self-evolve the latent reasoning process while receiving policy rewards from generated text, thereby encouraging a more unified semantic space. Specifically, we adapt the GRPO algorithm \citep{grpo} to replay latent reasoning steps during policy gradient loss computation. In addition, GRPO leverages verifiable rewards to evaluate roll-out responses, where the policy gradient loss is computed solely from the token distribution of the text generation component. Experimental results demonstrate that \modelname achieves substantial improvements over state-of-the-art MLLMs, particularly on perception-intensive and visual detail-dependent understanding tasks.
+
+In summary, our contributions are as follows:
+\begin{itemize}[left=0pt]
+\item We propose \modelfullname, a novel multimodal reasoning paradigm that unifies latent reasoning over visual inputs with text generation in the language space, enabling deeper integration of visual and textual signals throughout the model's reasoning process.
+\item We introduce architectural innovations and training frameworks for stable and scalable training MLLMs with \modelname. Our approach combines a reconstruction loss with next-token prediction for SFT and extends the GRPO algorithm to latent reasoning for reinforcement learning.
+\item Through extensive evaluation, we demonstrate that \modelname achieves strong performance across diverse visual question answering benchmarks requiring fine-grained visual understanding and perception. In addition, our comprehensive ablation studies and discussions explore alternative architectural designs and training objectives, providing insights to guide future research on this emerging paradigm.
+\end{itemize}
+
+
+
+

@@ -1,0 +1,464 @@
+{
+  "W2": {
+    "sdpa_vs_fa2_parity": 1.0,
+    "W2_Intact": {
+      "micro_acc_pct": 70.0,
+      "macro_acc_pct": 70.0,
+      "per_task_acc_pct": {
+        "blink_sprel": 50.0,
+        "blink_reldepth": 100.0,
+        "blink_jigsaw": 100.0,
+        "blink_mv": 50.0,
+        "blink_iqtest": 50.0
+      },
+      "agree_with_intact_pct": 100.0,
+      "mean_margin": 0.725,
+      "margin_delta_vs_intact": 0.0,
+      "mcnemar_b": 0,
+      "mcnemar_c": 0,
+      "mcnemar_p": 1.0,
+      "wilcoxon_p": 1.0
+    },
+    "W2_KO_LatentToAns_All": {
+      "micro_acc_pct": 70.0,
+      "macro_acc_pct": 70.0,
+      "per_task_acc_pct": {
+        "blink_sprel": 50.0,
+        "blink_reldepth": 100.0,
+        "blink_jigsaw": 100.0,
+        "blink_mv": 50.0,
+        "blink_iqtest": 50.0
+      },
+      "agree_with_intact_pct": 100.0,
+      "mean_margin": 0.7,
+      "margin_delta_vs_intact": -0.025,
+      "mcnemar_b": 0,
+      "mcnemar_c": 0,
+      "mcnemar_p": 1.0,
+      "wilcoxon_p": 0.5
+    },
+    "W2_KO_LatentToAns_Early": {
+      "micro_acc_pct": 70.0,
+      "macro_acc_pct": 70.0,
+      "per_task_acc_pct": {
+        "blink_sprel": 50.0,
+        "blink_reldepth": 100.0,
+        "blink_jigsaw": 100.0,
+        "blink_mv": 50.0,
+        "blink_iqtest": 50.0
+      },
+      "agree_with_intact_pct": 100.0,
+      "mean_margin": 0.75,
+      "margin_delta_vs_intact": 0.025,
+      "mcnemar_b": 0,
+      "mcnemar_c": 0,
+      "mcnemar_p": 1.0,
+      "wilcoxon_p": 0.5
+    },
+    "W2_KO_LatentToAns_Mid": {
+      "micro_acc_pct": 70.0,
+      "macro_acc_pct": 70.0,
+      "per_task_acc_pct": {
+        "blink_sprel": 50.0,
+        "blink_reldepth": 100.0,
+        "blink_jigsaw": 100.0,
+        "blink_mv": 50.0,
+        "blink_iqtest": 50.0
+      },
+      "agree_with_intact_pct": 90.0,
+      "mean_margin": 0.7375,
+      "margin_delta_vs_intact": 0.0125,
+      "mcnemar_b": 0,
+      "mcnemar_c": 0,
+      "mcnemar_p": 1.0,
+      "wilcoxon_p": 1.0
+    },
+    "W2_KO_LatentToAns_Late": {
+      "micro_acc_pct": 70.0,
+      "macro_acc_pct": 70.0,
+      "per_task_acc_pct": {
+        "blink_sprel": 50.0,
+        "blink_reldepth": 100.0,
+        "blink_jigsaw": 100.0,
+        "blink_mv": 50.0,
+        "blink_iqtest": 50.0
+      },
+      "agree_with_intact_pct": 100.0,
+      "mean_margin": 0.675,
+      "margin_delta_vs_intact": -0.05,
+      "mcnemar_b": 0,
+      "mcnemar_c": 0,
+      "mcnemar_p": 1.0,
+      "wilcoxon_p": 0.125
+    },
+    "W2_KO_ImgToLatent_All": {
+      "micro_acc_pct": 70.0,
+      "macro_acc_pct": 70.0,
+      "per_task_acc_pct": {
+        "blink_sprel": 50.0,
+        "blink_reldepth": 100.0,
+        "blink_jigsaw": 100.0,
+        "blink_mv": 50.0,
+        "blink_iqtest": 50.0
+      },
+      "agree_with_intact_pct": 100.0,
+      "mean_margin": 0.775,
+      "margin_delta_vs_intact": 0.05,
+      "mcnemar_b": 0,
+      "mcnemar_c": 0,
+      "mcnemar_p": 1.0,
+      "wilcoxon_p": 0.25
+    },
+    "W2_KO_Total_Sever": {
+      "micro_acc_pct": 70.0,
+      "macro_acc_pct": 70.0,
+      "per_task_acc_pct": {
+        "blink_sprel": 50.0,
+        "blink_reldepth": 100.0,
+        "blink_jigsaw": 100.0,
+        "blink_mv": 50.0,
+        "blink_iqtest": 50.0
+      },
+      "agree_with_intact_pct": 100.0,
+      "mean_margin": 0.7,
+      "margin_delta_vs_intact": -0.025,
+      "mcnemar_b": 0,
+      "mcnemar_c": 0,
+      "mcnemar_p": 1.0,
+      "wilcoxon_p": 0.5
+    }
+  },
+  "W4a": {
+    "n_items": 8,
+    "orig_acc_pct": 75.0,
+    "patched_acc_pct": 75.0,
+    "flip_rate_pct": 0.0,
+    "unchanged_rate_pct": 100.0,
+    "mean_abs_log_odds_shift": 0.0312,
+    "mean_counterfactual_log_odds_gap": 0.5469,
+    "fraction_of_cf_gap_transferred": 0.0571
+  },
+  "W4b": {
+    "layer_geometry": [
+      {
+        "layer": 0,
+        "lat_raw_cos": 1.0,
+        "lat_centered_cos": 1.0,
+        "dot_centered_cos": 1.0,
+        "q_centered_cos": 0.9979,
+        "lat_eff_rank": 1.0,
+        "dot_eff_rank": 1.0,
+        "lat_vis_align": -0.9999,
+        "dot_vis_align": -0.9991
+      },
+      {
+        "layer": 1,
+        "lat_raw_cos": 0.9949,
+        "lat_centered_cos": 0.9989,
+        "dot_centered_cos": 0.9787,
+        "q_centered_cos": 0.7653,
+        "lat_eff_rank": 3.42,
+        "dot_eff_rank": 1.39,
+        "lat_vis_align": -0.9845,
+        "dot_vis_align": -0.8902
+      },
+      {
+        "layer": 2,
+        "lat_raw_cos": 0.9844,
+        "lat_centered_cos": 0.9929,
+        "dot_centered_cos": 0.9574,
+        "q_centered_cos": 0.676,
+        "lat_eff_rank": 1.93,
+        "dot_eff_rank": 2.04,
+        "lat_vis_align": -0.9506,
+        "dot_vis_align": -0.8514
+      },
+      {
+        "layer": 3,
+        "lat_raw_cos": 0.9741,
+        "lat_centered_cos": 0.9855,
+        "dot_centered_cos": 0.9362,
+        "q_centered_cos": 0.5718,
+        "lat_eff_rank": 1.97,
+        "dot_eff_rank": 2.17,
+        "lat_vis_align": -0.9226,
+        "dot_vis_align": -0.8122
+      },
+      {
+        "layer": 4,
+        "lat_raw_cos": 0.9635,
+        "lat_centered_cos": 0.9791,
+        "dot_centered_cos": 0.9207,
+        "q_centered_cos": 0.5572,
+        "lat_eff_rank": 2.23,
+        "dot_eff_rank": 2.35,
+        "lat_vis_align": -0.135,
+        "dot_vis_align": -0.0663
+      },
+      {
+        "layer": 5,
+        "lat_raw_cos": 0.9549,
+        "lat_centered_cos": 0.9705,
+        "dot_centered_cos": 0.9016,
+        "q_centered_cos": 0.5506,
+        "lat_eff_rank": 2.27,
+        "dot_eff_rank": 2.35,
+        "lat_vis_align": 0.0093,
+        "dot_vis_align": 0.0556
+      },
+      {
+        "layer": 6,
+        "lat_raw_cos": 0.9489,
+        "lat_centered_cos": 0.9508,
+        "dot_centered_cos": 0.9038,
+        "q_centered_cos": 0.532,
+        "lat_eff_rank": 1.94,
+        "dot_eff_rank": 2.47,
+        "lat_vis_align": 0.044,
+        "dot_vis_align": 0.1086
+      },
+      {
+        "layer": 7,
+        "lat_raw_cos": 0.9195,
+        "lat_centered_cos": 0.9202,
+        "dot_centered_cos": 0.8771,
+        "q_centered_cos": 0.4706,
+        "lat_eff_rank": 1.9,
+        "dot_eff_rank": 2.57,
+        "lat_vis_align": 0.0216,
+        "dot_vis_align": 0.0952
+      },
+      {
+        "layer": 8,
+        "lat_raw_cos": 0.8892,
+        "lat_centered_cos": 0.8842,
+        "dot_centered_cos": 0.8568,
+        "q_centered_cos": 0.3993,
+        "lat_eff_rank": 1.98,
+        "dot_eff_rank": 2.8,
+        "lat_vis_align": 0.0185,
+        "dot_vis_align": 0.0779
+      },
+      {
+        "layer": 9,
+        "lat_raw_cos": 0.8227,
+        "lat_centered_cos": 0.8173,
+        "dot_centered_cos": 0.7631,
+        "q_centered_cos": 0.3587,
+        "lat_eff_rank": 3.15,
+        "dot_eff_rank": 3.45,
+        "lat_vis_align": -0.0072,
+        "dot_vis_align": 0.0506
+      },
+      {
+        "layer": 10,
+        "lat_raw_cos": 0.865,
+        "lat_centered_cos": 0.8399,
+        "dot_centered_cos": 0.7921,
+        "q_centered_cos": 0.3157,
+        "lat_eff_rank": 3.17,
+        "dot_eff_rank": 3.7,
+        "lat_vis_align": 0.0191,
+        "dot_vis_align": 0.1136
+      },
+      {
+        "layer": 11,
+        "lat_raw_cos": 0.849,
+        "lat_centered_cos": 0.8226,
+        "dot_centered_cos": 0.7916,
+        "q_centered_cos": 0.3244,
+        "lat_eff_rank": 3.31,
+        "dot_eff_rank": 4.15,
+        "lat_vis_align": 0.0132,
+        "dot_vis_align": 0.0887
+      },
+      {
+        "layer": 12,
+        "lat_raw_cos": 0.8046,
+        "lat_centered_cos": 0.7748,
+        "dot_centered_cos": 0.7484,
+        "q_centered_cos": 0.3079,
+        "lat_eff_rank": 4.39,
+        "dot_eff_rank": 5.92,
+        "lat_vis_align": -0.0032,
+        "dot_vis_align": 0.0801
+      },
+      {
+        "layer": 13,
+        "lat_raw_cos": 0.7989,
+        "lat_centered_cos": 0.7539,
+        "dot_centered_cos": 0.741,
+        "q_centered_cos": 0.3123,
+        "lat_eff_rank": 4.62,
+        "dot_eff_rank": 6.53,
+        "lat_vis_align": -0.0656,
+        "dot_vis_align": 0.0548
+      },
+      {
+        "layer": 14,
+        "lat_raw_cos": 0.7707,
+        "lat_centered_cos": 0.775,
+        "dot_centered_cos": 0.763,
+        "q_centered_cos": 0.3251,
+        "lat_eff_rank": 5.31,
+        "dot_eff_rank": 6.94,
+        "lat_vis_align": -0.0266,
+        "dot_vis_align": 0.0553
+      },
+      {
+        "layer": 15,
+        "lat_raw_cos": 0.7947,
+        "lat_centered_cos": 0.7743,
+        "dot_centered_cos": 0.7566,
+        "q_centered_cos": 0.3041,
+        "lat_eff_rank": 5.61,
+        "dot_eff_rank": 7.17,
+        "lat_vis_align": -0.0936,
+        "dot_vis_align": 0.0057
+      },
+      {
+        "layer": 16,
+        "lat_raw_cos": 0.7901,
+        "lat_centered_cos": 0.7841,
+        "dot_centered_cos": 0.7681,
+        "q_centered_cos": 0.3425,
+        "lat_eff_rank": 6.06,
+        "dot_eff_rank": 7.25,
+        "lat_vis_align": -0.1771,
+        "dot_vis_align": -0.1285
+      },
+      {
+        "layer": 17,
+        "lat_raw_cos": 0.7897,
+        "lat_centered_cos": 0.7632,
+        "dot_centered_cos": 0.7516,
+        "q_centered_cos": 0.3093,
+        "lat_eff_rank": 6.06,
+        "dot_eff_rank": 7.27,
+        "lat_vis_align": -0.2173,
+        "dot_vis_align": -0.1459
+      },
+      {
+        "layer": 18,
+        "lat_raw_cos": 0.7636,
+        "lat_centered_cos": 0.7578,
+        "dot_centered_cos": 0.755,
+        "q_centered_cos": 0.305,
+        "lat_eff_rank": 6.21,
+        "dot_eff_rank": 7.69,
+        "lat_vis_align": -0.2276,
+        "dot_vis_align": -0.1814
+      },
+      {
+        "layer": 19,
+        "lat_raw_cos": 0.7537,
+        "lat_centered_cos": 0.7948,
+        "dot_centered_cos": 0.7877,
+        "q_centered_cos": 0.3381,
+        "lat_eff_rank": 6.18,
+        "dot_eff_rank": 7.62,
+        "lat_vis_align": -0.3026,
+        "dot_vis_align": -0.3104
+      },
+      {
+        "layer": 20,
+        "lat_raw_cos": 0.7751,
+        "lat_centered_cos": 0.7514,
+        "dot_centered_cos": 0.7721,
+        "q_centered_cos": 0.3048,
+        "lat_eff_rank": 5.49,
+        "dot_eff_rank": 8.13,
+        "lat_vis_align": -0.3354,
+        "dot_vis_align": -0.3293
+      },
+      {
+        "layer": 21,
+        "lat_raw_cos": 0.7706,
+        "lat_centered_cos": 0.7245,
+        "dot_centered_cos": 0.7512,
+        "q_centered_cos": 0.2848,
+        "lat_eff_rank": 5.41,
+        "dot_eff_rank": 8.53,
+        "lat_vis_align": -0.3859,
+        "dot_vis_align": -0.404
+      },
+      {
+        "layer": 22,
+        "lat_raw_cos": 0.8036,
+        "lat_centered_cos": 0.6883,
+        "dot_centered_cos": 0.7384,
+        "q_centered_cos": 0.243,
+        "lat_eff_rank": 5.51,
+        "dot_eff_rank": 8.77,
+        "lat_vis_align": -0.4492,
+        "dot_vis_align": -0.4551
+      },
+      {
+        "layer": 23,
+        "lat_raw_cos": 0.8023,
+        "lat_centered_cos": 0.695,
+        "dot_centered_cos": 0.7148,
+        "q_centered_cos": 0.2104,
+        "lat_eff_rank": 5.23,
+        "dot_eff_rank": 8.48,
+        "lat_vis_align": -0.4698,
+        "dot_vis_align": -0.4794
+      },
+      {
+        "layer": 24,
+        "lat_raw_cos": 0.8189,
+        "lat_centered_cos": 0.7172,
+        "dot_centered_cos": 0.7105,
+        "q_centered_cos": 0.1762,
+        "lat_eff_rank": 4.62,
+        "dot_eff_rank": 8.64,
+        "lat_vis_align": -0.4896,
+        "dot_vis_align": -0.501
+      },
+      {
+        "layer": 25,
+        "lat_raw_cos": 0.8125,
+        "lat_centered_cos": 0.7077,
+        "dot_centered_cos": 0.696,
+        "q_centered_cos": 0.1648,
+        "lat_eff_rank": 4.1,
+        "dot_eff_rank": 8.24,
+        "lat_vis_align": -0.497,
+        "dot_vis_align": -0.5454
+      },
+      {
+        "layer": 26,
+        "lat_raw_cos": 0.8069,
+        "lat_centered_cos": 0.7168,
+        "dot_centered_cos": 0.7114,
+        "q_centered_cos": 0.1712,
+        "lat_eff_rank": 3.6,
+        "dot_eff_rank": 8.54,
+        "lat_vis_align": -0.4491,
+        "dot_vis_align": -0.5531
+      },
+      {
+        "layer": 27,
+        "lat_raw_cos": 0.8296,
+        "lat_centered_cos": 0.7308,
+        "dot_centered_cos": 0.7475,
+        "q_centered_cos": 0.2389,
+        "lat_eff_rank": 3.55,
+        "dot_eff_rank": 8.44,
+        "lat_vis_align": -0.5636,
+        "dot_vis_align": -0.6401
+      },
+      {
+        "layer": 28,
+        "lat_raw_cos": 0.7562,
+        "lat_centered_cos": 0.81,
+        "dot_centered_cos": 0.8431,
+        "q_centered_cos": 0.396,
+        "lat_eff_rank": 2.94,
+        "dot_eff_rank": 5.23,
+        "lat_vis_align": -0.7865,
+        "dot_vis_align": -0.8049
+      }
+    ]
+  }
+}

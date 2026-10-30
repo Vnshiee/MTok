@@ -1,0 +1,43 @@
+\section{Introduction}
+
+
+Vision–language models (VLMs) jointly encode images and text and attain impressive results on visual-understanding benchmarks through text-only decoding~\citep{wang2024qwen2}. Techniques such as chain-of-thought prompting and reinforcement-learning fine-tuning can lengthen these textual reasoning traces and yield extra gains.
+Nonetheless, VLMs still stumble on multimodal reasoning tasks such as spatial reasoning, which demand more than passive perception; they require a coherent understanding and manipulation of visual elements.
+
+Consider the jigsaw puzzle in Fig.~\ref{fig:teaser}.
+Instead of textualizing every candidate piece, people picture how the two fragments might align and decide on the correct match.
+This reasoning unfolds in a native multimodal fashion, not through language alone.
+Recent studies~\citep{team2024chameleon,tong2024metamorph,chern2024anole,chen2025blip3} have pre-trained VLMs for large-scale image generation so a single model can produce both words and pictures.
+Yet the cognitive demands of logical reasoning differ sharply from the task of synthesizing pixels, and asking one model to master both goals often degrades its reasoning quality~\citep{wang2025autoregressive}.
+In addition, the image decoders cannot produce interleaved trajectories pertinent to input images.
+Consequently, fully exploiting the dormant multimodal reasoning capacity of VLMs remains an open challenge.
+
+According to imagery theory, humans do not summon photorealistic pictures while thinking. We instead construct and manipulate mental images, simplified sketches that capture only task-relevant information, a process known as \textbf{mental imagery}~\citep{shepard1971mental, farah1985psychophysical, kosslyn1996image}. In the jigsaw example, we examine fragment contours to decide whether two pieces fit. Likewise, when searching for misplaced keys, we recall the outline of the shelf edge rather than the full room. Inspired by this behavior, we ask whether VLMs can reason directly in their latent visual embedding space, weaving compact visual embeddings into the text stream and dispensing with the need for explicit image generation.
+
+To this end, we present \textbf{\Model}, a decoding mechanism that interleaves latent visual representations among text tokens.
+Prior studies have shown that LLMs can reason directly within the latent space. Building upon this insight, in our \Model framework, when the model chooses to reason visually by producing a special token, it then reuses its current hidden state as a compact visual embedding and appends it to the context, skipping the language projection. These internal embeddings furnish focused visual cues for later reasoning steps. As illustrated in Fig.~\ref{fig:teaser}, \Model yields a chain-of-thought trajectory without any external image decoder.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=1\linewidth]{figures/teaser.pdf}
+\caption{\textbf{Multimodal Reasoning Examples.} \Model interleaves \textcolor{darkred}{\textbf{latent visual tokens}}, which represent compact imagery visual features, with explicit text tokens to solve diverse spatial reasoning multimodal tasks, boosting the reasoning performance without the full pixel-level image generation.}
+\label{fig:teaser}
+\end{figure}
+
+\vspace{-2pt}
+
+
+As illustrated in Fig.~\ref{fig:framework}, we adopt a two-stage fine-tuning paradigm to equip the model with interleaved reasoning. In the first stage, with annotated interleaving trajectories, we supervise both modalities: the model predicts the next word while reconstructing a compact latent visual vector obtained from compressed image embeddings. This dual objective anchors the latent tokens in the visual subspace and teaches the model to weave visual cues into its output.
+
+The second stage removes direct supervision on the latent vectors and optimizes only the text tokens, letting the model treat its autoregressively generated latent embeddings as priors that guide subsequent word generation.
+This relaxation yields a more flexible interleave reasoning trajectory without forcing the latent channel to match any predetermined embedding.
+After these two stages, we apply reinforcement learning to further boost the reasoning performance.
+
+Extensive experiments and superior performance across multiple benchmarks demonstrate that our proposed \Model significantly enhances the reasoning ability of VLMs compared with text-only decoding. More concretely, our contributions are threefold,
+
+\begin{itemize}
+    \item We introduce \Model, which enables VLMs to generate interleaved reasoning trajectories that mix latent visual tokens with ordinary text, without relying on external visual decoders.
+    \item Our two-stage training paradigm empowers VLMs to produce stable yet flexible interleaved reasoning and shows that reinforcement learning can further boost performance.
+    \item \Model achieves consistent gains across diverse multimodal reasoning benchmarks. Further analysis reveals that the latent tokens embody meaningful visual cues, underscoring the potential to unlock deeper multimodal reasoning capabilities in VLMs.
+\end{itemize}
+

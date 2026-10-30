@@ -1,0 +1,1205 @@
+\documentclass[aspectratio=169, 10pt]{beamer}
+
+% Theme selection
+\usetheme{metropolis}
+\metroset{progressbar=frametitle, block=fill, numbering=fraction}
+\setbeameroption{show notes}
+
+% Packages
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pifont}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+
+% Color palette - Modern Slate & Sky Blue
+\definecolor{primary}{HTML}{0F172A}    % Slate 900
+\definecolor{secondary}{HTML}{1E293B}  % Slate 800
+\definecolor{accent}{HTML}{0284C7}     % Sky 600
+\definecolor{accentlight}{HTML}{E0F2FE}% Sky 100
+\definecolor{success}{HTML}{059669}    % Emerald 600
+\definecolor{emerald}{HTML}{10B981}    % Emerald 500
+\definecolor{danger}{HTML}{DC2626}     % Red 600
+\definecolor{warning}{HTML}{D97706}    % Amber 600
+\definecolor{muted}{HTML}{64748B}      % Slate 500
+\definecolor{cardbg}{HTML}{F8FAFC}     % Slate 50
+\definecolor{codebg}{HTML}{F1F5F9}     % Slate 100
+
+% Set beamer colors
+\setbeamercolor{palette primary}{bg=primary, fg=white}
+\setbeamercolor{palette secondary}{bg=secondary, fg=white}
+\setbeamercolor{palette tertiary}{bg=accent, fg=white}
+\setbeamercolor{frametitle}{bg=primary, fg=white}
+\setbeamercolor{progress bar}{fg=accent, bg=muted!30}
+\setbeamercolor{title separator}{fg=accent}
+\setbeamercolor{normal text}{fg=secondary}
+\setbeamercolor{alerted text}{fg=danger}
+
+% Custom tcolorbox card styles
+\tcbset{
+  metriccard/.style={
+    colback=cardbg,
+    colframe=muted!40,
+    boxrule=0.7pt,
+    arc=2.5pt,
+    left=5pt, right=5pt, top=3pt, bottom=3pt
+  },
+  accentcard/.style={
+    colback=accentlight!35,
+    colframe=accent,
+    boxrule=0.8pt,
+    arc=2.5pt,
+    left=5pt, right=5pt, top=3pt, bottom=3pt
+  },
+  alertcard/.style={
+    colback=red!5!white,
+    colframe=danger,
+    boxrule=0.8pt,
+    arc=2.5pt,
+    left=5pt, right=5pt, top=3pt, bottom=3pt
+  },
+  successcard/.style={
+    colback=emerald!6!white,
+    colframe=success,
+    boxrule=0.8pt,
+    arc=2.5pt,
+    left=5pt, right=5pt, top=3pt, bottom=3pt
+  }
+}
+
+% Graphics path
+\graphicspath{{/home/devraj/MTok/slides/figures/}}
+
+% Metadata
+\title{When Does ``Thinking'' Help a Model See?}
+\subtitle{Investigating Latent Computation in Multimodal Reasoning}
+\author{\textbf{Devraj} \quad $\cdot$ \quad \textit{Advisor Discussion}}
+\institute{Vision-Language Research Group \quad $\cdot$ \quad \texttt{MTok Project}}
+\date{October 29, 2026}
+
+\begin{document}
+
+% ==============================================================================
+% SLIDE 1: Title
+% ==============================================================================
+\begin{frame}[plain]
+  \titlepage
+  \note{Frame the meeting. I want to walk you through where I've got to, show you some results that surprised me, and get your help choosing between two or three directions. I'll take about 25 minutes and I'd like to leave time to argue about the last section. The subtitle is deliberately a question. It tells the advisor immediately that this is an investigation, not a reimplementation.}
+\end{frame}
+
+% ==============================================================================
+% ACT I: THE PROBLEM SPACE (Slides 2-9)
+% ==============================================================================
+
+% SLIDE 2: Why Vision Reasoning
+\begin{frame}{Why Vision Reasoning?}
+  \framesubtitle{Act I: The Problem Space $\cdot$ Spatial manipulation vs. perceptual recognition}
+  
+  \begin{columns}[T]
+    \begin{column}{0.60\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{Three Canonical Failure Modes}]
+        \begin{enumerate}\setlength{\itemsep}{5pt}
+          \item \textbf{Jigsaw Puzzle}: Which piece fills the vacant gap?\\
+          \textit{\scriptsize Requires mentally rotating, inverting, and fitting 2D boundaries.}
+          \item \textbf{Relative Depth}: Which marked point is closer to camera?\\
+          \textit{\scriptsize Requires 3D geometry and occlusion reasoning from 2D pixel cues.}
+          \item \textbf{Perspective-Taking}: Facing fridge at X, is table front-left?\\
+          \textit{\scriptsize Requires dynamic coordinate frame re-anchoring.}
+        \end{enumerate}
+      \end{tcolorbox}
+    \end{column}
+    
+    \begin{column}{0.38\textwidth}
+      \begin{tcolorbox}[alertcard, title=\textbf{Perception $\neq$ Reasoning}]
+        \small
+        A model that can label every object in a scene \textbf{still fails} these tasks.
+        \vspace{6pt}
+        
+        \textbf{Central Working Claim:}\\
+        \alert{\textbf{Language is a lossy channel for spatial computation.}}
+      \end{tcolorbox}
+      \vspace{4pt}
+      \begin{tcolorbox}[metriccard]
+        \scriptsize Spatial structure resists verbal decomposition; verbalising it forces unnatural sequential commitments.
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{These are not perception problems. A model that can name every object in the scene still fails them. They need manipulation of spatial structure, and that structure resists being written down in words. Make the central claim of the whole talk here: language is a lossy channel for spatial computation. Everything that follows is about what to do with that.}
+\end{frame}
+
+% SLIDE 3: The Gap in One Chart
+\begin{frame}{The Spatial Gap in One Chart}
+  \framesubtitle{Act I: The Problem Space $\cdot$ Qwen2.5-VL-7B zero-shot accuracy across BLINK spatial splits}
+  
+  \begin{columns}[c]
+    \begin{column}{0.62\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{slide3_blink_gap.pdf}
+    \end{column}
+    \begin{column}{0.36\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{Key Empirical Reality}]
+        \small
+        \begin{itemize}\setlength{\itemsep}{4pt}
+          \item \textbf{Perception is Solved}:\\
+          Spatial Relation = \textbf{92.4\%} \textit{(+42.4\% over chance)}
+          \item \textbf{Manipulation Collapses}:\\
+          Multi-View = \textbf{39.0\%} \textit{(vs. 50\% chance)}\\
+          IQ Test = \textbf{25.3\%} \textit{(vs. 25\% chance)}
+          \item \textbf{Why Qwen2.5-VL}: Standard open literature anchor for spatial VLM research.
+        \end{itemize}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{This is the motivating picture. A strong 7B model is at or below chance on multi-view reasoning and IQ-test items, while being near-perfect on simple left-of/right-of relations. The gap is not perception. It is the manipulation step. That is the target of this research direction.}
+\end{frame}
+
+% SLIDE 4: Four Attempts to Fix Visual Reasoning
+\begin{frame}{Four Paradigms for Visual Reasoning}
+  \framesubtitle{Act I: The Problem Space $\cdot$ How the field attempts to close the manipulation gap}
+  
+  \centering
+  \scriptsize
+  \begin{tabular}{lp{3.3cm}p{3.2cm}p{3.8cm}}
+    \toprule
+    \textbf{Paradigm} & \textbf{Core Mechanism} & \textbf{Representative Work} & \textbf{Cost / Primary Failure} \\
+    \midrule
+    \textbf{Text CoT} & Write reasoning out in words & Wei et al. (2022); Video-R1 & Drifts from image; \alert{\textbf{hurts vs. direct answer}} on spatial benchmarks ($\sim -3$ pp) \\
+    \addlinespace
+    \textbf{Tools / Sketch} & External cropper, detector, sketchpad & Visual Sketchpad (2024); DeepEyes; Pixel Reasoner & Brittle, external modules, narrow manipulation vocabulary \\
+    \addlinespace
+    \textbf{Gen Images} & Produce intermediate pictures & Unified models (Chameleon, Blip3-o) & Extremely expensive to train and run \\
+    \addlinespace
+    \rowcolor{accentlight!50}
+    \textbf{Latent Tokens} & Reason in continuous hidden states & COCONUT (2024); Mirage; LVR; Monet; \textbf{Mull-Tokens} & Uninterpretable: \textbf{does latent computation actually occur?} \\
+    \bottomrule
+  \end{tabular}
+  
+  \vspace{8pt}
+  \begin{tcolorbox}[accentcard]
+    \small \textbf{The Core Hinge}: If verbalising spatial manipulation actively harms performance, the logical move is to reason \textbf{without writing it down} $\rightarrow$ \textbf{Latent Tokens}.
+  \end{tcolorbox}
+
+  \note{Walk the rows. Land hard on row 1: text CoT is not just imperfect for spatial tasks, it is actively harmful. The Mull-Tokens paper reports direct-answer fine-tuning beating text-CoT fine-tuning by about 3 points on average. That result is the hinge of the whole field. If writing your reasoning down makes you worse at spatial problems, the natural move is to reason without writing it down. That motivates row 4.}
+\end{frame}
+
+% SLIDE 5: The Latent Reasoning Idea
+\begin{frame}{The Latent Reasoning Concept}
+  \framesubtitle{Act I: The Problem Space $\cdot$ Purchasing internal computation without verbal commitment}
+  
+  \centering
+  \includegraphics[height=0.36\textheight]{slide5_cot_vs_latent.pdf}
+  
+  \vspace{4pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{Intellectual Lineage}]
+        \scriptsize
+        \begin{itemize}\setlength{\itemsep}{2pt}
+          \item \textbf{Pause Tokens} (Goyal et al., ICLR 2024): Inserting content-free tokens grants extra decoder compute.
+          \item \textbf{COCONUT} (Hao et al., 2024): Feeds hidden states back as inputs rather than decoding to words.
+        \end{itemize}
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[accentcard, title=\textbf{The Multimodal Hypothesis}]
+        \scriptsize
+        Spatial computation never had a good verbal form in the first place.\\
+        $\rightarrow$ The bet in vision is that latent computation helps \textbf{more than in language} by bypassing verbal bottlenecks.
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{The intellectual lineage runs through language models, not vision. Pause tokens (Goyal et al., ICLR 2024) showed that inserting content-free pause tokens gives a transformer extra computation before it answers. COCONUT fed hidden states back as inputs instead of decoding them to words. The bet in vision is that the same trick helps more, because the thing being computed never had a good verbal form in the first place.}
+\end{frame}
+
+% SLIDE 6: Why This Is a Live Research Area
+\begin{frame}{Evolution of Latent Multimodal Reasoning}
+  \framesubtitle{Act I: The Problem Space $\cdot$ A fast-moving 2024--2026 trajectory culminating in an audit wave}
+  
+  \vspace{2pt}
+  \begin{columns}[T]
+    \begin{column}{0.24\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{2024: Foundations}]
+        \scriptsize
+        $\bullet$ Pause Tokens (ICLR)\\
+        $\bullet$ COCONUT\\
+        Continuous latents demonstrated in language decoders.
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.24\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{2025: Multimodal}]
+        \scriptsize
+        $\bullet$ Mirage\\
+        $\bullet$ Perception Tokens\\
+        Latents extended to image-text inputs.
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.24\textwidth}
+      \begin{tcolorbox}[accentcard, title=\textbf{Early 2026}]
+        \scriptsize
+        $\bullet$ \textbf{Mull-Tokens}\\
+        $\bullet$ LVR / ILVR / Monet\\
+        Claiming double-digit gains on spatial tasks.
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.24\textwidth}
+      \begin{tcolorbox}[alertcard, title=\textbf{Late 2026: Audits}]
+        \scriptsize
+        $\bullet$ Viveiros et al.\\
+        $\bullet$ Guo et al.\\
+        $\bullet$ Li et al., Zhang et al.\\
+        \alert{Are latents doing anything?}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+  
+  \vspace{8pt}
+  \begin{tcolorbox}[metriccard]
+    \centering \small \textit{``There is now a set of papers asking whether any of this actually works, and I will come back to them once I have shown you my numbers.''}
+  \end{tcolorbox}
+
+  \note{Flag that the field accelerated sharply and that a critical literature has now appeared alongside the methods. Do not detail the audits here—that is Act IV, and it lands much harder after the advisor has seen your own data. One sentence only: There's now a set of papers asking whether any of this actually works, and I'll come back to them once I've shown you my numbers.}
+\end{frame}
+
+% SLIDE 7: How It Works Now: The Standard Pipeline
+\begin{frame}{The Standard Pipeline and Its Constraints}
+  \framesubtitle{Act I: The Problem Space $\cdot$ Architectural limitations governing contemporary VLMs}
+  
+  \centering
+  \includegraphics[height=0.46\textheight]{slide7_standard_pipeline.pdf}
+  
+  \vspace{2pt}
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{1. Single Input Pass}]
+        \scriptsize Frozen ViT encoder; visual tokens entered once. No mechanism to re-attend or re-inspect regions.
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{2. Fixed Depth}]
+        \scriptsize Decoder has fixed depth (28 layers); hard problems get identical sequential depth to easy ones.
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \begin{tcolorbox}[alertcard, title=\textbf{3. Token Bottleneck}]
+        \scriptsize Extra compute requires emitting tokens $\rightarrow$ text CoT forces premature verbal commitment.
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{Three structural facts matter for everything that follows: 1. Visual information enters once, at the input. 2. The decoder has fixed depth (28 layers). 3. The only way to get more computation is to emit more tokens. Point 3 is the one to dwell on: it sets up the latent-token idea as a way to buy computation without committing to words.}
+\end{frame}
+
+% SLIDE 8: Four Concrete Limitations
+\begin{frame}{Four Concrete Limitations}
+  \framesubtitle{Act I: The Problem Space $\cdot$ Disentangling substrate, dynamics, information flow, and interpretability}
+  
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{1. Verbalisation Loses Spatial Structure}]
+        \small
+        Text CoT underperforms direct answering by \alert{$\sim 3$ points} average on spatial benchmarks.\\
+        \textit{\scriptsize Evidence: Mull-Tokens Table 1, rows b vs. c.}
+      \end{tcolorbox}
+      \vspace{4pt}
+      \begin{tcolorbox}[metriccard, title=\textbf{2. Fixed Compute Budget}]
+        \small
+        No architecture here dynamically allocates more sequential computation to harder items.
+      \end{tcolorbox}
+    \end{column}
+    
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{3. Visual Grounding Decays with Depth}]
+        \small
+        Reasoning progressively drifts from the image tokens; documented across the visual drift literature.
+      \end{tcolorbox}
+      \vspace{4pt}
+      \begin{tcolorbox}[alertcard, title=\textbf{4. Latents are Uninterpretable}]
+        \small
+        Latents remain uninterpretable black boxes.\\
+        \textit{\scriptsize The Mull-Tokens paper explicitly lists this as its own main limitation.}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{Be precise that these are different kinds of problem. The first two are about the computational substrate. The third is about information flow. The fourth is about our ability to check any of it. Most of the field works on 1 and 3. Almost nobody works on 2. Nobody had seriously worked on 4 until this year. That observation is where my project came from.}
+\end{frame}
+
+% SLIDE 9: Narrowing to One Question
+\begin{frame}{Narrowing to One Question: Competing Hypotheses}
+  \framesubtitle{Act I: The Problem Space $\cdot$ The core scientific pivot of the entire investigation}
+  
+  \begin{columns}[T]
+    \begin{column}{0.44\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{slide9_funnel.pdf}
+    \end{column}
+    
+    \begin{column}{0.54\textwidth}
+      \resizebox{\textwidth}{!}{
+      \begin{tabular}{lp{2.4cm}p{2.6cm}}
+        \toprule
+        \textbf{Hypothesis} & \textbf{Core Claim} & \textbf{Empirical Signature} \\
+        \midrule
+        \textbf{Scratchpad} & Carries image-derived computation & Perturbing latents hurts; counterfactual flips answer \\
+        \addlinespace
+        \textbf{Compute Buffer} & Parallel compute; contents generic & Any trained filler works equally well \\
+        \addlinespace
+        \rowcolor{accentlight!50}
+        \textbf{Format Key} & Prefix triggers fine-tuned mode & \textbf{1 token works as well as twenty} \\
+        \bottomrule
+      \end{tabular}}
+      
+      \vspace{6pt}
+      \begin{tcolorbox}[alertcard]
+        \scriptsize \textbf{The Core Thesis}: The paper claims the \textbf{Scratchpad}. Our empirical results point conclusively at the \textbf{Format Key}. That disagreement is where my project lives.
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{This slide is the pivot of the whole talk. Deliver it slowly. The argument: steps 1-3 are the field's reasoning, and it is good reasoning. Step 4 is the question nobody answered before publishing. Methods are validated by benchmark accuracy, and accuracy cannot distinguish the latents compute something from the latents do nothing and something else changed. The paper claims the first. My results point conclusively at the third. That disagreement is where my project lives.}
+\end{frame}
+
+% ==============================================================================
+% ACT II: THE OBJECT OF STUDY: MULL-TOKENS (Slides 10-13)
+% ==============================================================================
+
+% SLIDE 10: The Cleanest Instance of the Idea
+\begin{frame}[fragile]{Mull-Tokens: The Minimal Testbed}
+  \framesubtitle{Act II: The Object of Study $\cdot$ Ray et al., CVPR 2026 (Google, Boston University, Stanford)}
+  
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \begin{tcolorbox}[accentcard, title=\textbf{Why Mull-Tokens?}]
+        \small
+        \begin{itemize}\setlength{\itemsep}{3pt}
+          \item Minimalist instantiation of latent thinking.
+          \item Modality-agnostic: uses uniform discrete tokens.
+          \item No complex routing $\rightarrow$ cleanest mechanistic testbed.
+        \end{itemize}
+      \end{tcolorbox}
+      
+      \begin{tcolorbox}[metriccard, title=\textbf{Tokenizer Ground Truth}]
+        \small
+        Confirmed via Qwen2.5-VL tokenizer:\\
+        \texttt{<think>} and \texttt{</think>} are \textbf{plain text} (\texttt{<} + \texttt{think} + \texttt{>}), \textbf{not special tokens}. Mull adds no special boundary embeddings.
+      \end{tcolorbox}
+    \end{column}
+    
+    \begin{column}{0.42\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{Inference-Time Intervention}]
+        \footnotesize
+        Twenty copies of token ID \texttt{151665} prefilled into the assistant turn:
+        \vspace{3pt}
+        \begin{center}
+          \texttt{<think> + <|latent\_pad|> $\times$ 20 + </think>\textbackslash n $\rightarrow$ answer}
+        \end{center}
+        \vspace{3pt}
+        \begin{itemize}\setlength{\itemsep}{2pt}
+          \item All 20 positions receive \textbf{identical input embeddings}.
+          \item Whatever they compute must come from position and attention, not fed-in content.
+        \end{itemize}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{Introduce it as a choice, not a given. I picked this paper deliberately: Google + BU + Stanford, CVPR 2026, and it's the minimal version of the latent-token idea, which makes it the cleanest testbed. The inference intervention is twenty copies of one token, ID 151665, prefilled into the assistant turn.}
+\end{frame}
+
+% SLIDE 11: Architecture and Training Pipeline
+\begin{frame}{Mull-Tokens 3-Stage Training Pipeline}
+  \framesubtitle{Act II: The Object of Study $\cdot$ Dissecting the supervision signals across training phases}
+  
+  \centering
+  \includegraphics[height=0.46\textheight]{slide11_mull_pipeline.pdf}
+  
+  \vspace{2pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{Observation 1: Architectural Depth}]
+        \scriptsize Because latents are a fixed parallel prefix, latent $k$ at layer $\ell$ only reads latents $<k$ at layer $\ell-1$. Total serial compute is strictly 28 layers: \textbf{Mull adds width, not serial recurrence.}
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[alertcard, title=\textbf{Observation 2: Code Audit of Stage 3}]
+        \scriptsize Training config inspection reveals: \texttt{text\_only\_logprobs: True}. Policy gradients only backpropagate through answer tokens; \textbf{latents receive zero direct policy gradient!}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{Two details to emphasise: First, Stage 1 and Stage 2 use different structures. In Stage 1 the latents are interleaved one-per-word; in Stage 2 they are twenty contiguous. Author confirmed this design choice. Second, latents are discrete and identical. Third, Stage 3 config sets text\_only\_logprobs: True, so only answer tokens enter policy gradient.}
+\end{frame}
+
+% SLIDE 12: What the Paper Claims
+\begin{frame}{What the Paper Claims}
+  \framesubtitle{Act II: The Object of Study $\cdot$ Published headline metrics and architectural justifications}
+  
+  \centering
+  \resizebox{0.95\textwidth}{!}{
+  \begin{tabular}{lp{6.2cm}r}
+    \toprule
+    \textbf{Core Claim} & \textbf{Published Justification} & \textbf{Reported Metric} \\
+    \midrule
+    \textbf{Beats Strongest Baseline} & Outperforms direct-answer fine-tuning & \textbf{+5.40\%} (DirAns: 61.40\% $\rightarrow$ 66.80\%) \\
+    \addlinespace
+    \textbf{Large Spatial Gain} & Substantial surge on visual reasoning & \textbf{+15.34\%} on BLINK Jigsaw (58.66\% $\rightarrow$ 74.00\%) \\
+    \addlinespace
+    \textbf{Inference Efficiency} & 20 latent tokens vs. verbose text CoT & \textbf{10--25$\times$ shorter} (20 vs. 200--500 tokens) \\
+    \addlinespace
+    \textbf{Multimodal Warm-up Vital} & Cosine loss to subgoal image embeddings & \textbf{66.8\%} vs. 65.9\% (text) vs. 59.2\% (no warm-up) \\
+    \addlinespace
+    \rowcolor{red!8!white}
+    \textbf{GRPO Latent Reinforcement} & Latents made causally responsible & \alert{\textbf{+0.12\%}} overall (53.92\% $\rightarrow$ 54.04\%) \\
+    \bottomrule
+  \end{tabular}}
+  
+  \vspace{6pt}
+  \begin{tcolorbox}[metriccard]
+    \centering \small \textit{Read the last row out loud and pause: 50,000 GRPO iterations on 8$\times$H100 GPUs yielded an overall gain of just 0.12 percentage points across all benchmarks.}
+  \end{tcolorbox}
+
+  \note{Read the last row out loud and pause. Fifty thousand GRPO iterations on 8xH100 for a tenth of a percentage point. Flag that you will come back to it. Do not editorialise beyond that yet. Present the paper fairly: the critique lands much harder on the next slide if this one is straight.}
+\end{frame}
+
+% SLIDE 13: Critical Reading: Five Gaps
+\begin{frame}{My Critical Reading: Five Gaps}
+  \framesubtitle{Act II: The Object of Study $\cdot$ Identified from deep analysis of paper, appendix, and released source code}
+  
+  \centering
+  \renewcommand{\arraystretch}{0.84}
+  \resizebox{0.90\textwidth}{!}{
+  \begin{tabular}{clp{7.5cm}l}
+    \toprule
+    \textbf{\#} & \textbf{Identified Gap} & \textbf{Mechanistic Implication} & \textbf{Source} \\
+    \midrule
+    \textbf{1} & \textbf{No Causal Test} & Answer tokens can attend directly to image tokens, bypassing latents entirely; no intervention ruled this out. & Paper \S 3 \\
+    \addlinespace
+    \textbf{2} & \textbf{Confounded Data} & SAT data rose from 20\% to 60\% between Stage 1 \& 2; gains may reflect domain adaptation, not latent thinking. & Appendix \S 6.1 \\
+    \addlinespace
+    \rowcolor{red!6!white}
+    \textbf{3} & \textbf{GRPO Does Not Reward Latents} & Released config sets \texttt{text\_only\_logprobs: True}; only final answer tokens enter the policy gradient. & \textbf{Source Code} \\
+    \addlinespace
+    \rowcolor{red!6!white}
+    \textbf{4} & \textbf{Train/Test Mismatch} & Stage 1 interleaves 1 latent/word; Stage 2 injects 20 contiguous latents. Learned functional role may not transfer. & \textbf{Code} (Auth. Conf.) \\
+    \addlinespace
+    \textbf{5} & \textbf{Spatial Collapse} & Subgoal images average-pooled to 1 vector, destroying 2D layout; method regresses 3.2 pp on Relative Depth. & Appendix \\
+    \bottomrule
+  \end{tabular}}
+  
+  \vspace{2pt}
+  \begin{tcolorbox}[metriccard]
+    \centering \scriptsize \textit{Transition: ``I had five hypotheses about where this might be weak. The next part is what happened when I tested them.''}
+  \end{tcolorbox}
+
+  \note{This is the slide that proves you did more than read an abstract. Emphasise that gaps 3 and 4 are NOT in the paper: they came from reading the training code line by line. Gap 3 is the strongest: GRPO rewards causally-useful latent chains, but released config does not implement that.}
+\end{frame}
+
+% ==============================================================================
+% ACT III: THE EMPIRICAL JOURNEY (Slides 14-26)
+% ==============================================================================
+
+% SLIDE 14: Why Replicate First
+\begin{frame}{Why Replicate First?}
+  \framesubtitle{Act III: The Empirical Journey $\cdot$ Establishing baseline validity before conducting mechanistic ablations}
+  
+  \vspace{4pt}
+  \begin{center}
+    \begin{tcolorbox}[accentcard, width=0.88\textwidth]
+      \centering \Large \textbf{``A negative result is only believable if the positive result reproduces first.''}
+    \end{tcolorbox}
+  \end{center}
+  
+  \vspace{6pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{Controlled Evaluation Hardware}]
+        \small
+        \begin{itemize}\setlength{\itemsep}{2pt}
+          \item \textbf{GPU}: 1$\times$ NVIDIA A100-PCIE-40GB
+          \item \textbf{OS / Env}: Ubuntu 20.04, CUDA 12.2
+          \item \textbf{Software}: PyTorch 2.5.1, FlashAttention 2
+          \item \textbf{Suite}: Hardened fork of \texttt{lmms-eval}
+        \end{itemize}
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{Strategic Validity Argument}]
+        \small
+        \begin{itemize}\setlength{\itemsep}{2pt}
+          \item Pre-empts immediate challenge: \textit{``Is your ablation setup broken?''}
+          \item Validates checkpoint weights, prompt formatting, and tokenizer integrity.
+          \item Fast iteration: Image suite runs in $\sim 50$ minutes on 1$\times$ A100.
+        \end{itemize}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{Pre-empt the obvious objection. If I'd gone straight to ablations and found the latents don't matter, the first question would be whether my setup was broken. So I reproduced the published numbers first. That's now my validity argument.}
+\end{frame}
+
+% SLIDE 15: Five Blocking Bugs Fixed
+\begin{frame}{Engineering the Testbed: Five Upstream Bugs Fixed}
+  \framesubtitle{Act III: The Empirical Journey $\cdot$ Resolving critical repository defects to build an auditable harness}
+  
+  \begin{tcolorbox}[alertcard, title=\textbf{Upstream Code Defects Identified \& Resolved}]
+    \small
+    \begin{enumerate}\setlength{\itemsep}{4pt}
+      \item \textbf{Hardcoded Cluster Paths}: Task YAMLs referenced inaccessible internal cluster directories (\texttt{/home/jupyter/data\_files/...}) $\rightarrow$ Rewired to HF streaming.
+      \item \textbf{Dataset Schema Mismatches}: SAT config naming, split errors, ERQA image key discrepancies (\texttt{images\_encoded}), and checksum failures.
+      \item \textbf{Silent Chat-Template Corruption}: A line \texttt{text.replace("<|im\_end|>\textbackslash n", "")} stripped turn boundaries between \textbf{all} turns, silently collapsing system, user, and assistant into one invalid string.
+      \item \textbf{Broken Model Registration}: Hardcoded \texttt{sys.path.append("../models")} and missing \texttt{@register\_model} decorators in evaluation harness.
+      \item \textbf{Logging Directory Crashes}: Hardcoded Google Cloud paths causing silent crashes.
+    \end{enumerate}
+  \end{tcolorbox}
+
+  \note{Do not spend more than 45 seconds here, but do show it. Bug 3 is the interesting one: it silently produced malformed prompts rather than crashing, so it would have corrupted every number without any error.}
+\end{frame}
+
+% SLIDE 16: Replication Result
+\begin{frame}{Replication Verified Across 8 Benchmarks + Video}
+  \framesubtitle{Act III: The Empirical Journey $\cdot$ Comprehensive validation across $\sim$2,400 static and 5,130 video samples}
+  
+  \centering
+  \resizebox{0.92\textwidth}{!}{
+  \begin{tabular}{lccc}
+    \toprule
+    \textbf{Benchmark Split ($N$)} & \textbf{Paper Claimed (SFT / GRPO)} & \textbf{Our Replication} & \textbf{Outcome vs. Paper} \\
+    \midrule
+    BLINK Spatial Relation (143) & 81.81\% / 81.81\% & \textbf{85.31\%} & \textcolor{success}{\textbf{+3.50\% (Exceeded)}} \\
+    BLINK Relative Depth (124)   & 83.06\% / 83.87\% & \textbf{85.48\%} & \textcolor{success}{\textbf{+1.61\% (Exceeded)}} \\
+    BLINK Jigsaw (150)           & 74.00\% / 74.67\% & \textbf{76.67\%} & \textcolor{success}{\textbf{+2.00\% (Exceeded)}} \\
+    BLINK Multi-view (133)       & 63.15\% / 64.66\% & \textbf{63.91\%} & Matches within margin \\
+    BLINK IQ Test (150)          & 32.00\% / 30.66\% & \textbf{30.67\%} & Exact match (30.67\% vs. 30.66\%) \\
+    \addlinespace
+    \rowcolor{accentlight!50}
+    \textbf{BLINK Overall Average (700)} & \textbf{66.80\% / 67.13\%} & \textbf{68.41\%} & \textcolor{success}{\textbf{+1.28\% (Exceeded)}} \\
+    \addlinespace
+    SAT-Real (300 pairs)         & 77.66\% / 77.00\% & \textbf{74.33\%} & Matches within margin ($-3.33\%$) \\
+    ERQA Spatial (400)           & 38.25\% / 38.50\% & \textbf{39.25\%} & \textcolor{success}{\textbf{+0.75\% (Exceeded)}} \\
+    MMSI-Bench Multi-Image (1,000) & 29.00\% & \textbf{28.50\%} & Matches within margin \\
+    VSI-Bench Video Spatial (5,130) & 32.98\% / 33.51\% & \textbf{33.69\%} & \textcolor{success}{\textbf{+0.71\% (Exceeded)}} \\
+    \quad $\hookrightarrow$ Reasoning Subset (3,114) & 32.85\% / 33.49\% & \textbf{32.67\%} & Exact match (within 0.18\%) \\
+    \bottomrule
+  \end{tabular}}
+
+  \note{Land the headline: replication holds across image, multi-image and video benchmarks. VSI-Bench at 5,130 samples matches to within 0.2 points on the reasoning subset. Total runtime: about 50 minutes for core image benchmarks on one A100.}
+\end{frame}
+
+% SLIDE 17: Pipeline Hardening: A Forensic Self-Audit
+\begin{frame}{Pipeline Hardening: A Forensic Self-Audit}
+  \framesubtitle{Act III: The Empirical Journey $\cdot$ Why initial aggregation numbers were defective---and how we hardened}
+  
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[alertcard, title=\textbf{Defect Identification}]
+        \small
+        \begin{itemize}\setlength{\itemsep}{2pt}
+          \item Launcher ran \texttt{--dry-run} smoke tests with \texttt{--limit 2} into same dirs.
+          \item Unvetted glob evaluated 2-sample runs after full runs, overwriting metrics with $1/2 = 50.00\%$ or $2/2 = 100.00\%$.
+          \item \textbf{The Giveaway}: 50.00\% on 143 items requires 71.5 correct answers (impossible).
+        \end{itemize}
+      \end{tcolorbox}
+    \end{column}
+    
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[successcard, title=\textbf{Hardened Pipeline Controls}]
+        \small
+        \begin{enumerate}\setlength{\itemsep}{2pt}
+          \item \textbf{Isolated Smoke Archive}: Segregated all smoke outputs.
+          \item \textbf{Automated Assertions}: Hard sample-count checks ($N=700$ total) fail loudly.
+          \item \textbf{Token Logging}: Full per-sample token IDs, lengths, and logits logged.
+          \item \textbf{Transparent Errata}: Full forensic audit published in \texttt{ERRATA.md}.
+        \end{enumerate}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+  
+  \vspace{2pt}
+  \begin{tcolorbox}[accentcard]
+    \centering \scriptsize \textbf{Scientific Payoff}: Corrected data reveals \textbf{flatness}, which is a far sharper, cleaner finding than spurious artifacts.
+  \end{tcolorbox}
+
+  \note{Deliver this without defensiveness. I caught this by checking whether each percentage was achievable given split size. Three weren't. That's now a standing automated assertion. The corrected data tells a cleaner and more interesting story: true flatness.}
+\end{frame}
+
+% SLIDE 18: Master Empirical Architecture
+\begin{frame}{Master Empirical Architecture: E1 \& E2}
+  \framesubtitle{Act III: The Empirical Journey $\cdot$ Two-stage mechanistic investigation adjudicating format, compute, and bias}
+  
+  \centering
+  \includegraphics[height=0.48\textheight]{slide18_empirical_architecture.pdf}
+  
+  \vspace{2pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{Experiment E1 ($N=10,500$)}]
+        \scriptsize 15 conditions testing scratchpad (H1) vs. format key (H3). Covers negative controls, budget scaling, and prompt crosses at standardized 4.19 MP.
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{Experiment E2 ($N=44,590$)}]
+        \scriptsize 14 conditions and 6 input variants (V0--V4, CF). Separates true visual discrimination ($s$) from literal ($L$) and positional ($P$) answer priors.
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{Structure the two master experiments clearly. Experiment E1 adjudicates between continuous scratchpad computation and format conditioning. Experiment E2 isolates whether Mull's margin over DirAns reflects true perceptual reasoning or answer-prior alignment.}
+\end{frame}
+
+% SLIDE 19: Experiment E1: The 15-Condition Matrix
+\begin{frame}{Experiment E1: The 15-Condition Factorial Matrix}
+  \framesubtitle{Act III: The Empirical Journey $\cdot$ Full mechanistic matrix across 5 BLINK tasks ($N=700$ per row, $N=10,500$ total) at 4.19 MP}
+  
+  \centering
+  \resizebox{0.98\textwidth}{!}{
+  \begin{tabular}{ccllcccccclcc}
+    \toprule
+    \textbf{Row} & \textbf{Model} & \textbf{Prompt} & \textbf{Assistant Prefill} & \textbf{SpRel} & \textbf{RelDep} & \textbf{Jigsaw} & \textbf{MV} & \textbf{IQ} & \textbf{Avg} & \textbf{$\Delta$ vs. Row 1 [95\% CI]} & \textbf{McNemar $p$} & \textbf{Tokens} \\
+    \midrule
+    \rowcolor{accentlight!60}
+    \textbf{1} & Mull & \texttt{latents} & \texttt{think + 20 latents} & 85.31\% & 85.48\% & 76.67\% & 63.91\% & 30.67\% & \textbf{67.71\%} & \textbf{Reference} & --- & 7.0 \\
+    \rowcolor{red!10!white}
+    \textbf{2} & Mull & \texttt{latents} & \texttt{empty} ($K=0$) & 76.22\% & 67.74\% & 62.00\% & 50.38\% & 24.67\% & \textbf{55.71\%} & -12.00\% [-15.86\%, -8.57\%] & $\mathbf{p < 10^{-10}}$ & 138.5 \\
+    \rowcolor{emerald!12!white}
+    \textbf{3} & Mull & \texttt{latents} & \texttt{<think></think>\textbackslash n} & 85.31\% & 85.48\% & 79.33\% & 60.15\% & 28.67\% & \textbf{67.14\%} & \textbf{-0.57\% [-2.00\%, +0.71\%]} & $\mathbf{p = 0.5413}$ & 7.0 \\
+    \textbf{4} & Mull & \texttt{latents} & \texttt{think + 20x' .'} & 84.62\% & 84.68\% & 75.33\% & 60.90\% & 30.00\% & \textbf{66.43\%} & -1.29\% [-2.57\%, -0.14\%] & $p = 0.0636$ & 7.0 \\
+    \textbf{5} & Mull & \texttt{latents} & \texttt{think + 20x<|latent\_end|>} & 84.62\% & 86.29\% & 72.00\% & 60.90\% & 32.00\% & \textbf{66.43\%} & -1.29\% [-2.57\%, +0.00\%] & $p = 0.0784$ & 7.0 \\
+    \textbf{6} & Mull & \texttt{sft} & \texttt{empty} & 78.32\% & 74.19\% & 64.67\% & 51.13\% & 25.33\% & \textbf{58.14\%} & -9.57\% [-12.86\%, -6.29\%] & $p < 10^{-10}$ & 122.9 \\
+    \textbf{7} & Mull & \texttt{sft} & \texttt{think + 20 latents} & 85.31\% & 84.68\% & 77.33\% & 59.40\% & 29.33\% & \textbf{66.57\%} & -1.14\% [-2.57\%, +0.29\%] & $p = 0.1859$ & 7.0 \\
+    \rowcolor{cardbg}
+    \textbf{8} & SAT & \texttt{sft} & \texttt{empty} (DirAns) & 81.82\% & 79.03\% & 68.00\% & 63.91\% & 27.33\% & \textbf{63.29\%} & -4.43\% [-7.71\%, -1.14\%] & $p = 0.0104$ & 7.0 \\
+    \textbf{9} & SAT & \texttt{latents} & \texttt{empty} & 81.82\% & 79.84\% & 68.00\% & 68.42\% & 28.00\% & \textbf{64.43\%} & -3.29\% [-6.57\%, +0.00\%] & $p = 0.0639$ & 7.0 \\
+    \rowcolor{accentlight!30}
+    \textbf{10} & Mull-GRPO & \texttt{latents} & \texttt{think + 20 latents} & 86.01\% & 84.68\% & 78.67\% & 65.41\% & 31.33\% & \textbf{68.57\%} & +0.86\% [-1.00\%, +2.71\%] & $\mathbf{p = 0.4610}$ & 7.0 \\
+    \textbf{11} & Mull & \texttt{latents} & \texttt{think + 1 latent} & 84.62\% & 83.87\% & 78.00\% & 60.15\% & 28.67\% & \textbf{66.43\%} & -1.29\% [-2.71\%, +0.00\%] & $p = 0.0931$ & 7.0 \\
+    \textbf{12} & Mull & \texttt{latents} & \texttt{think + 5 latents} & 85.31\% & 86.29\% & 77.33\% & 60.90\% & 30.00\% & \textbf{67.29\%} & -0.43\% [-1.71\%, +0.86\%] & $p = 0.6636$ & 7.0 \\
+    \textbf{13} & Mull & \texttt{latents} & \texttt{think + 10 latents} & 85.31\% & 85.48\% & 76.67\% & 60.15\% & 29.33\% & \textbf{66.71\%} & -1.00\% [-2.14\%, +0.14\%] & $p = 0.1435$ & 7.0 \\
+    \textbf{14} & Mull & \texttt{latents} & \texttt{think + 40 latents} & 85.31\% & 83.87\% & 76.67\% & 62.41\% & 31.33\% & \textbf{67.29\%} & -0.43\% [-1.86\%, +1.00\%] & $p = 0.7003$ & 7.0 \\
+    \textbf{15} & Mull & \texttt{latents} & \texttt{think + 20 latents} (Warm) & 85.31\% & 85.48\% & 76.67\% & 63.91\% & 30.67\% & \textbf{67.71\%} & +0.00\% & $p = 1.0000$ & 7.0 \\
+    \bottomrule
+  \end{tabular}}
+
+  \note{Point out that this 15-condition matrix was executed strictly against our pre-registered hypotheses. It covers negative controls, prompt cross-conditions, budget scaling, and warm latency baselines.}
+\end{frame}
+
+% SLIDE 20: E1 Finding 1: The Smoking Gun
+\begin{frame}{E1 Finding 1: The Smoking Gun}
+  \framesubtitle{Act III: The Empirical Journey $\cdot$ Empty think tags ($K=0$) and generic periods match trained latents}
+  
+  \begin{columns}[c]
+    \begin{column}{0.62\textwidth}
+      \centering
+      \includegraphics[width=0.98\textwidth]{slide20_e1_smoking_gun.pdf}
+    \end{column}
+    \begin{column}{0.36\textwidth}
+      \begin{tcolorbox}[successcard, title=\textbf{Paired McNemar Test ($N=700$)}]
+        \scriptsize
+        \textbf{Row 3 vs. Row 1 Reference}:
+        \begin{itemize}\setlength{\itemsep}{2pt}
+          \item $\Delta = -0.57\%$ [95\% CI: -2.00\%, +0.71\%]
+          \item $b=14, c=10$ (only 4 items net)
+          \item $\mathbf{p = 0.5413}$ (Statistically Identical!)
+        \end{itemize}
+      \end{tcolorbox}
+      \vspace{3pt}
+      \begin{tcolorbox}[accentcard, title=\textbf{Punctuation Controls}]
+        \scriptsize
+        \begin{itemize}\setlength{\itemsep}{2pt}
+          \item Generic periods (\texttt{'.' }): \textbf{66.43\%} ($p=0.0636$)
+          \item Delimiters: \textbf{66.43\%} ($p=0.0784$)
+        \end{itemize}
+      \end{tcolorbox}
+      \vspace{3pt}
+      \begin{tcolorbox}[alertcard]
+        \scriptsize \textbf{Verdict}: Falsifies H1 (Scratchpad); confirms H3 (Format Stop-Gate).
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{Deliver this clearly: Row 3 injects zero latent tokens. We simply prefilled the tag: \textless{}think\textgreater{}\textless{}/think\textgreater{}\textbackslash{}n. The difference across the entire 700-question benchmark is only 4 items. This directly falsifies Hypothesis H1 (latent scratchpad) and confirms Hypothesis H3 (format conditioning). Generic periods match the trained embeddings, proving that the learned weights carry no specialized visual-reasoning payload.}
+\end{frame}
+
+% SLIDE 21: E1 Finding 2: Decoding Pathology at K=0
+\begin{frame}{E1 Finding 2: Decoding Pathology at $K=0$}
+  \framesubtitle{Act III: The Empirical Journey $\cdot$ Why Row 2 collapsed by 12 points: autoregressive runaway, not missing compute}
+  
+  \centering
+  \includegraphics[height=0.48\textheight]{slide21_decoding_pathology.pdf}
+  
+  \vspace{2pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{Pathology 1: Unconstrained Verbal Drift}]
+        \scriptsize When \texttt{<think>} is unclosed, base model defaults to discursive text-CoT. Latency surges from 0.36s to \textbf{175.12s per sample} (480$\times$ slowdown).
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[alertcard, title=\textbf{Pathology 2: Repetition Loops \& Parse Crashes}]
+        \scriptsize IQ \#52 looped 48 cycles hitting 1,024 cap; RelDep \#12 collapsed into CJK characters; 3 items failed regex parsing completely.
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{The 12-point drop is not caused by losing an internal scratchpad. It is caused by the model reverting to rambling text-CoT, which introduces visual drift and occasional decoding pathologies.}
+\end{frame}
+
+% SLIDE 22: E1 Finding 3: Flat Scaling & Non-Significant GRPO
+\begin{frame}{E1 Finding 3: Flat Scaling \& Non-Significant GRPO}
+  \framesubtitle{Act III: The Empirical Journey $\cdot$ Absence of computational scaling and evaluative noise in RL refinement}
+  
+  \centering
+  \includegraphics[height=0.40\textheight]{slide22_budget_scaling_grpo.pdf}
+  
+  \vspace{2pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{Flat Budget Scaling ($K=1$ to $40$)}]
+        \scriptsize
+        \begin{itemize}\setlength{\itemsep}{2pt}
+          \item $K=1$: \textbf{66.43\%} ($p=0.0931$) --- recovers \textbf{89\%} of effect with 1 token!
+          \item $K=5$: 67.29\% \quad $K=10$: 66.71\% \quad $K=40$: 67.29\%
+          \item Performance is a flat line across all $K \ge 1$.
+        \end{itemize}
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[alertcard, title=\textbf{GRPO Advantage Bottleneck ($G=2$)}]
+        \scriptsize
+        \begin{itemize}\setlength{\itemsep}{2pt}
+          \item Stage 3 GRPO gain: \textbf{+0.86\%} ($b=20, c=26, \mathbf{p=0.4610}$).
+          \item With group size $G=2$, pairs $[1, 1]$ or $[0, 0]$ have 0 advantage.
+          \item Statistically indistinguishable from evaluative noise.
+        \end{itemize}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{A true cognitive scratchpad benefits from more thinking steps. Here, giving the model 40 tokens yields the exact same performance as 1 token. GRPO's reported gain is statistical noise.}
+\end{frame}
+
+% SLIDE 23: The New Threat: Systematic Answer Bias
+\begin{frame}{The New Threat: Systematic Answer Bias}
+  \framesubtitle{Act III: The Empirical Journey $\cdot$ Auditing prediction distributions uncovers severe label prior misalignment}
+  
+  \begin{columns}[c]
+    \begin{column}{0.60\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{slide23_b_bias.pdf}
+    \end{column}
+    \begin{column}{0.38\textwidth}
+      \begin{tcolorbox}[alertcard, title=\textbf{Severe Prior Skew}]
+        \small
+        \begin{itemize}\setlength{\itemsep}{3pt}
+          \item Mull checkpoints predict \textbf{``B'' 59.6\%--61.8\%} of the time on 2-way tasks ($N=550$).
+          \item SAT / DirAns baseline is well calibrated (\textbf{48.1\%}).
+          \item BLINK Multi-View split is skewed: \textbf{55.6\% gold ``B''}.
+        \end{itemize}
+      \end{tcolorbox}
+      \vspace{4pt}
+      \begin{tcolorbox}[metriccard]
+        \scriptsize \textbf{The Scientific Question}:\\
+        Does Mull's margin reflect spatial reasoning, or an uncalibrated prior guessing ``B''?
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{This is the hinge to Experiment E2. In the paper, Mull beat DirAns by +5.40\%. But when we audited the raw predictions, Mull had a massive 10-point bias toward predicting option ``B'', while the SAT baseline was calibrated near 50\%. Because the Multi-View split happens to have 55.6\% gold ``B'', guessing ``B'' gives a free score boost. That raised an urgent scientific question: Is Mull actually better at seeing space, or is its lead an artifact of guessing ``B''?}
+\end{frame}
+
+% SLIDE 24: Experiment E2: Disentangling Bias
+\begin{frame}{Experiment E2: Disentangling Bias from Discrimination}
+  \framesubtitle{Act III: The Empirical Journey $\cdot$ Factorial manipulation across 6 input variants ($N=44,590$ evaluations across 14 conditions)}
+  
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{Six Controlled Input Variants}]
+        \scriptsize
+        \begin{enumerate}\setlength{\itemsep}{2pt}
+          \item \textbf{V0 (Real)}: Original image and question ($N=700$).
+          \item \textbf{V1 (Blind)}: Uniform grey (128) canvas ($N=700$) --- pure language prior.
+          \item \textbf{V2 (Option Swap)}: Content of A and B exchanged ($N=550$).
+          \item \textbf{V3 (Option Relabel)}: Option letters reversed ($N=550$).
+          \item \textbf{V4 (Swap + Relabel)}: Orthogonal $2\times 2$ factorial cell ($N=550$).
+          \item \textbf{CF (Content-Free)}: 27 dummy probes to extract $p_{\text{cf}}(\text{letter})$.
+        \end{enumerate}
+      \end{tcolorbox}
+    \end{column}
+    
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[accentcard, title=\textbf{Debiased Discrimination Formula}]
+        \scriptsize
+        Decomposing logit margin $m$ into visual signal $s$, letter bias $L$, and position bias $P$:
+        \begin{align*}
+          m_{V0} &= s + L + P, \quad m_{V2} = -s + L + P \\
+          m_{V3} &= -s + L - P, \quad m_{V4} = s + L - P
+        \end{align*}
+        \begin{equation*}
+          \mathbf{s = \frac{m_{V0} - m_{V2} - m_{V3} + m_{V4}}{4}}
+        \end{equation*}
+        \textit{Teacher-forced argmax verified with greedy decoding (Gate G3 agreement $\ge 99\%$).}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{We executed this using single-pass teacher-forced letter probability scoring with four hard verification gates (G1--G4). Gate G3 asserted \textgreater{}= 99\% agreement between teacher-forced argmax and E1 greedy generation.}
+\end{frame}
+
+% SLIDE 25: E2 Master Results
+\begin{frame}{E2 Master Results: Mull's Lead Evaporates}
+  \framesubtitle{Act III: The Empirical Journey $\cdot$ Rigorous calibration and debiasing eliminate the published advantage}
+  
+  \begin{columns}[c]
+    \begin{column}{0.60\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{slide25_e2_master_results.pdf}
+    \end{column}
+    \begin{column}{0.38\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{Primary Hypothesis Q1}]
+        \scriptsize
+        \textbf{Raw Accuracy ($M1$, $N=700$)}:\\
+        Mull 66.71\% vs. SAT 63.57\%\\
+        $\Delta = +3.14\%$ ($p=0.063$, non-sig)\\
+        \vspace{4pt}
+        \textbf{Calibrated ($M2$, $N=700$)}:\\
+        Mull 53.57\% vs. \textbf{SAT 56.14\%}\\
+        \alert{\textbf{SAT WINS by +2.57\%}} ($p=0.079$)\\
+        \vspace{4pt}
+        \textbf{Debiased $2\times 2$ ($M3$, $N=550$)}:\\
+        Mull 74.91\% vs. SAT 72.55\%\\
+        $\Delta = +2.36\%$ ($p=0.2181$, non-sig)
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+  
+  \vspace{4pt}
+  \begin{tcolorbox}[alertcard]
+    \centering \small \alert{\textbf{Key Discovery: 35.0\% of Mull's published advantage over DirAns is explained purely by answer-prior alignment with benchmark test splits.}}
+  \end{tcolorbox}
+
+  \note{Read these numbers carefully. When contextual letter priors are calibrated out, the SAT baseline actually beats Mull by +2.57\%. Under full bias-free 2x2 discrimination, the gap shrinks to +2.36\% with p = 0.2181 (statistically indistinguishable). Over a third of Mull's reported margin over DirAns was simply answer bias.}
+\end{frame}
+
+% SLIDE 26: E2 Mechanistic Proofs
+\begin{frame}{E2 Mechanistic Proofs: Logit Margins \& Direct Control}
+  \framesubtitle{Act III: The Empirical Journey $\cdot$ Continuous logit distributions and zero-latent direct answering controls}
+  
+  \centering
+  \includegraphics[height=0.48\textheight]{slide26_margin_distribution.pdf}
+  
+  \vspace{2pt}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[successcard, title=\textbf{1. Continuous Margin Equivalence}]
+        \scriptsize
+        T1 (20 latents) mean margin = \textbf{0.7163}\\
+        T3 (\texttt{<think></think>}) mean margin = \textbf{0.7130}\\
+        Wilcoxon: $W=46497.0, \mathbf{p = 0.9833}$ ($d_z = 0.023$).\\
+        \textbf{TOST ($\pm 3$ pp)}: Confirmed Equivalent.
+      \end{tcolorbox}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[accentcard, title=\textbf{2. Direct Answer Control (T2F)}]
+        \scriptsize
+        Force \texttt{<answer} directly with \textbf{0 tags and 0 latents}.\\
+        $\bullet$ Scores \textbf{66.86\% raw} and \textbf{73.82\% debiased}.\\
+        $\bullet$ Matches T1 (66.71\%/74.91\%) and T3 (66.86\%/73.82\%).\\
+        $\bullet$ Proves $K=0$ drop is 100\% decoding artifact.
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{This slide closes both questions. The continuous logit distribution of 20 latents is mathematically identical to empty tags (p=0.9833). And when forced to answer directly with no latents (T2F), performance is completely preserved.}
+\end{frame}
+
+% ==============================================================================
+% ACT IV: WHERE THE FIELD IS & SCIENTIFIC VERDICT (Slides 27-29)
+% ==============================================================================
+
+% SLIDE 27: The 2026 Audit Wave
+\begin{frame}{The 2026 Audit Wave: Independent Convergence}
+  \framesubtitle{Act IV: Where the Field Is $\cdot$ Four independent teams concurrently arrived at the format/marker finding}
+  
+  \centering
+  \resizebox{0.98\textwidth}{!}{
+  \begin{tabular}{llp{7.5cm}}
+    \toprule
+    \textbf{Paper} & \textbf{Venue / Date} & \textbf{Core Empirical Finding} \\
+    \midrule
+    \textbf{What's Holding Back Latent VR?} & NeurIPS 2026 & Accuracy unaffected when latents replaced by uninformative dummy tokens; latent space collapses into narrow region. \\
+    \addlinespace
+    \textbf{Beyond Visual Memory} & Aug 2026 & Decomposes latents into slots vs. markers. Slot perturbations move accuracy $\le 0.027$; \textbf{markers preserve 78--100\% of gain}. \\
+    \addlinespace
+    \textbf{Imagination Helps VR, But Not in Latents} & ICML 2026 & Inputs barely affect latent states; latent states barely affect final answers. \\
+    \addlinespace
+    \textbf{Do Latent Tokens Think?} & EMNLP 2026 & Continuous latents show minimal steering sensitivity and lack reasoning-critical information. \\
+    \bottomrule
+  \end{tabular}}
+  
+  \vspace{6pt}
+  \begin{tcolorbox}[metriccard]
+    \small \textbf{Contextualisation}: Our empirical results converged independently with these four groups. We reached the format stop-gate finding from our own data before reading them. However, all four audited \textbf{continuous, content-supervised} tokens on perception tasks.
+  \end{tcolorbox}
+
+  \note{Our empirical results independently converged with four published groups. We reached the format/stop-gate finding from our own data before reading these. A paper arguing Mull-Tokens latents are a placebo would be fifth to that general conclusion. But all four audited continuous, content-supervised latents on perception tasks. Mull-Tokens is a different object, as the next slide shows.}
+\end{frame}
+
+% SLIDE 28: Positioning Matrix: Mull as the Limiting Case
+\begin{frame}{Positioning Matrix: Mull as the Limiting Case}
+  \framesubtitle{Act IV: Where the Field Is $\cdot$ Mull-Tokens represents the extreme theoretical boundary of latent architectures}
+  
+  \centering
+  \resizebox{0.98\textwidth}{!}{
+  \begin{tabular}{lp{5.0cm}p{5.0cm}}
+    \toprule
+    \textbf{Dimension} & \textbf{Audited Literature (LVR, Mirage, Monet)} & \textbf{Mull-Tokens (Our Study)} \\
+    \midrule
+    \textbf{Latent Form} & \textbf{Continuous} autoregressive vectors & \textbf{Discrete}: identical token ID \texttt{151665} $\times K$ \\
+    \addlinespace
+    \textbf{Slot Content} & Exists; supervised toward visual features & \textbf{Zero at input} (all 20 positions identical) \\
+    \addlinespace
+    \textbf{Boundary Markers} & Learned special tokens (\texttt{<lat\_start>}) & \textbf{Plain text} \texttt{<think>} (no special embeddings) \\
+    \addlinespace
+    \textbf{Benchmarks} & Perception-heavy ($V^*$, HRBench) & \textbf{Spatial Reasoning} (Jigsaw, IQ) + \textbf{Video} \\
+    \bottomrule
+  \end{tabular}}
+  
+  \vspace{3pt}
+  \begin{tcolorbox}[accentcard]
+    \centering \scriptsize \textbf{The Limiting Case}: Everything the audits attribute to non-content mechanisms (markers, format, attention routing, raw FLOPs) is \textbf{all Mull has}.
+  \end{tcolorbox}
+
+  \note{Structural argument: Mull-Tokens is the limiting case of the entire family: zero slot content. Everything the audits attribute to non-content mechanisms—markers, format, attention routing, raw compute—is all Mull has. We also verified in the tokenizer that \textless{}think\textgreater{} and \textless{}/think\textgreater{} are plain multi-token text, meaning Mull adds no learned boundary embeddings at all.}
+\end{frame}
+
+% SLIDE 29: The Final Scientific Verdict
+\begin{frame}{The Final Scientific Verdict}
+  \framesubtitle{Act IV: Where the Field Is $\cdot$ Three definitive conclusions from the empirical and mechanistic audit}
+  
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}
+      \begin{tcolorbox}[accentcard, title=\textbf{1. What Mull Is}]
+        \scriptsize
+        Mull-Tokens are a \textbf{syntactic format stop-gate}.\\
+        \vspace{3pt}
+        Prefilling \texttt{<think>...</think>} locks the assistant turn, preventing discursive text CoT which causes catastrophic visual drift in VLMs.
+      \end{tcolorbox}
+    \end{column}
+    
+    \begin{column}{0.34\textwidth}
+      \begin{tcolorbox}[alertcard, title=\textbf{2. Why Paper Flawed}]
+        \scriptsize
+        \begin{itemize}\setlength{\itemsep}{2pt}
+          \item \textbf{Text CoT Sabotage}: Prompted with padding, provoking drift.
+          \item \textbf{Regex Fragility}: Unlocked runs crashed or hit repetition loops.
+          \item \textbf{Uncalibrated Prior}: 10 pp B-bias explains \textbf{35\% of gain}.
+          \item \textbf{Zero Controls}: No empty tags or paired tests.
+        \end{itemize}
+      \end{tcolorbox}
+    \end{column}
+    
+    \begin{column}{0.32\textwidth}
+      \begin{tcolorbox}[successcard, title=\textbf{3. Field Takeaway}]
+        \scriptsize
+        Latent token insertions in feed-forward transformers \textbf{must} be evaluated with strict format and calibration controls before attributing gains to ``latent thinking''.
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{Three core conclusions: 1. What Mull-Tokens Actually Are: syntactic format stop-gate. 2. Why the Paper Reached Flawed Conclusions: sabotaged text baseline, regex parsing fragility, uncalibrated answer prior (explaining 35\% of gain), no controls or error bars. 3. Takeaway for the Field: latent token insertions in feed-forward transformers must be evaluated with strict format and calibration controls before attributing gains to latent thinking.}
+\end{frame}
+
+% ==============================================================================
+% ACT V: THE ASK & NEXT STEPS (Slides 30-32)
+% ==============================================================================
+
+% SLIDE 30: Candidate Problem Statements
+\begin{frame}{Candidate Problem Statements}
+  \framesubtitle{Act V: The Ask $\cdot$ Three concrete directions for advisor selection and alignment}
+  
+  \centering
+  \renewcommand{\arraystretch}{0.74}
+  \resizebox{0.88\textwidth}{!}{
+  \begin{tabular}{lp{3.1cm}p{3.1cm}p{3.8cm}}
+    \toprule
+    \textbf{Dimension} & \textbf{A. Task Taxonomy} & \textbf{B. Adaptive Budgeting} & \textbf{A + B Combined (Recommended)} \\
+    \midrule
+    \textbf{Research Question} & Which visual tasks benefit from content-free compute? & Can a model learn per-instance latent budget allocation? & Unified theory of content-free compute \& dynamic per-instance allocation. \\
+    \addlinespace
+    \textbf{Novelty} & High (extends Pfau et al. to vision and video) & High (test-time scaling for multimodal latents is open) & \textbf{Very High} (comprehensive conference paper). \\
+    \addlinespace
+    \textbf{40 GB Feasibility} & Excellent (pure inference) & Good (LoRA on 7B/3B) & Fits our current infrastructure. \\
+    \addlinespace
+    \textbf{Primary Risk} & May read as benchmark study without a method & Risk if compute genuinely doesn't help & Requires disciplined milestone execution. \\
+    \bottomrule
+  \end{tabular}}
+  
+  \vspace{3pt}
+  \begin{tcolorbox}[accentcard]
+    \scriptsize \textbf{Core Synthesis (A+B)}: \textit{``Content-free latent tokens provide format control and task-dependent compute, not visual memory---and current fixed-prefix designs cannot allocate that compute where it would help.''}
+  \end{tcolorbox}
+
+  \note{Advisor's job is to pick the problem statement, so Act V must leave real room for that. Notes on Recommendation (A+B): Content-free latent tokens provide format control and task-dependent compute, not visual memory—and current fixed-prefix designs cannot allocate that compute where it would help. We have the tools, verified harness, and video evaluation pipeline (VSI-Bench) that no other audit covers.}
+\end{frame}
+
+% SLIDE 31: Research Roadmap & Compute Feasibility
+\begin{frame}{Research Roadmap \& Compute Feasibility}
+  \framesubtitle{Act V: The Ask $\cdot$ Phased execution plan aligned with available GPU infrastructure}
+  
+  \centering
+  \resizebox{0.98\textwidth}{!}{
+  \begin{tabular}{llp{5.5cm}l}
+    \toprule
+    \textbf{Phase} & \textbf{Timeline} & \textbf{Core Deliverables} & \textbf{Hardware Required} \\
+    \midrule
+    \rowcolor{cardbg}
+    \textbf{Phase 1: Audit} & \textbf{Done} & E1 Matrix ($N=10.5\text{k}$) + E2 Calibration ($N=44.6\text{k}$) + \texttt{ERRATA.md} & 1$\times$ A100-40GB \\
+    \addlinespace
+    \textbf{Phase 2: Taxonomy} & Weeks 1--3 & Map benefit profile across 8 tasks + VSI-Bench video; layer attention knockout & 1$\times$ A100-40GB \\
+    \addlinespace
+    \textbf{Phase 3: Controller} & Weeks 4--7 & Train randomised-$K$ LoRA ($K \in [0, 40]$); learn per-instance \texttt{<|end\_of\_thought|>} & 1$\times$ A100 (LoRA) or 80GB (Full GRPO $G=8$) \\
+    \addlinespace
+    \textbf{Phase 4: Paper} & Weeks 8--10 & Conference submission (NeurIPS / CVPR / ICCV) & Writing / CPU \\
+    \bottomrule
+  \end{tabular}}
+  
+  \vspace{6pt}
+  \begin{tcolorbox}[metriccard]
+    \small \textbf{Compute Guarantee}: Phases 1 and 2 run entirely within our existing 40 GB card. Requesting 1 week of 80 GB VRAM during Phase 3 to scale GRPO group size ($G=8/16$) and eliminate dead updates.
+  \end{tcolorbox}
+
+  \note{Phases 1 and 2 fit our existing 40 GB card comfortably. If we obtain 80 GB access for one week during Phase 3, we can scale GRPO group size to G=8 or 16 to eliminate the dead updates that plagued the original paper.}
+\end{frame}
+
+% SLIDE 32: Four Decisions Needed from Advisor
+\begin{frame}{Four Strategic Decisions Needed Today}
+  \framesubtitle{Act V: The Ask $\cdot$ Guiding project scope, venue targeting, and collaborative engagement}
+  
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[accentcard, title=\textbf{1. Direction Approval}]
+        \small Commit to \textbf{Option A+B}: unified task structure taxonomy + adaptive budget controller.
+      \end{tcolorbox}
+      \vspace{4pt}
+      \begin{tcolorbox}[metriccard, title=\textbf{2. Target Venue Strategy}]
+        \small Target top-tier conference paper (NeurIPS / CVPR) rather than a narrow workshop audit.
+      \end{tcolorbox}
+    \end{column}
+    
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{3. Compute Scheduling}]
+        \small Schedule 1 week of 80 GB VRAM access for Phase 3 GRPO scaling ($G=8$).
+      \end{tcolorbox}
+      \vspace{4pt}
+      \begin{tcolorbox}[alertcard, title=\textbf{4. Author Outreach}]
+        \small Reach out to Ray et al. regarding unreleased Stage 1 and Table 2 ablation checkpoints.
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+  
+  \vspace{8pt}
+  \begin{center}
+    \small \textbf{``Replication verified $\cdot$ Audit definitive $\cdot$ Data hygiene rock-solid $\cdot$ Ready to build.''}
+  \end{center}
+
+  \note{Closing line: The replication is verified, the mechanistic audit is definitive, and the data hygiene is rock-solid. What I need now is your direction on which problem statement to commit to.}
+\end{frame}
+
+% ==============================================================================
+% BACKUP SLIDES (B1-B3)
+% ==============================================================================
+\appendix
+
+% SLIDE 33 (B1): Isn't this just replicating?
+\begin{frame}{Backup B1: ``Isn't this just replicating a paper?''}
+  \framesubtitle{Backup $\cdot$ Distinguishing replication infrastructure from our novel scientific discoveries}
+  
+  \begin{tcolorbox}[successcard, title=\textbf{Five Novel Scientific Discoveries (None in Literature)}]
+    \small
+    \begin{enumerate}\setlength{\itemsep}{3pt}
+      \item \textbf{Row 3 Empty Tags}: Prefilling \texttt{<think></think>} matches 20 trained latents ($p = 0.5413$).
+      \item \textbf{Direct Answer Control (T2F)}: Forcing immediate \texttt{<answer} achieves 66.86\% raw / 73.82\% debiased, proving $K=0$ drop is 100\% decoding mode degeneration.
+      \item \textbf{Answer Prior Discovery}: 35.0\% of Mull's lead over DirAns is explained by uncalibrated ``B''-bias alignment ($L = +0.098$).
+      \item \textbf{Calibration Reversal}: Under contextual letter calibration, SAT actually \textbf{outperforms} Mull by \textbf{+2.57\%} ($p = 0.0790$).
+      \item \textbf{Continuous Margin Equivalence}: Wilcoxon signed-rank test proves logit distributions are identical ($W=46497.0, \mathbf{p = 0.9833}$).
+    \end{enumerate}
+  \end{tcolorbox}
+
+  \note{No. Replication was only Phase 0. The scientific discoveries are entirely ours: 1. Row 3 empty think tags (\textless{}think\textgreater{}\textless{}/think\textgreater{}) match 20 latents (p=0.5413). 2. The K=0 drop is 100\% autoregressive verbal degeneration, proven by T2F (66.86\% raw / 73.82\% debiased). 3. 35.0\% of Mull's lead over DirAns is pure B-bias alignment (L = +0.098). 4. Under contextual calibration, SAT actually outperforms Mull (+2.57\%, p=0.0790). 5. Continuous logit margins prove mathematical equivalence (W=46497.0, p=0.9833).}
+\end{frame}
+
+% SLIDE 34 (B2): Why trust numbers after bug?
+\begin{frame}{Backup B2: Forensic Pipeline Verification}
+  \framesubtitle{Backup $\cdot$ Why the automated error detection demonstrates institutional research rigor}
+  
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{How Bug Was Detected}]
+        \small
+        \begin{itemize}\setlength{\itemsep}{2pt}
+          \item Discovered via automated arithmetic check on sample fractions.
+          \item 50.00\% on 143 items = 71.5 items (mathematical impossibility).
+          \item Defect isolated to unvetted filesystem globbing during smoke runs.
+        \end{itemize}
+      \end{tcolorbox}
+    \end{column}
+    
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[successcard, title=\textbf{Standing Pipeline Assertions}]
+        \small
+        \begin{itemize}\setlength{\itemsep}{2pt}
+          \item Smoke runs isolated to \texttt{smoke\_archive/}.
+          \item Hardcoded assertions enforce exact split counts: SpRel=143, RelDep=124, Jig=150, MV=133, IQ=150 ($N=700$).
+          \item All E1 ($N=10.5\text{k}$) and E2 ($N=44.6\text{k}$) runs logged raw per-sample token IDs and logits.
+        \end{itemize}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+  
+  \vspace{6pt}
+  \begin{tcolorbox}[accentcard]
+    \centering \small Full forensic disclosure and corrected data tables documented in \texttt{ERRATA.md}.
+  \end{tcolorbox}
+
+  \note{Because: The bug was caught by an automated arithmetic check on sample fractions. We isolated all smoke files, instituted strict sample count assertions in eval\_metric\_utils.py, and published the full correction log in ERRATA.md. All runs in E1 (N=10,500) and E2 (N=44,590) logged raw per-sample token IDs, lengths, and logits with G1-G4 verification gates.}
+\end{frame}
+
+% SLIDE 35 (B3): Blind Baseline
+\begin{frame}{Backup B3: What Did the Blind Baseline ($V1$) Show?}
+  \framesubtitle{Backup $\cdot$ Dissecting pure language priors on uniform grey (128) canvases}
+  
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{Fixed-Prompt Benchmark Splits}]
+        \small
+        On Relative Depth, Jigsaw, and Multi-View, each split uses an \textbf{identical question prompt} across all items.
+        \vspace{4pt}
+        \begin{itemize}\setlength{\itemsep}{2pt}
+          \item Accuracy on grey canvases equals the gold share of the model's preferred letter.
+          \item \textbf{Multi-View Blind}: Mull achieves \textbf{55.6\%}, exactly matching its ``B''-bias on a 55.6\% gold ``B'' split!
+        \end{itemize}
+      \end{tcolorbox}
+    \end{column}
+    
+    \begin{column}{0.48\textwidth}
+      \begin{tcolorbox}[accentcard, title=\textbf{Variable-Prompt Split (Spatial Relation)}]
+        \small
+        Spatial Relation is the only split where question text varies per instance:
+        \vspace{4pt}
+        \begin{itemize}\setlength{\itemsep}{2pt}
+          \item \textbf{Blind Accuracy}: \textbf{46.85\%} (vs. 50\% chance)
+          \item \textbf{AUC}: \textbf{0.602}
+          \item Demonstrates weak linguistic heuristic exploitation even without pixel features.
+        \end{itemize}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{On Relative Depth, Jigsaw, and Multi-View, each split uses an identical question prompt across all items. On uniform grey canvases (V1), accuracy equals the gold share of whichever letter the model prefers (Multi-View blind accuracy = 55.6\% for Mull, exactly matching its B-bias on a 55.6\% gold-B split). Spatial Relation is the only split where question text varies (blind accuracy = 46.85\%, AUC = 0.602).}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,375 @@
+\begin{thebibliography}{74}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bai et~al.(2025{\natexlab{a}})Bai, Chen, Liu, Wang, Ge, Song, Dang, Wang, Wang, Tang, Zhong, Zhu, Yang, Li, Wan, Wang, Ding, Fu, Xu, Ye, Zhang, Xie, Cheng, Zhang, Yang, Xu, and Lin]{Qwen2.5-VL}
+Shuai Bai, Keqin Chen, Xuejing Liu, Jialin Wang, Wenbin Ge, Sibo Song, Kai Dang, Peng Wang, Shijie Wang, Jun Tang, Humen Zhong, Yuanzhi Zhu, Mingkun Yang, Zhaohai Li, Jianqiang Wan, Pengfei Wang, Wei Ding, Zheren Fu, Yiheng Xu, Jiabo Ye, Xi~Zhang, Tianbao Xie, Zesen Cheng, Hang Zhang, Zhibo Yang, Haiyang Xu, and Junyang Lin.
+\newblock Qwen2.5-vl technical report.
+\newblock \emph{arXiv preprint arXiv:2502.13923}, 2025{\natexlab{a}}.
+
+\bibitem[Bai et~al.(2025{\natexlab{b}})Bai, Chen, Liu, Wang, Ge, Song, Dang, Wang, Wang, Tang, et~al.]{bai2025qwen2_5}
+Shuai Bai, Keqin Chen, Xuejing Liu, Jialin Wang, Wenbin Ge, Sibo Song, Kai Dang, Peng Wang, Shijie Wang, Jun Tang, et~al.
+\newblock Qwen2. 5-vl technical report.
+\newblock \emph{arXiv preprint arXiv:2502.13923}, 2025{\natexlab{b}}.
+
+\bibitem[Bai et~al.(2025{\natexlab{c}})Bai, Li, Liu, Tang, Zhang, Sun, Chu, and Tang]{bai2025univg}
+Sule Bai, Mingxing Li, Yong Liu, Jing Tang, Haoji Zhang, Lei Sun, Xiangxiang Chu, and Yansong Tang.
+\newblock Univg-r1: Reasoning guided universal visual grounding with reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2505.14231}, 2025{\natexlab{c}}.
+
+\bibitem[Bigverdi et~al.(2025)Bigverdi, Luo, Hsieh, Shen, Chen, Shapiro, and Krishna]{bigverdi2025perception}
+Mahtab Bigverdi, Zelun Luo, Cheng-Yu Hsieh, Ethan Shen, Dongping Chen, Linda~G Shapiro, and Ranjay Krishna.
+\newblock Perception tokens enhance visual reasoning in multimodal language models.
+\newblock In \emph{Proceedings of the Computer Vision and Pattern Recognition Conference}, pp.\  3836--3845, 2025.
+
+\bibitem[Cai et~al.(2025)Cai, Li, Wen, Chen, and Zhao]{cai2025diagnosingmitigatingmodalityinterference}
+Rui Cai, Bangzheng Li, Xiaofei Wen, Muhao Chen, and Zhe Zhao.
+\newblock Diagnosing and mitigating modality interference in multimodal large language models.
+\newblock \emph{arXiv preprint arXiv:2505.19616}, 2025.
+
+\bibitem[Chen et~al.(2025{\natexlab{a}})Chen, Tu, Wang, Liu, Tang, Du, Zhou, and Xie]{chen2025sft}
+Hardy Chen, Haoqin Tu, Fali Wang, Hui Liu, Xianfeng Tang, Xinya Du, Yuyin Zhou, and Cihang Xie.
+\newblock Sft or rl? an early investigation into training r1-like reasoning large vision-language models.
+\newblock \emph{arXiv preprint arXiv:2504.11468}, 2025{\natexlab{a}}.
+
+\bibitem[Chen et~al.(2025{\natexlab{b}})Chen, Guo, Su, Li, Wu, Chen, Chen, Wang, Qu, and Cheng]{chen2025advancing}
+Shuang Chen, Yue Guo, Zhaochen Su, Yafu Li, Yulun Wu, Jiacheng Chen, Jiayu Chen, Weijie Wang, Xiaoye Qu, and Yu~Cheng.
+\newblock Advancing multimodal reasoning: From optimized cold start to staged reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2506.04207}, 2025{\natexlab{b}}.
+
+\bibitem[Chen et~al.(2024)Chen, Wang, Cao, Liu, Gao, Cui, Zhu, Ye, Tian, Liu, et~al.]{internvl2.5}
+Zhe Chen, Weiyun Wang, Yue Cao, Yangzhou Liu, Zhangwei Gao, Erfei Cui, Jinguo Zhu, Shenglong Ye, Hao Tian, Zhaoyang Liu, et~al.
+\newblock Expanding performance boundaries of open-source multimodal models with model, data, and test-time scaling.
+\newblock \emph{arXiv preprint arXiv:2412.05271}, 2024.
+
+\bibitem[Cheng \& Van~Durme(2024)Cheng and Van~Durme]{cheng2024compressed}
+Jeffrey Cheng and Benjamin Van~Durme.
+\newblock Compressed chain of thought: Efficient reasoning through dense representations.
+\newblock \emph{arXiv preprint arXiv:2412.13171}, 2024.
+
+\bibitem[Chung et~al.(2025)Chung, Kim, Kim, Lee, Kim, and Yu]{chung2025don}
+Jiwan Chung, Junhyeok Kim, Siyeol Kim, Jaeyoung Lee, Min~Soo Kim, and Youngjae Yu.
+\newblock Don't look only once: Towards multimodal interactive reasoning with selective visual revisitation.
+\newblock \emph{arXiv preprint arXiv:2505.18842}, 2025.
+
+\bibitem[Deng et~al.(2025{\natexlab{a}})Deng, Cao, Chen, and Hooi]{deng2025wordsvisionvisionlanguagemodels}
+Ailin Deng, Tri Cao, Zhirui Chen, and Bryan Hooi.
+\newblock Words or vision: Do vision-language models have blind faith in text?, 2025{\natexlab{a}}.
+
+\bibitem[Deng et~al.(2025{\natexlab{b}})Deng, Zhu, Li, Gou, Li, Wang, Zhong, Yu, Nie, Song, Shi, and Fan]{bagel}
+Chaorui Deng, Deyao Zhu, Kunchang Li, Chenhui Gou, Feng Li, Zeyu Wang, Shu Zhong, Weihao Yu, Xiaonan Nie, Ziang Song, Guang Shi, and Haoqi Fan.
+\newblock Emerging properties in unified multimodal pretraining.
+\newblock \emph{arXiv preprint arXiv:2505.14683}, 2025{\natexlab{b}}.
+
+\bibitem[Deng et~al.(2025{\natexlab{c}})Deng, Bansal, Yin, Peng, Wang, and Chang]{deng2025openvlthinker}
+Yihe Deng, Hritik Bansal, Fan Yin, Nanyun Peng, Wei Wang, and Kai-Wei Chang.
+\newblock Openvlthinker: An early exploration to complex vision-language reasoning via iterative self-improvement.
+\newblock \emph{arXiv preprint arXiv:2503.17352}, 2025{\natexlab{c}}.
+
+\bibitem[Fu et~al.(2024)Fu, Hu, Li, Feng, Wang, Lin, Roth, Smith, Ma, and Krishna]{blink}
+Xingyu Fu, Yushi Hu, Bangzheng Li, Yu~Feng, Haoyu Wang, Xudong Lin, Dan Roth, Noah~A Smith, Wei-Chiu Ma, and Ranjay Krishna.
+\newblock Blink: Multimodal large language models can see but not perceive.
+\newblock \emph{arXiv preprint arXiv:2404.12390}, 2024.
+
+\bibitem[Fu et~al.(2025)Fu, Liu, Yang, Corring, Lu, Yang, Roth, Florencio, and Zhang]{fu2025refocus}
+Xingyu Fu, Minqian Liu, Zhengyuan Yang, John Corring, Yijuan Lu, Jianwei Yang, Dan Roth, Dinei Florencio, and Cha Zhang.
+\newblock Refocus: Visual editing as a chain of thought for structured image understanding.
+\newblock \emph{arXiv preprint arXiv:2501.05452}, 2025.
+
+\bibitem[Geng et~al.(2025)Geng, Xia, Zhang, Wang, Wang, Ding, Wang, Wu, Zhao, Li, et~al.]{geng2025webwatcher}
+Xinyu Geng, Peng Xia, Zhen Zhang, Xinyu Wang, Qiuchen Wang, Ruixue Ding, Chenxi Wang, Jialong Wu, Yida Zhao, Kuan Li, et~al.
+\newblock Webwatcher: Breaking new frontiers of vision-language deep research agent.
+\newblock \emph{arXiv preprint arXiv:2508.05748}, 2025.
+
+\bibitem[Hao et~al.(2024)Hao, Sukhbaatar, Su, Li, Hu, Weston, and Tian]{coconut}
+Shibo Hao, Sainbayar Sukhbaatar, DiJia Su, Xian Li, Zhiting Hu, Jason Weston, and Yuandong Tian.
+\newblock Training large language models to reason in a continuous latent space.
+\newblock \emph{arXiv preprint arXiv:2412.06769}, 2024.
+
+\bibitem[Hong et~al.(2025)Hong, Guo, Xia, Wang, Zhang, Jin, and Zhao]{hong2025apo}
+Minjie Hong, Zirun Guo, Yan Xia, Zehan Wang, Ziang Zhang, Tao Jin, and Zhou Zhao.
+\newblock Apo: Enhancing reasoning ability of mllms via asymmetric policy optimization.
+\newblock \emph{arXiv preprint arXiv:2506.21655}, 2025.
+
+\bibitem[Hu et~al.(2024)Hu, Shi, Fu, Roth, Ostendorf, Zettlemoyer, Smith, and Krishna]{hu2024visual}
+Yushi Hu, Weijia Shi, Xingyu Fu, Dan Roth, Mari Ostendorf, Luke Zettlemoyer, Noah~A Smith, and Ranjay Krishna.
+\newblock Visual sketchpad: Sketching as a visual chain of thought for multimodal language models.
+\newblock \emph{arXiv preprint arXiv:2406.09403}, 2024.
+
+\bibitem[Huang et~al.(2024)Huang, Dong, Zhang, Wang, He, Wang, Lin, Zhang, and Yu]{huang2024opera}
+Qidong Huang, Xiaoyi Dong, Pan Zhang, Bin Wang, Conghui He, Jiaqi Wang, Dahua Lin, Weiming Zhang, and Nenghai Yu.
+\newblock Opera: Alleviating hallucination in multi-modal large language models via over-trust penalty and retrospection-allocation.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pp.\  13418--13427, 2024.
+
+\bibitem[Huang et~al.(2025{\natexlab{a}})Huang, Jia, Zhai, Cao, Ye, Zhao, Xu, Hu, and Lin]{visionr1}
+Wenxuan Huang, Bohan Jia, Zijie Zhai, Shaosheng Cao, Zheyu Ye, Fei Zhao, Zhe Xu, Yao Hu, and Shaohui Lin.
+\newblock Vision-r1: Incentivizing reasoning capability in multimodal large language models, 2025{\natexlab{a}}.
+
+\bibitem[Huang et~al.(2025{\natexlab{b}})Huang, Ji, Rajan, Cai, Xiao, Wang, Hu, and Lee]{huang2025visualtoolagent}
+Zeyi Huang, Yuyang Ji, Anirudh~Sundara Rajan, Zefan Cai, Wen Xiao, Haohan Wang, Junjie Hu, and Yong~Jae Lee.
+\newblock Visualtoolagent (vista): A reinforcement learning framework for visual tool selection.
+\newblock \emph{arXiv preprint arXiv:2505.20289}, 2025{\natexlab{b}}.
+
+\bibitem[Jiang et~al.(2025)Jiang, Heng, Ye, Yang, Xu, Yan, Zhang, Huang, and Zhang]{jiang2025vlm}
+Chaoya Jiang, Yongrui Heng, Wei Ye, Han Yang, Haiyang Xu, Ming Yan, Ji~Zhang, Fei Huang, and Shikun Zhang.
+\newblock Vlm-r 3: Region recognition, reasoning, and refinement for enhanced multimodal chain-of-thought.
+\newblock \emph{arXiv preprint arXiv:2505.16192}, 2025.
+
+\bibitem[Li et~al.(2024{\natexlab{a}})Li, Zhang, Zhang, Pu, Du, Dong, Liu, Zhang, Zhang, Li, and Liu]{lmms_eval2024}
+Bo~Li, Peiyuan Zhang, Kaichen Zhang, Fanyi Pu, Xinrun Du, Yuhao Dong, Haotian Liu, Yuanhan Zhang, Ge~Zhang, Chunyuan Li, and Ziwei Liu.
+\newblock Lmms-eval: Accelerating the development of large multimoal models, 2024{\natexlab{a}}.
+\newblock URL \url{https://github.com/EvolvingLMMs-Lab/lmms-eval}.
+
+\bibitem[Li et~al.(2024{\natexlab{b}})Li, Zhang, Guo, Zhang, Li, Zhang, Zhang, Zhang, Li, Liu, et~al.]{li2024llava_ov}
+Bo~Li, Yuanhan Zhang, Dong Guo, Renrui Zhang, Feng Li, Hao Zhang, Kaichen Zhang, Peiyuan Zhang, Yanwei Li, Ziwei Liu, et~al.
+\newblock Llava-onevision: Easy visual task transfer.
+\newblock \emph{arXiv preprint arXiv:2408.03326}, 2024{\natexlab{b}}.
+
+\bibitem[Li et~al.(2025)Li, Wu, Zhang, Xia, Mao, Dong, Vulić, and Wei]{mvot}
+Chengzu Li, Wenshan Wu, Huanyu Zhang, Yan Xia, Shaoguang Mao, Li~Dong, Ivan Vulić, and Furu Wei.
+\newblock Imagine while reasoning in space: Multimodal visualization-of-thought, 2025.
+\newblock URL \url{https://arxiv.org/abs/2501.07542}.
+
+\bibitem[Liang et~al.(2025)Liang, Qiu, Ding, Liu, Tompkin, Xu, Xia, Tu, Shi, and Zhu]{liang2025modomodo}
+Yiqing Liang, Jielin Qiu, Wenhao Ding, Zuxin Liu, James Tompkin, Mengdi Xu, Mengzhou Xia, Zhengzhong Tu, Laixi Shi, and Jiacheng Zhu.
+\newblock Modomodo: Multi-domain data mixtures for multimodal llm reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2505.24871}, 2025.
+
+\bibitem[Liu et~al.(2025{\natexlab{a}})Liu, Wang, Ruan, Luo, Chen, Li, and Liu]{liu2025Visual}
+Dairu Liu, Ziyue Wang, Minyuan Ruan, Fuwen Luo, Chi Chen, Peng Li, and Yang Liu.
+\newblock Visual {{Abstract Thinking Empowers Multimodal Reasoning}}, May 2025{\natexlab{a}}.
+\newblock URL \url{http://arxiv.org/abs/2505.20164}.
+
+\bibitem[Liu et~al.(2023)Liu, Li, Wu, and Lee]{liu2023llava}
+Haotian Liu, Chunyuan Li, Qingyang Wu, and Yong~Jae Lee.
+\newblock Visual instruction tuning.
+\newblock In \emph{NeurIPS}, 2023.
+
+\bibitem[Liu et~al.(2025{\natexlab{b}})Liu, Liu, Zhu, Xie, Li, Yuan, Wang, Li, Cheung, Zhang, et~al.]{liu2025infi}
+Zeyu Liu, Yuhang Liu, Guanghao Zhu, Congkai Xie, Zhen Li, Jianbo Yuan, Xinyao Wang, Qing Li, Shing-Chi Cheung, Shengyu Zhang, et~al.
+\newblock Infi-mmr: Curriculum-based unlocking multimodal reasoning via phased reinforcement learning in multimodal small language models.
+\newblock \emph{arXiv preprint arXiv:2505.23091}, 2025{\natexlab{b}}.
+
+\bibitem[Liu et~al.(2025{\natexlab{c}})Liu, Sun, Zang, Dong, Cao, Duan, Lin, and Wang]{liu2025visual2}
+Ziyu Liu, Zeyi Sun, Yuhang Zang, Xiaoyi Dong, Yuhang Cao, Haodong Duan, Dahua Lin, and Jiaqi Wang.
+\newblock Visual-rft: Visual reinforcement fine-tuning.
+\newblock \emph{arXiv preprint arXiv:2503.01785}, 2025{\natexlab{c}}.
+
+\bibitem[Man et~al.(2025)Man, Huang, Liu, Sheng, Liu, Gui, Kautz, Wang, and Yu]{man2025argus}
+Yunze Man, De-An Huang, Guilin Liu, Shiwei Sheng, Shilong Liu, Liang-Yan Gui, Jan Kautz, Yu-Xiong Wang, and Zhiding Yu.
+\newblock Argus: Vision-centric reasoning with grounded chain-of-thought.
+\newblock In \emph{CVPR}, 2025.
+
+\bibitem[Meng et~al.(2025)Meng, Du, Liu, Zhou, Lu, Fu, Shi, Wang, He, Zhang, et~al.]{meng2025mm}
+Fanqing Meng, Lingxiao Du, Zongkai Liu, Zhixiang Zhou, Quanfeng Lu, Daocheng Fu, Botian Shi, Wenhai Wang, Junjun He, Kaipeng Zhang, et~al.
+\newblock Mm-eureka: Exploring visual aha moment with rule-based large-scale reinforcement learning.
+\newblock \emph{CoRR}, 2025.
+
+\bibitem[Ni et~al.(2025)Ni, Yang, Li, Lin, Lin, Zuo, and Wang]{ni2025point}
+Minheng Ni, Zhengyuan Yang, Linjie Li, Chung-Ching Lin, Kevin Lin, Wangmeng Zuo, and Lijuan Wang.
+\newblock Point-rft: Improving multimodal reasoning with visually grounded reinforcement finetuning.
+\newblock \emph{arXiv preprint arXiv:2505.19702}, 2025.
+
+\bibitem[Peng et~al.(2025)Peng, Zhang, Zhang, You, Liu, Zhu, Yang, Xu, Geng, and Yang]{peng2025lmm}
+Yingzhe Peng, Gongrui Zhang, Miaosen Zhang, Zhiyuan You, Jie Liu, Qipeng Zhu, Kai Yang, Xingzhong Xu, Xin Geng, and Xu~Yang.
+\newblock Lmm-r1: Empowering 3b lmms with strong reasoning abilities through two-stage rule-based rl.
+\newblock \emph{arXiv preprint arXiv:2503.07536}, 2025.
+
+\bibitem[Pezeshkpour et~al.(2025)Pezeshkpour, Aminnaseri, and Hruschka]{pezeshkpour2025mixedsignalsdecodingvlms}
+Pouya Pezeshkpour, Moin Aminnaseri, and Estevam Hruschka.
+\newblock Mixed signals: Decoding vlms' reasoning and underlying bias in vision-language conflict, 2025.
+
+\bibitem[Shao et~al.(2024{\natexlab{a}})Shao, Qian, Xiao, Song, Zong, Wang, Liu, and Li]{shao2024visual}
+Hao Shao, Shengju Qian, Han Xiao, Guanglu Song, Zhuofan Zong, Letian Wang, Yu~Liu, and Hongsheng Li.
+\newblock Visual cot: Unleashing chain-of-thought reasoning in multi-modal language models, 2024{\natexlab{a}}.
+
+\bibitem[Shao et~al.(2024{\natexlab{b}})Shao, Qian, Xiao, Song, Zong, Wang, Liu, and Li]{visualcot}
+Hao Shao, Shengju Qian, Han Xiao, Guanglu Song, Zhuofan Zong, Letian Wang, Yu~Liu, and Hongsheng Li.
+\newblock Visual cot: Unleashing chain-of-thought reasoning in multi-modal language models, 2024{\natexlab{b}}.
+
+\bibitem[Shao et~al.(2024{\natexlab{c}})Shao, Wang, Zhu, Xu, Song, Bi, Zhang, Zhang, Li, Wu, and Guo]{grpo}
+Zhihong Shao, Peiyi Wang, Qihao Zhu, Runxin Xu, Junxiao Song, Xiao Bi, Haowei Zhang, Mingchuan Zhang, Y.~K. Li, Y.~Wu, and Daya Guo.
+\newblock Deepseekmath: Pushing the limits of mathematical reasoning in open language models, 2024{\natexlab{c}}.
+
+\bibitem[Shen et~al.(2025{\natexlab{a}})Shen, Wei, Qu, and Cheng]{shen2025satori}
+Chuming Shen, Wei Wei, Xiaoye Qu, and Yu~Cheng.
+\newblock Satori-r1: Incentivizing multimodal reasoning with spatial grounding and verifiable rewards.
+\newblock \emph{arXiv preprint arXiv:2505.19094}, 2025{\natexlab{a}}.
+
+\bibitem[Shen et~al.(2025{\natexlab{b}})Shen, Yan, Zhang, Hu, Du, and He]{shen2025codi}
+Zhenyi Shen, Hanqi Yan, Linhai Zhang, Zhanghao Hu, Yali Du, and Yulan He.
+\newblock Codi: Compressing chain-of-thought into continuous space via self-distillation.
+\newblock \emph{arXiv preprint arXiv:2502.21074}, 2025{\natexlab{b}}.
+
+\bibitem[Su et~al.(2025{\natexlab{a}})Su, Wang, Ren, Lin, and Chen]{pixelreasoner}
+Alex Su, Haozhe Wang, Weiming Ren, Fangzhen Lin, and Wenhu Chen.
+\newblock Pixel reasoner: Incentivizing pixel-space reasoning with curiosity-driven reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2505.15966}, 2025{\natexlab{a}}.
+
+\bibitem[Su et~al.(2025{\natexlab{b}})Su, Wang, Ren, Lin, and Chen]{su2025pixel}
+Alex Su, Haozhe Wang, Weiming Ren, Fangzhen Lin, and Wenhu Chen.
+\newblock Pixel reasoner: Incentivizing pixel-space reasoning with curiosity-driven reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2505.15966}, 2025{\natexlab{b}}.
+
+\bibitem[Su et~al.(2025{\natexlab{c}})Su, Li, Song, Hao, Yang, Zhang, Chen, Gu, Li, Qu, et~al.]{su2025openthinkimg}
+Zhaochen Su, Linjie Li, Mingyang Song, Yunzhuo Hao, Zhengyuan Yang, Jun Zhang, Guanjie Chen, Jiawei Gu, Juntao Li, Xiaoye Qu, et~al.
+\newblock Openthinkimg: Learning to think with images via visual tool reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2505.08617}, 2025{\natexlab{c}}.
+
+\bibitem[Su et~al.(2025{\natexlab{d}})Su, Xia, Guo, Liu, Ma, Qu, Liu, Li, Zeng, Yang, et~al.]{su2025thinking}
+Zhaochen Su, Peng Xia, Hangyu Guo, Zhenhua Liu, Yan Ma, Xiaoye Qu, Jiaqi Liu, Yanshu Li, Kaide Zeng, Zhengyuan Yang, et~al.
+\newblock Thinking with images for multimodal reasoning: Foundations, methods, and future frontiers.
+\newblock \emph{arXiv preprint arXiv:2506.23918}, 2025{\natexlab{d}}.
+
+\bibitem[Sur\'is et~al.(2023)Sur\'is, Menon, and Vondrick]{surismenon2023vipergpt}
+D\'idac Sur\'is, Sachit Menon, and Carl Vondrick.
+\newblock Vipergpt: Visual inference via python execution for reasoning.
+\newblock \emph{arXiv preprint arXiv:2303.08128}, 2023.
+
+\bibitem[Tan et~al.(2025)Tan, Ji, Hao, Lin, Wang, Wang, and Zhang]{tan2025reason}
+Huajie Tan, Yuheng Ji, Xiaoshuai Hao, Minglan Lin, Pengwei Wang, Zhongyuan Wang, and Shanghang Zhang.
+\newblock Reason-rft: Reinforcement fine-tuning for visual reasoning.
+\newblock \emph{arXiv preprint arXiv:2503.20752}, 2025.
+
+\bibitem[Team(2024)]{chameleon}
+Chameleon Team.
+\newblock Chameleon: Mixed-modal early-fusion foundation models.
+\newblock \emph{arXiv preprint arXiv:2405.09818}, 2024.
+\newblock \doi{10.48550/arXiv.2405.09818}.
+\newblock URL \url{https://github.com/facebookresearch/chameleon}.
+
+\bibitem[Tong et~al.(2024)Tong, Liu, Zhai, Ma, LeCun, and Xie]{mmvp}
+Shengbang Tong, Zhuang Liu, Yuexiang Zhai, Yi~Ma, Yann LeCun, and Saining Xie.
+\newblock Eyes wide shut? exploring the visual shortcomings of multimodal llms, 2024.
+
+\bibitem[Wang et~al.(2025{\natexlab{a}})Wang, Qu, Huang, Chu, Lin, and Chen]{vl-rethinker}
+Haozhe Wang, Chao Qu, Zuming Huang, Wei Chu, Fangzhen Lin, and Wenhu Chen.
+\newblock Vl-rethinker: Incentivizing self-reflection of vision-language models with reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2504.08837}, 2025{\natexlab{a}}.
+
+\bibitem[Wang et~al.(2025{\natexlab{b}})Wang, Kang, Wang, Jiang, Li, Wu, Wang, Ran, Liang, Feng, et~al.]{wang2025vgr}
+Jiacong Wang, Zijian Kang, Haochen Wang, Haiyong Jiang, Jiawen Li, Bohong Wu, Ya~Wang, Jiao Ran, Xiao Liang, Chao Feng, et~al.
+\newblock Vgr: Visual grounded reasoning.
+\newblock \emph{arXiv preprint arXiv:2506.11991}, 2025{\natexlab{b}}.
+
+\bibitem[Wang et~al.(2025{\natexlab{c}})Wang, Gao, Chen, Chen, Zhu, Zhao, Liu, Cao, Ye, Zhu, et~al.]{wang2025visualprm}
+Weiyun Wang, Zhangwei Gao, Lianjie Chen, Zhe Chen, Jinguo Zhu, Xiangyu Zhao, Yangzhou Liu, Yue Cao, Shenglong Ye, Xizhou Zhu, et~al.
+\newblock Visualprm: An effective process reward model for multimodal reasoning.
+\newblock \emph{arXiv preprint arXiv:2503.10291}, 2025{\natexlab{c}}.
+
+\bibitem[Wang et~al.(2025{\natexlab{d}})Wang, Gao, Gu, Pu, Cui, Wei, Liu, Jing, Ye, Shao, et~al.]{wang2025internvl3_5}
+Weiyun Wang, Zhangwei Gao, Lixin Gu, Hengjun Pu, Long Cui, Xingguang Wei, Zhaoyang Liu, Linglin Jing, Shenglong Ye, Jie Shao, et~al.
+\newblock Internvl3. 5: Advancing open-source multimodal models in versatility, reasoning, and efficiency.
+\newblock \emph{arXiv preprint arXiv:2508.18265}, 2025{\natexlab{d}}.
+
+\bibitem[Wang et~al.(2025{\natexlab{e}})Wang, Hooi, Wang, Yang, Huang, and Cai]{wang2025text}
+Zhaochen Wang, Bryan Hooi, Yiwei Wang, Ming-Hsuan Yang, Zi~Huang, and Yujun Cai.
+\newblock Text speaks louder than vision: {ASCII} art reveals textual biases in vision-language models.
+\newblock In \emph{Second Conference on Language Modeling}, 2025{\natexlab{e}}.
+\newblock URL \url{https://openreview.net/forum?id=naEyNVTLsh}.
+
+\bibitem[Wang et~al.(2025{\natexlab{f}})Wang, Guo, Stoica, Xu, Wang, Ha, Chen, Chen, Yan, Huang, et~al.]{papo}
+Zhenhailong Wang, Xuehang Guo, Sofia Stoica, Haiyang Xu, Hongru Wang, Hyeonjeong Ha, Xiusi Chen, Yangyi Chen, Ming Yan, Fei Huang, et~al.
+\newblock Perception-aware policy optimization for multimodal reasoning.
+\newblock \emph{arXiv preprint arXiv:2507.06448}, 2025{\natexlab{f}}.
+
+\bibitem[Wang et~al.(2025{\natexlab{g}})Wang, Guo, Stoica, Xu, Wang, Ha, Chen, Chen, Yan, Huang, et~al.]{wang2025perception}
+Zhenhailong Wang, Xuehang Guo, Sofia Stoica, Haiyang Xu, Hongru Wang, Hyeonjeong Ha, Xiusi Chen, Yangyi Chen, Ming Yan, Fei Huang, et~al.
+\newblock Perception-aware policy optimization for multimodal reasoning.
+\newblock \emph{arXiv preprint arXiv:2507.06448}, 2025{\natexlab{g}}.
+
+\bibitem[Wei et~al.(2025{\natexlab{a}})Wei, Li, Zheng, Wang, Wang, Kong, Sun, and Huang]{wei2025advancing}
+Lai Wei, Yuting Li, Kaipeng Zheng, Chen Wang, Yue Wang, Linghe Kong, Lichao Sun, and Weiran Huang.
+\newblock Advancing multimodal reasoning via reinforcement learning with cold start.
+\newblock \emph{arXiv preprint arXiv:2505.22334}, 2025{\natexlab{a}}.
+
+\bibitem[Wei et~al.(2025{\natexlab{b}})Wei, Zhao, Lin, Yu, Peng, Dong, Sun, Wei, Ge, Zhang, et~al.]{wei2025perception}
+Yana Wei, Liang Zhao, Kangheng Lin, En~Yu, Yuang Peng, Runpei Dong, Jianjian Sun, Haoran Wei, Zheng Ge, Xiangyu Zhang, et~al.
+\newblock Perception in reflection.
+\newblock \emph{arXiv preprint arXiv:2504.07165}, 2025{\natexlab{b}}.
+
+\bibitem[Wu et~al.(2025{\natexlab{a}})Wu, Guan, Feng, Liu, Wu, Wang, Wu, and Tan]{wu2025reinforcing}
+Junfei Wu, Jian Guan, Kaituo Feng, Qiang Liu, Shu Wu, Liang Wang, Wei Wu, and Tieniu Tan.
+\newblock Reinforcing spatial reasoning in vision-language models with interwoven thinking and visual drawing.
+\newblock \emph{arXiv preprint arXiv:2506.09965}, 2025{\natexlab{a}}.
+
+\bibitem[Wu et~al.(2025{\natexlab{b}})Wu, Yang, Jiang, Li, Yan, Yu, Zhang, Zhai, and Nahrstedt]{wu2025vtool}
+Mingyuan Wu, Jingcheng Yang, Jize Jiang, Meitang Li, Kaizhuo Yan, Hanchao Yu, Minjia Zhang, Chengxiang Zhai, and Klara Nahrstedt.
+\newblock Vtool-r1: Vlms learn to think with images via reinforcement learning on multimodal tool use.
+\newblock \emph{arXiv preprint arXiv:2505.19255}, 2025{\natexlab{b}}.
+
+\bibitem[Xia et~al.(2025)Xia, Zang, Gao, Li, and Zhou]{xia2025visionary}
+Jiaer Xia, Yuhang Zang, Peng Gao, Yixuan Li, and Kaiyang Zhou.
+\newblock Visionary-r1: Mitigating shortcuts in visual reasoning with reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2505.14677}, 2025.
+
+\bibitem[Xie et~al.(2025)Xie, Yang, and Shou]{xie2025showo2}
+Jinheng Xie, Zhenheng Yang, and Mike~Zheng Shou.
+\newblock Show-o2: Improved native unified multimodal models.
+\newblock \emph{arXiv preprint arXiv:2506.15564}, 2025.
+
+\bibitem[Xu et~al.(2024)Xu, Jin, Wu, Li, Song, Sun, and Yuan]{xu2024llava}
+Guowei Xu, Peng Jin, Ziang Wu, Hao Li, Yibing Song, Lichao Sun, and Li~Yuan.
+\newblock Llava-cot: Let vision language models reason step-by-step.
+\newblock \emph{arXiv preprint arXiv:2411.10440}, 2024.
+
+\bibitem[Xu et~al.(2025)Xu, Li, Zhou, Wan, Zhang, Korhonen, and Vulić]{visualplanning}
+Yi~Xu, Chengzu Li, Han Zhou, Xingchen Wan, Caiqi Zhang, Anna Korhonen, and Ivan Vulić.
+\newblock Visual planning: Let's think only with images, 2025.
+\newblock URL \url{https://arxiv.org/abs/2505.11409}.
+
+\bibitem[Yang et~al.(2025{\natexlab{a}})Yang, He, Pan, Jiang, Deng, Yang, Lu, Yin, Rao, Zhu, et~al.]{yang2025r1}
+Yi~Yang, Xiaoxuan He, Hongkun Pan, Xiyan Jiang, Yan Deng, Xingtao Yang, Haoyu Lu, Dacheng Yin, Fengyun Rao, Minfeng Zhu, et~al.
+\newblock R1-onevision: Advancing generalized multimodal reasoning through cross-modal formalization.
+\newblock \emph{arXiv preprint arXiv:2503.10615}, 2025{\natexlab{a}}.
+
+\bibitem[Yang et~al.(2025{\natexlab{b}})Yang, Yu, Chen, Shen, and Gan]{mirage}
+Zeyuan Yang, Xueyang Yu, Delin Chen, Maohao Shen, and Chuang Gan.
+\newblock Machine mental imagery: Empower multimodal reasoning with latent visual tokens.
+\newblock 2025{\natexlab{b}}.
+\newblock URL \url{https://arxiv.org/abs/2506.17218}.
+
+\bibitem[Yu et~al.(2025)Yu, Lin, Zhao, Yin, Wei, Peng, Wei, Sun, Han, Ge, et~al.]{yu2025perception}
+En~Yu, Kangheng Lin, Liang Zhao, Jisheng Yin, Yana Wei, Yuang Peng, Haoran Wei, Jianjian Sun, Chunrui Han, Zheng Ge, et~al.
+\newblock Perception-r1: Pioneering perception policy with reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2504.07954}, 2025.
+
+\bibitem[Zhang et~al.(2025{\natexlab{a}})Zhang, Zhong, Xia, Yu, Li, He, Shu, Liu, She, Wang, et~al.]{zhang2025cmmcot}
+Guanghao Zhang, Tao Zhong, Yan Xia, Zhelun Yu, Haoyuan Li, Wanggui He, Fangxun Shu, Mushui Liu, Dong She, Yi~Wang, et~al.
+\newblock Cmmcot: Enhancing complex multi-image comprehension via multi-modal chain-of-thought and memory augmentation.
+\newblock \emph{arXiv preprint arXiv:2503.05255}, 2025{\natexlab{a}}.
+
+\bibitem[Zhang et~al.(2025{\natexlab{b}})Zhang, Huang, Yao, Liu, Zhang, Lu, and Tao]{zhang2025r1}
+Jingyi Zhang, Jiaxing Huang, Huanjin Yao, Shunyu Liu, Xikun Zhang, Shijian Lu, and Dacheng Tao.
+\newblock R1-vl: Learning to reason with multimodal large language models via step-wise group relative policy optimization.
+\newblock \emph{arXiv preprint arXiv:2503.12937}, 2025{\natexlab{b}}.
+
+\bibitem[Zhang et~al.(2025{\natexlab{c}})Zhang, Cheng, Lu, Zhang, Zhuo, Cao, Guo, She, and Zhang]{zhang2025vispruner}
+Qizhe Zhang, Aosong Cheng, Ming Lu, Renrui Zhang, Zhiyong Zhuo, Jiajun Cao, Shaobo Guo, Qi~She, and Shanghang Zhang.
+\newblock Beyond text-visual attention: Exploiting visual cues for effective token pruning in vlms.
+\newblock \emph{arXiv preprint arXiv:2412.01818}, 2025{\natexlab{c}}.
+
+\bibitem[Zhang et~al.(2025{\natexlab{d}})Zhang, Gao, Zhang, Li, Zhang, Liu, Yuan, Wu, Jia, Zhu, et~al.]{zhang2025chain}
+Xintong Zhang, Zhi Gao, Bofei Zhang, Pengxiang Li, Xiaowen Zhang, Yang Liu, Tao Yuan, Yuwei Wu, Yunde Jia, Song-Chun Zhu, et~al.
+\newblock Chain-of-focus: Adaptive visual search and zooming for multimodal reasoning via rl.
+\newblock \emph{arXiv preprint arXiv:2505.15436}, 2025{\natexlab{d}}.
+
+\bibitem[Zhang et~al.(2024)Zhang, Unell, Wang, Ghosh, Su, Schmidt, and Yeung-Levy]{VLMClassifier}
+Yuhui Zhang, Alyssa Unell, Xiaohan Wang, Dhruba Ghosh, Yuchang Su, Ludwig Schmidt, and Serena Yeung-Levy.
+\newblock Why are visually-grounded language models bad at image classification?
+\newblock \emph{Conference on Neural Information Processing Systems (NeurIPS)}, 2024.
+
+\bibitem[Zhang et~al.(2023)Zhang, Zhang, Li, Zhao, Karypis, and Smola]{zhang2023multicot}
+Zhuosheng Zhang, Aston Zhang, Mu~Li, Hai Zhao, George Karypis, and Alex Smola.
+\newblock Multimodal chain-of-thought reasoning in language models.
+\newblock \emph{arXiv preprint arXiv:2302.00923}, 2023.
+
+\bibitem[Zheng et~al.(2025)Zheng, Yang, Hong, Zhao, Xu, Yang, Shen, and Yu]{zheng2025deepeyes}
+Ziwei Zheng, Michael Yang, Jack Hong, Chenxiao Zhao, Guohai Xu, Le~Yang, Chao Shen, and Xing Yu.
+\newblock Deepeyes: Incentivizing" thinking with images" via reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2505.14362}, 2025.
+
+\end{thebibliography}

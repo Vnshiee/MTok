@@ -1,0 +1,39 @@
+\frametitle{Mull-Tokens: The Minimal Testbed}
+\framesubtitle{Act II: The Object of Study $\cdot$ Ray et al., CVPR 2026 (Google, Boston University, Stanford)}
+
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \begin{tcolorbox}[accentcard, title=\textbf{Why Mull-Tokens?}]
+        \small
+        \begin{itemize}\setlength{\itemsep}{3pt}
+          \item Minimalist instantiation of latent thinking.
+          \item Modality-agnostic: uses uniform discrete tokens.
+          \item No complex routing $\rightarrow$ cleanest mechanistic testbed.
+        \end{itemize}
+      \end{tcolorbox}
+
+      \begin{tcolorbox}[metriccard, title=\textbf{Tokenizer Ground Truth}]
+        \small
+        Confirmed via Qwen2.5-VL tokenizer:\\
+        \texttt{<think>} and \texttt{</think>} are \textbf{plain text} (\texttt{<} + \texttt{think} + \texttt{>}), \textbf{not special tokens}. Mull adds no special boundary embeddings.
+      \end{tcolorbox}
+    \end{column}
+
+    \begin{column}{0.42\textwidth}
+      \begin{tcolorbox}[metriccard, title=\textbf{Inference-Time Intervention}]
+        \footnotesize
+        Twenty copies of token ID \texttt{151665} prefilled into the assistant turn:
+        \vspace{3pt}
+        \begin{center}
+          \texttt{<think> + <|latent\_pad|> $\times$ 20 + </think>\textbackslash n $\rightarrow$ answer}
+        \end{center}
+        \vspace{3pt}
+        \begin{itemize}\setlength{\itemsep}{2pt}
+          \item All 20 positions receive \textbf{identical input embeddings}.
+          \item Whatever they compute must come from position and attention, not fed-in content.
+        \end{itemize}
+      \end{tcolorbox}
+    \end{column}
+  \end{columns}
+
+  \note{Introduce it as a choice, not a given. I picked this paper deliberately: Google + BU + Stanford, CVPR 2026, and it's the minimal version of the latent-token idea, which makes it the cleanest testbed. The inference intervention is twenty copies of one token, ID 151665, prefilled into the assistant turn.}

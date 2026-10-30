@@ -1,0 +1,71 @@
+\section{Related Works}
+
+% \bangzheng{1.MM-reasoning; XXX-R1}
+% % SFT based
+% LLaVA-CoT
+% Perception in Reflection
+% visual cot
+% % RL based
+% %% general
+% LMM-R1
+% Reason-RFT
+% Critic-V: VLM Critics Help Catch VLM Errors in Multimodal Reasoning
+% PixelThink
+% Jigsaw-R1
+% R1-ShareVL
+% Relation-R1
+% R1-Onevision
+% VisRL
+% MM-Eureka
+
+% %% Loss design
+% APO
+% %% stages
+% Revisual-R1
+% Infi-MMR
+% RL-with-Cold-Start
+% OpenVLThinker
+% VL-Cogito
+
+% %% Point or bbox style grounding of ROI
+% SAM-R1
+% Point-RFT
+% ViGoRL
+% Visual-RFT 
+% Deep Perception
+% Perception-R1
+% SIFThinker
+% VLM-R^3
+% %% captioning
+% Visionary-R1
+% %% Shuffling
+% %% random masking
+% PAPO
+% %% step-vise verify or rewriting more agent like work
+% Visual PRM
+% SATORI-R1
+% URSA
+% VLAA-Thinking
+% RL-VL
+% SophiaVL-R1
+
+
+% MoDoMoDo: data design
+
+
+
+\textbf{Think about Images.} Many prior work has employed text-space chain-of-thought (CoT) reasoning to enhance visual perception and multimodal mathematical reasoning. Early approaches focused on constructing SFT datasets~\citep{xu2024llava,shao2024visual,wei2025perception}, aiming for models to fully acquire such reasoning patterns during training. More recently, the field has shifted toward RL–based methods~\citep{peng2025lmm,tan2025reason,meng2025mm,yang2025r1} with many discussions on data design~\citep{liang2025modomodo}, loss design~\citep{hong2025apo} and training stages~\citep{wei2025advancing,deng2025openvlthinker,liu2025infi,chen2025advancing}. Some studies explore specialized RL phase designs, while others mitigate visual hallucination by generating auxiliary captions~\citep{xia2025visionary} or randomly masking parts of the image~\citep{wang2025perception}. Additional efforts guide models to focus on regions of interest (ROIs) by predicting points, bounding boxes, or descriptions~\citep{jiang2025vlm,ni2025point,yu2025perception,liu2025visual2}, ensuring that answers are grounded in the correct visual evidence. Another line of work incorporates verification or rewriting steps to refine reasoning quality~\citep{wang2025visualprm,shen2025satori,zhang2025r1,chen2025sft}. Despite these advances, most methods still perform reasoning in text space, which remains an indirect and inefficient representation of visual understanding. Humans, by contrast, can reason about images naturally without translating them into text. Inspired by this observation, our work seeks to more closely mimic human visual reasoning by enabling models to understand and reason directly in the visual space.
+
+
+\textbf{Think with Images.} Another recent line of research emphasizes augmenting multimodal models with external, predefined visual tools. Many approaches employ zoom-in or cropping utilities~\citep{su2025pixel,zhang2025chain} to locate ROIs relevant to a given question, while others integrate more advanced tools such as OCR engines, chart parsers, or even drawing interfaces~\citep{huang2025visualtoolagent}. To determine when and how to invoke these tools, early studies relied on supervised fine-tuning~\citep{wang2025vgr,zhang2025cmmcot,chung2025don}, whereas more recent work adopts reinforcement learning to learn tool-using behaviors~\citep{zhang2025chain,su2025openthinkimg,geng2025webwatcher,wu2025reinforcing}, enabling interleaved CoT reasoning and tool execution~\citep{wu2025vtool,zheng2025deepeyes}. Despite their success, these approaches remain constrained by the availability and design of external tools. Tool APIs can be difficult to extend, and updates or changes often require substantial training effort. Moreover, many fundamental operations, such as zooming, cropping, or OCR, can potentially be solved directly within modern MLLMs without tool invocation. Motivated by these limitations, our work explores latent visual reasoning, approximating question-relevant visual tokens directly in the visual representation space rather than relying on explicit external tools.
+
+
+\textbf{Latent Reasoning.} In natural language processing, several studies have explored performing reasoning in the latent space (e.g., the final layer outputs) rather than directly in the token space~\citep{coconut}. Some work ~\citep{shen2025codi} leverages latent representations to approximate token-level reasoning, investigating both fixed-length and variable-length latent reasoning strategies~\citep{cheng2024compressed}. However, latent spaces in NLP are often difficult to interpret, making supervision of such representations challenging. Building on this idea, we extend latent-space reasoning to the visual domain, where the latent tokens are grounded in visual meaning. Specifically, we aim for these tokens to approximate question-relevant visual features. Recent efforts have also explored similar directions, using latent spaces to capture visual content, but many rely on auxiliary images to supervise latent tokens~\citep{mirage,bigverdi2025perception}. Such auxiliary data introduces additional labeling and pairing costs, ultimately limiting scalability. In contrast, our approach requires no extra images and can be readily applied across diverse vision tasks after a single training.
+
+\begin{figure*}[t]
+    \centering
+	\includegraphics[width=\linewidth]{./figures/lvr_main.pdf}
+    \caption{\small \textbf{Training and inference pipeline of \modelname.} The overall framework closely follows a standard MLLM. Images are encoded into tokens by a visual encoder and mapped into a joint semantic space with text embeddings. During the SFT stage, bounding boxes are provided to identify query-relevant visual tokens, which supervise the last hidden states in the \modelname process. Here, only the LLM’s last hidden states are passed forward for latent reasoning, optimized with a Mean Squared Error loss. The \modelname process is wrapped with special tokens that indicate reasoning mode. Once all query-relevant visual tokens are consumed, the model exits \modelname and resumes standard text generation with cross-entropy loss. During RL training, the model self-evolves the \modelname process learned in SFT, while only the text generation part is supervised, using our adapted $GRPO_{latent}$. At inference, the model triggers \modelname upon generating the special token, propagates hidden states to reconstruct visual semantics, and resumes text generation when a stopping criterion is met.}
+\label{fig:main} 
+\vspace{-0.15in}
+\end{figure*}

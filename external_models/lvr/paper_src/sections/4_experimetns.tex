@@ -1,0 +1,76 @@
+\section{Experiment}
+% I'll talk about the implementation details as the opening of this section
+% data packing
+
+% \subsection{Model Settings and Data Collection}\label{ssec:lvr_trainingDetails}
+% We adopt the Qwen-2.5-VL series 3B and 7B checkpoints as our base models. Both feature a native dynamic-resolution visual encoder, which encodes images into a variable number of tokens depending on image size (in pixels).
+
+% Our training data consists of three key fields: the image, the question, and a bounding box marking the region of interest in the image essential for answering the question. We use \textsc{Visual COT}~\citep{visualcot} as the primary training source. \textsc{Visual COT} is a large-scale VQA dataset containing 438k question–answer pairs, each annotated with bounding boxes that highlight the critical regions needed to derive the answer. Each instance is provided in a \textit{question–bounding box–answer} format, making it particularly well suited for \modelname.
+
+% For a given image, the image processor of the model will first crop the image into a grid of visual patches which will later be flattened in raster order and encoded into visual tokens by the visual encoder.\footnote{The Qwen image encoder applies a more complex flattening procedure, which is detailed in our released code.} Given a bounding box of ROI in the original image, \modelname takes $O(1)$ time to select the bounded visual patches and obtain their indices in the sequence of flatten visual tokens. We calculate the index list by each bounding box for later use in the training pipeline.
+
+% Thus, each training instance for \modelname is represented as: the image $V$, the question $T$, the list of token indexes for \modelname supervision $lvr\_tokens=[...]$, and the final response$T_{ans}$. This data preparation process requires no model inference and the only model-dependent step is the extraction of token indexes which relies on the model's image processor to compute indexes.
+
+
+
+% We use Qwen-2.5-VL 3B and 7B as our backbone MLLMs. For visual encoders, we set max pixels = 5120*28*28 and minimum pixels = 128*28*28. In both training stages, we freeze the visual encoder and the multimodal projector, leaving only the LLM parameters trainable. This design choice aligns with the research goal of \modelname, which seeks to unify the reasoning space, under the hypothesis that an optimal modality projection can be learned without further tuning.
+
+We adopt Qwen-2.5-VL 3B and 7B as the backbone MLLMs. For the visual encoder, we set the maximum resolution to $5120 \times 28 \times 28$ pixels and the minimum to $128 \times 28 \times 28$ pixels. In both training stages, the visual encoder and multimodal projector are kept frozen, with only the LLM parameters updated. This design reflects the learning objective of \modelname to unify the reasoning space under the hypothesis that an optimal modality projection can be achieved without additional tuning.
+
+
+% In the SFT stage, we adopt \textsc{Visual COT}~\citep{visualcot} as the primary training source. \textsc{Visual COT} is a large-scale VQA dataset containing 438k question–answer pairs, each annotated with bounding boxes that specify the critical regions required to derive the answer. During training, the variable number of image tokens and \modelname tokens leads to imbalanced instance lengths. To mitigate this, we employ the adaptive multimodal data-packing strategy from \citet{internvl2.5}, which enables dynamic batching: multiple shorter instances can be packed together, while longer ones are packed in smaller numbers. On average, this yields an effective batch size of $\sim$3.2 per device. The learning rate is set to $1\times 10^{-5}$. For the 7B variant, supervised fine-tuning requires approximately 40 hours to complete 2,500 steps on a 4$\times$AMD MI250 GPU cluster.
+
+In the SFT stage, we use \textsc{Visual COT}~\citep{visualcot} as the primary training data. This large-scale VQA dataset contains 438k question–answer pairs, each annotated with bounding boxes that mark the critical regions needed to derive the answer. During training, the variable number of image tokens and \modelname tokens results in imbalanced instance lengths. To address this, we adopt the adaptive multimodal data-packing strategy from \citet{internvl2.5}, which supports dynamic batching: multiple shorter instances can be packed together, while longer ones are grouped in smaller numbers. On average, this yields an effective batch size of $\sim$3.2 per device. The learning rate is set to $1\times 10^{-5}$. For the 7B variant, supervised fine-tuning requires roughly 40 hours to complete 2,500 steps on a 4$\times$AMD MI250 GPU cluster.
+
+% For reinforcement learning, we implement a latent GRPO framework customized from the HuggingFace TRL package, using ViRL~\citep{vl-rethinker} as the training source. The policy generates 8 responses per input, with a learning rate of $1\times 10^{-5}$. We fix the sampling temperature at $\tau=0.9$ and the KL coefficient at $\beta=0.04$. This stage is applied only to the 3B variant and requires about 20 hours to complete 1,500 steps. We do not apply it to 7B variant due to the limited computation resource.
+
+For reinforcement learning, we implement a latent GRPO framework customized from the HuggingFace TRL package, using ViRL~\citep{vl-rethinker} as the training data. The policy generates 8 responses per input, with a learning rate of $1\times 10^{-5}$, a fixed sampling temperature of $\tau=0.9$, and a KL coefficient of $\beta=0.04$. This stage is applied only to the 3B variant, requiring about 20 hours to complete 1,500 steps. We do not extend it to the 7B variant due to limited computational resources.
+
+
+\subsection{Evaluation Benchmarks}
+We evaluate \modelname on visual detail understanding task and a diverse set of vision-centric benchmarks. For visual detail understanding, we adopt $V^*$ Bench, which assesses MLLMs’ ability to perform fine-grained visual detail search and relative spatial reasoning respectively on two subsets. We further employ MMVP~\citep{mmvp} to measure perception robustness under subtle image perturbations, providing a rigorous test of \modelname’s fine-grained reasoning capabilities.
+
+Beyond these, we evaluate on Counting (object enumeration), JigSaw (image reconstruction from fragments), Relative Reflectance (pixel-level albedo comparison), and Spatial Relation (object–relation understanding within a scene). These tasks are drawn from BLINK~\citep{blink}, a benchmark of expert-annotated, perception-heavy tasks designed for MLLMs.
+
+To ensure consistency and fairness, all evaluations follow the standardized metrics provided by LMMs-Eval~\citep{lmms_eval2024}. 
+
+\subsection{Baselines}
+We compare \modelname against state-of-the-art MLLM baselines, grouped into the following categories:
+
+\textbf{Thinking about Images.} This category includes Vision-R1~\citep{visionr1} and PAPO~\citep{papo}, which use reinforcement learning with verifiable rewards to equip MLLMs with chain-of-thought reasoning. Vision-R1 follows a ``think before answer'' trajectory, while PAPO adds an implicit perception loss for image-grounded descriptions.
+
+
+\textbf{Thinking with Images.} This category includes PixelReasoner~\citep{pixelreasoner} and Argus-X3~\citep{man2025argus}. PixelReasoner employs image-editing tools to iteratively enhance the input image during reasoning. In contrast, Argus-X3 detects regions of interest via bounding boxes, extracts the corresponding visual tokens, and reinjects them into the MLLM input to strengthen perception. This makes Argus-X3 a strong reference point for comparison with \modelname: whereas Argus-X3 depends on external tools for feature extraction, \modelname directly learns to reconstruct visual semantics.
+
+To isolate the effect of training data, we also include a baseline trained with standard supervised fine-tuning on the same dataset as \modelname, denoted as SFT. For completeness, we include each baseline model’s system prompt when it is available in the documentation.
+
+\input{tables/main_table}
+\input{tables/sft_rl}
+
+\subsection{Main Results}
+The main evaluation results are summarized in Table~\ref{table:main_paper}. We report performance under the best decoding strategy, \textbf{Fixed Token}, with \modelname steps set to [4, 8, 16]. Overall, \modelname achieves state-of-the-art results across most benchmarks. Importantly, for a fair comparison, all open-source baselines are built on the same backbone MLLMs as \modelname, highlighting the effectiveness of latent reasoning over existing “Think about images’’ or “Think with images’’ approaches.
+
+The largest gains are observed on the $V^*$ and MMVP benchmarks, where \modelname consistently achieves top performance across all step settings. 
+In particular, it improves the base model by 2.7\% on the $V^*_{D.A.}$ subset, which measures visual detail search, and by 5.3\% on the $V^*_{R.P.}$ subset, which evaluates relative spatial reasoning. On MMVP, which perturbs subtle image details to assess perception robustness, \modelname demonstrates strong performance by reconstructing target visual semantics, accurately identifying differences, and thereby improving accuracy. Moreover, it surpasses PixelReasoner in both categories, despite PixelReasoner relying on external tools to crop image sub-regions. This underscores that \textbf{reconstructing visual semantics can be more effective than depending on external visual-editing tools (as in “Think with Images’’) for fine-grained visual understanding.} In addition, both PAPO and Vision-R1 exhibit degraded performance on $V^*$, suggesting that \textbf{textual-space CoT in MLLMs (i.e., “Think about Images’’) may introduce cross-modal interference and weaken perception, whereas \modelname avoids this issue by reasoning jointly across modalities.}
+
+\modelname also achieves leading results on Counting, IQ-Test, JigSaw, and Spatial Relation. In Counting, the model is required to enumerate specific objects in a scene; in IQ-Test, it solves geometry-based puzzles; In JigSaw, it reassembles image crops; and in Spatial Relation, it answers questions about relative object positions. These results demonstrate that \modelfullname effectively unifies object detection, visual-dependent logical reasoning, visual reconstruction, and spatial relation understanding.
+
+However, \modelname does not achieve top performance on Relative Reflect. We attribute this gap to a distribution shift between training and evaluation data: such task require reasoning over multiple images, whereas \modelname was trained exclusively on single-image data. We anticipate that incorporating cross-image data augmentation in future work will further strengthen \modelname’s capability for multi-image reasoning.
+
+\subsection{RL results}
+We present the results of our proposed $GRPO_{\text{latent}}$ in Table~\ref{table:sft_rl}. Reinforcement learning further enhances \modelname performance beyond the SFT stage across multiple benchmarks. The superior results demonstrate that incorporating a format reward based on the $<\vert\texttt{lvr\_start}\vert>$ and $<\vert\texttt{lvr\_end}\vert>$ tokens effectively encourages the model to perform \modelfullname. In contrast, removing these trigger tokens from the reward function destabilizes training, resulting in purely textual responses and degraded performance.
+
+\subsection{Ablation Studies}\label{ssec:exp_ablation}
+We examine variants in the architectural design and decoding strategies of \modelname models. 
+
+\stitle{\modelname with heads.}  
+Analogous to the LM head in LLMs, which maps text hidden states to logits, we add a \modelname head on top of the latent reasoning positions to transfer LLM hidden states into visual semantics. We evaluate two designs: (i) a 2-layer MLP without intermediate up-casting, and (ii) a Gated Linear Unit (GLU) with an intermediate dimension expanded to 3$\times$ the LM hidden size. The 7B results (Fig.~\ref{table:ablation}) show that standard \textbf{\modelname} consistently achieves the best performance across benchmarks. This is expected, as the \modelname process is directly supervised in the joint semantic space of text and vision, ensuring no semantic gap between the LLM’s last hidden states and those of \modelname.
+
+% \stitle{Unrestricted \modelname decoding.}  
+% As discussed in \S\ref{ssec:lvr_decoding}, we also explored two alternative decoding strategies: \textbf{Latent End Token} and \textbf{Mode Switching Loss}. Both aim to enable variable-length \modelname processes. In practice, however, \textbf{Mode Switching Loss} failed to encode stopping conditions, always collapsing to zero \modelname steps. The performance of \textbf{Latent End Token} is reported in Fig.~\ref{table:ablation}, where we observe significant instability. Human evaluation suggests this instability arises from unreliable distance measurements between \modelname hidden states and the latent end token. We tested cosine similarity, L1, and L2 distances under different thresholds, yet the model frequently failed to trigger termination properly, instead continuing \modelname steps until reaching the maximum generation length. We anticipate future work on latent reasoning will improve stability and ultimately enable fully free-form \modelfullname.
+
+
+\stitle{Unrestricted \modelname decoding.}
+As discussed in \S\ref{ssec:lvr_decoding}, we explored two alternative decoding strategies, \textbf{Mode Switching Loss} and \textbf{Latent End Token}, for variable-length \modelname processes. However, \textbf{Mode Switching Loss} failed to encode stopping conditions, collapsing to zero \modelname steps. The performance of \textbf{Latent End Token} is reported in Fig.~\ref{table:ablation}, where we observe significant instability. Human evaluation indicates that this instability stems from unreliable distance measurements between \modelname hidden states and the latent end token. Despite testing cosine similarity, L1, and L2 distances under varying thresholds, the model often failed to terminate properly and max out generation steps. We expect future work on improving stability for fully free-form \modelfullname.
+
+% We tested two variable-length decoding strategies for \modelname: \textbf{Latent End Token} and \textbf{Mode Switching Loss}. The latter failed to encode stopping conditions, while the former showed significant instability (Fig.~\ref{table:ablation}), often failing to terminate despite attempts with cosine, L1, and L2 distance thresholds. Human evaluation suggests this instability arises from unreliable distance measurements, pointing to future work on improving stability for fully free-form \modelfullname.

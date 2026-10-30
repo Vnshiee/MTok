@@ -1,0 +1,28 @@
+\section{Related Work}
+
+
+% \subsection{Test-time Scaling}
+% Recent studies on test-time scaling has progressed from simple prompt-engineering tricks to sophisticated, multi-stage systems that modulate inference compute on the fly. Early studies such as Chain-of-Thought prompting \citep{wei2023chainofthoughtpromptingelicitsreasoning} showed that instructing a model to verbalize intermediate reasoning can unlock latent capabilities, while Self-Consistency~\citep{wang2022self} and Best-of-N sampling demonstrated that sampling multiple independent traces and voting improves reliability. Sequential strategies like STaR \citep{zelikman2022star} and Self-Refine \citep{madaan2023self} add iterative revision, and hybrid search methods—including Tree-of-Thoughts \citep{yao2024tree} and MCTS-based planners \citep{zhang2024o1}—combine breadth and depth to explore diverse reasoning paths under a compute budget. 
+
+% Parallel trends~\citep{xie2025teaching} in internal scaling fine-tune models to decide autonomously how much “thinking” to allocate, as in OpenAI o1~\citep{jaech2024openai} and DeepSeek-R1~\citep{deepseekai2025deepseekr1incentivizingreasoningcapability}, often by pairing supervised traces with reinforcement-learning feedback. Collectively, these lines of work establish a taxonomy that frames test-time scaling as a unifying lens for improving LLM reasoning without changing model parameters at training time.
+
+% Reinforcement Learning (RL) has demonstrated its significance for enhancing the capabilities of LLMs and LMMs. Early research primarily focused on Reinforcement Learning from Human Feedback (RLHF)~\citep{ouyang2022training} to align with human preferences. Recent work ~\citep{deepseekai2025deepseekr1incentivizingreasoningcapability} introduces the open-source DeepSeek-R1 model and investigates how RL with verifiable rewards can promote advanced chain-of-thought reasoning and reflective behaviors. Several recent studies have explored R1 a
+
+
+
+\subsection{Multimodal Chain-of-Thought}
+Chain-of-Thought (CoT) prompting was first shown to elicit step-by-step reasoning in LLMs by supplying a few worked examples that include intermediate rationales~\citep{feng2023towards,zhang2024chain, wei2023chainofthoughtpromptingelicitsreasoning}.
+Recent extensions of CoT to multimodal settings embed visual evidence directly into the reasoning trajectory. ICoT ~\citep{zhang2024multimodalchainofthoughtreasoninglanguage} interleaves attention-selected image crops with text tokens, yielding significant VQA gains, while Visual CoT ~\citep{shao2024visualcotadvancingmultimodal} supplies 438 k bounding-box-grounded rationales to train VLMs that emit explicit visual tokens and improve spatial grounding.
+Recent works~\citep{hu2024visual,zhou2024image,yang20253d,gao2024cantor, wu2025reinforcing, chern2025thinking,fang2025intention, cheng2025visual, su2025openthinkimg} further leverage external tools to supply visual cues that enrich multimodal CoT reasoning..
+
+Recent works~\citep{chen2025blip3, wang2025autoregressive} like Chameleon~\citep{chameleonteam2025chameleonmixedmodalearlyfusionfoundation,chern2024anole} trains a unified token-based model that can emit arbitrary sequences of text and image tokens, but at the cost of large-scale pixel-level supervision and heavier decoding. MVoT~\citep{li2025imagine} further trains a unified model to directly produce image and text interleaving trajectories, but absent of reasoning thoughts.
+In contrast, our \Model framework differs by emitting compact latent visual tokens rather than real image patches or pixels, avoiding heavy image generation while still allowing fully interleaved visual–text reasoning.
+
+\subsection{Latent Reasoning in LLMs}
+
+Much recent work has highlighted the importance of intermediate hidden representations in Large Language Models (LLMs)~\citep{biran2024hopping,yang2024large}. To better guide the latent reasoning process, several approaches introduce specialized tokens into the input sequence. ~\cite{wang2023guiding} incorporate discrete \texttt{<plan>} tokens to control reasoning stages, while ~\cite{goyal2023think} propose inserting a \texttt{<pause>} token during pretraining to stabilize multi-step reasoning.
+
+Another line of work seeks to internalize reasoning behavior by distilling chain-of-thought rationales into latent representations. ~\cite{deng2023implicit} trains models to mimic CoT-style reasoning implicitly through hidden states, and ~\citep{deng2024explicit} further improves inference efficiency by removing explicit intermediate steps altogether. ~\cite{yu2024distilling} proposes to distill latent reasoning capabilities into a model by supervising it with data generated for complex reasoning. More recently, ~\cite{hao2024training} go further by replacing CoT tokens with continuous latent embeddings, enabling unconstrained reasoning in the latent space to explore on complex tasks including math and logical reasoning.
+While prior work primarily focuses on enhancing efficiency or structural planning within the LLM's latent space, our approach takes a different perspective: we treat latent tokens as a \emph{bridge for exploring visual information} into the model.
+
+% Rather than confining reasoning within the language model’s internal space, we expand the latent trajectory to incorporate cross-modal signals, enabling the model to reason more effectively on visually grounded tasks. This shifts the objective from internal reasoning compression to multimodal integration and alignment.

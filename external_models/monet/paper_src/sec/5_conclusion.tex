@@ -1,0 +1,5 @@
+\section{Conclusion and Limitations}
+\label{sec:conclusion}
+We introduce Monet, a framework that enables MLLMs to perform visual reasoning in the latent space. Our Monet-SFT pipeline enables the model to selectively encode useful visual cues from auxiliary images into compact latent embeddings, while our VLPO algorithm explicitly optimizes these embeddings during RL. We further construct the Monet-SFT-125K dataset to support SFT. Experiments show that Monet substantially improves real-world perception and reasoning performance and exhibits strong OOD generalization on abstract visual reasoning tasks. Together, these results demonstrate Monet as a promising direction toward more flexible and general multimodal reasoning.
+
+We summarize the limitations of our work as follows. First, Monet relies on a multi-stage SFT pipeline, which may increase the overall training complexity and overhead. Second, we have not yet explored how different reward designs might influence latent visual reasoning in MLLMs, leaving room for exploration and further enhancement.

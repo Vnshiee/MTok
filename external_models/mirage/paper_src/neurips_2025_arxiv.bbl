@@ -1,0 +1,238 @@
+\begin{thebibliography}{46}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bai et~al.(2025)Bai, Chen, Liu, Wang, Ge, Song, Dang, Wang, Wang, Tang, et~al.]{bai2025qwen2}
+Shuai Bai, Keqin Chen, Xuejing Liu, Jialin Wang, Wenbin Ge, Sibo Song, Kai Dang, Peng Wang, Shijie Wang, Jun Tang, et~al.
+\newblock Qwen2. 5-vl technical report.
+\newblock \emph{arXiv preprint arXiv:2502.13923}, 2025.
+
+\bibitem[Biran et~al.(2024)Biran, Gottesman, Yang, Geva, and Globerson]{biran2024hopping}
+Eden Biran, Daniela Gottesman, Sohee Yang, Mor Geva, and Amir Globerson.
+\newblock Hopping too late: Exploring the limitations of large language models on multi-hop queries.
+\newblock \emph{arXiv preprint arXiv:2406.12775}, 2024.
+
+\bibitem[Brockman et~al.(2016)Brockman, Cheung, Pettersson, Schneider, Schulman, Tang, and Zaremba]{brockman2016openai}
+Greg Brockman, Vicki Cheung, Ludwig Pettersson, Jonas Schneider, John Schulman, Jie Tang, and Wojciech Zaremba.
+\newblock Openai gym.
+\newblock \emph{arXiv preprint arXiv:1606.01540}, 2016.
+
+\bibitem[Chen et~al.(2025)Chen, Xu, Pan, Hu, Qin, Goldstein, Huang, Zhou, Xie, Savarese, et~al.]{chen2025blip3}
+Jiuhai Chen, Zhiyang Xu, Xichen Pan, Yushi Hu, Can Qin, Tom Goldstein, Lifu Huang, Tianyi Zhou, Saining Xie, Silvio Savarese, et~al.
+\newblock Blip3-o: A family of fully open unified multimodal models-architecture, training and dataset.
+\newblock \emph{arXiv preprint arXiv:2505.09568}, 2025.
+
+\bibitem[Cheng et~al.(2025{\natexlab{a}})Cheng, Chen, Xu, Wang, Wang, Fei, Wang, Wang, Chen, Che, et~al.]{cheng2025visual}
+Zihui Cheng, Qiguang Chen, Xiao Xu, Jiaqi Wang, Weiyun Wang, Hao Fei, Yidong Wang, Alex~Jinpeng Wang, Zhi Chen, Wanxiang Che, et~al.
+\newblock Visual thoughts: A unified perspective of understanding multimodal chain-of-thought.
+\newblock \emph{arXiv preprint arXiv:2505.15510}, 2025{\natexlab{a}}.
+
+\bibitem[Cheng et~al.(2025{\natexlab{b}})Cheng, Chen, Zhang, Fei, Feng, Che, Li, and Qin]{cheng2025comt}
+Zihui Cheng, Qiguang Chen, Jin Zhang, Hao Fei, Xiaocheng Feng, Wanxiang Che, Min Li, and Libo Qin.
+\newblock Comt: A novel benchmark for chain of multi-modal thought on large vision-language models.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial Intelligence}, volume~39, pages 23678--23686, 2025{\natexlab{b}}.
+
+\bibitem[Chern et~al.(2024)Chern, Su, Ma, and Liu]{chern2024anole}
+Ethan Chern, Jiadi Su, Yan Ma, and Pengfei Liu.
+\newblock Anole: An open, autoregressive, native large multimodal models for interleaved image-text generation.
+\newblock \emph{arXiv preprint arXiv:2407.06135}, 2024.
+
+\bibitem[Chern et~al.(2025)Chern, Hu, Chern, Kou, Su, Ma, Deng, and Liu]{chern2025thinking}
+Ethan Chern, Zhulin Hu, Steffi Chern, Siqi Kou, Jiadi Su, Yan Ma, Zhijie Deng, and Pengfei Liu.
+\newblock Thinking with generated images.
+\newblock \emph{arXiv preprint arXiv:2505.22525}, 2025.
+
+\bibitem[Deng et~al.(2023)Deng, Prasad, Fernandez, Smolensky, Chaudhary, and Shieber]{deng2023implicit}
+Yuntian Deng, Kiran Prasad, Roland Fernandez, Paul Smolensky, Vishrav Chaudhary, and Stuart Shieber.
+\newblock Implicit chain of thought reasoning via knowledge distillation.
+\newblock \emph{arXiv preprint arXiv:2311.01460}, 2023.
+
+\bibitem[Deng et~al.(2024)Deng, Choi, and Shieber]{deng2024explicit}
+Yuntian Deng, Yejin Choi, and Stuart Shieber.
+\newblock From explicit cot to implicit cot: Learning to internalize cot step by step.
+\newblock \emph{arXiv preprint arXiv:2405.14838}, 2024.
+
+\bibitem[Fang et~al.(2025)Fang, Zhang, Tong, and Feng]{fang2025intention}
+Irving Fang, Juexiao Zhang, Shengbang Tong, and Chen Feng.
+\newblock From intention to execution: Probing the generalization boundaries of vision-language-action models.
+\newblock \emph{arXiv preprint arXiv:2506.09930}, 2025.
+
+\bibitem[Farah(1985)]{farah1985psychophysical}
+Martha~J Farah.
+\newblock Psychophysical evidence for a shared representational medium for mental images and percepts.
+\newblock \emph{Journal of Experimental Psychology: General}, 114\penalty0 (1):\penalty0 91, 1985.
+
+\bibitem[Feng et~al.(2023)Feng, Zhang, Gu, Ye, He, and Wang]{feng2023towards}
+Guhao Feng, Bohang Zhang, Yuntian Gu, Haotian Ye, Di~He, and Liwei Wang.
+\newblock Towards revealing the mystery behind chain of thought: a theoretical perspective.
+\newblock \emph{Advances in Neural Information Processing Systems}, 36:\penalty0 70757--70798, 2023.
+
+\bibitem[Fu et~al.(2024)Fu, Hu, Li, Feng, Wang, Lin, Roth, Smith, Ma, and Krishna]{fu2024blink}
+Xingyu Fu, Yushi Hu, Bangzheng Li, Yu~Feng, Haoyu Wang, Xudong Lin, Dan Roth, Noah~A Smith, Wei-Chiu Ma, and Ranjay Krishna.
+\newblock Blink: Multimodal large language models can see but not perceive.
+\newblock In \emph{European Conference on Computer Vision}, pages 148--166. Springer, 2024.
+
+\bibitem[Gao et~al.(2024)Gao, Chen, Zhang, Fu, Shen, Zhang, Zhang, Zheng, Sun, Cao, et~al.]{gao2024cantor}
+Timin Gao, Peixian Chen, Mengdan Zhang, Chaoyou Fu, Yunhang Shen, Yan Zhang, Shengchuan Zhang, Xiawu Zheng, Xing Sun, Liujuan Cao, et~al.
+\newblock Cantor: Inspiring multimodal chain-of-thought of mllm.
+\newblock In \emph{Proceedings of the 32nd ACM International Conference on Multimedia}, pages 9096--9105, 2024.
+
+\bibitem[Goyal et~al.(2023)Goyal, Ji, Rawat, Menon, Kumar, and Nagarajan]{goyal2023think}
+Sachin Goyal, Ziwei Ji, Ankit~Singh Rawat, Aditya~Krishna Menon, Sanjiv Kumar, and Vaishnavh Nagarajan.
+\newblock Think before you speak: Training language models with pause tokens.
+\newblock \emph{arXiv preprint arXiv:2310.02226}, 2023.
+
+\bibitem[Hao et~al.(2024)Hao, Sukhbaatar, Su, Li, Hu, Weston, and Tian]{hao2024training}
+Shibo Hao, Sainbayar Sukhbaatar, DiJia Su, Xian Li, Zhiting Hu, Jason Weston, and Yuandong Tian.
+\newblock Training large language models to reason in a continuous latent space.
+\newblock \emph{arXiv preprint arXiv:2412.06769}, 2024.
+
+\bibitem[Hu et~al.(2024)Hu, Shi, Fu, Roth, Ostendorf, Zettlemoyer, Smith, and Krishna]{hu2024visual}
+Yushi Hu, Weijia Shi, Xingyu Fu, Dan Roth, Mari Ostendorf, Luke Zettlemoyer, Noah~A Smith, and Ranjay Krishna.
+\newblock Visual sketchpad: Sketching as a visual chain of thought for multimodal language models.
+\newblock \emph{arXiv preprint arXiv:2406.09403}, 2024.
+
+\bibitem[Kosslyn(1996)]{kosslyn1996image}
+Stephen~M Kosslyn.
+\newblock \emph{Image and brain: The resolution of the imagery debate}.
+\newblock MIT press, 1996.
+
+\bibitem[Li et~al.(2025{\natexlab{a}})Li, Wu, Zhang, Xia, Mao, Dong, Vuli{\'c}, and Wei]{li2025imagine}
+Chengzu Li, Wenshan Wu, Huanyu Zhang, Yan Xia, Shaoguang Mao, Li~Dong, Ivan Vuli{\'c}, and Furu Wei.
+\newblock Imagine while reasoning in space: Multimodal visualization-of-thought.
+\newblock \emph{arXiv preprint arXiv:2501.07542}, 2025{\natexlab{a}}.
+
+\bibitem[Li et~al.(2025{\natexlab{b}})Li, Zhong, Zhao, Lai, and Zhang]{li2025think}
+Ming Li, Jike Zhong, Shitian Zhao, Yuxiang Lai, and Kaipeng Zhang.
+\newblock Think or not think: A study of explicit thinking in rule-based visual reinforcement fine-tuning.
+\newblock \emph{arXiv preprint arXiv:2503.16188}, 2025{\natexlab{b}}.
+
+\bibitem[Peng et~al.(2025)Peng, Zhang, Zhang, You, Liu, Zhu, Yang, Xu, Geng, and Yang]{peng2025lmm}
+Yingzhe Peng, Gongrui Zhang, Miaosen Zhang, Zhiyuan You, Jie Liu, Qipeng Zhu, Kai Yang, Xingzhong Xu, Xin Geng, and Xu~Yang.
+\newblock Lmm-r1: Empowering 3b lmms with strong reasoning abilities through two-stage rule-based rl.
+\newblock \emph{arXiv preprint arXiv:2503.07536}, 2025.
+
+\bibitem[Ray et~al.(2024)Ray, Duan, Tan, Bashkirova, Hendrix, Ehsani, Kembhavi, Plummer, Krishna, Zeng, et~al.]{ray2024sat}
+Arijit Ray, Jiafei Duan, Reuben Tan, Dina Bashkirova, Rose Hendrix, Kiana Ehsani, Aniruddha Kembhavi, Bryan~A Plummer, Ranjay Krishna, Kuo-Hao Zeng, et~al.
+\newblock Sat: Spatial aptitude training for multimodal language models.
+\newblock \emph{arXiv preprint arXiv:2412.07755}, 2024.
+
+\bibitem[Shao et~al.(2024{\natexlab{a}})Shao, Qian, Xiao, Song, Zong, Wang, Liu, and Li]{shao2024visualcotadvancingmultimodal}
+Hao Shao, Shengju Qian, Han Xiao, Guanglu Song, Zhuofan Zong, Letian Wang, Yu~Liu, and Hongsheng Li.
+\newblock Visual cot: Advancing multi-modal language models with a comprehensive dataset and benchmark for chain-of-thought reasoning, 2024{\natexlab{a}}.
+\newblock URL \url{https://arxiv.org/abs/2403.16999}.
+
+\bibitem[Shao et~al.(2024{\natexlab{b}})Shao, Wang, Zhu, Xu, Song, Bi, Zhang, Zhang, Li, Wu, et~al.]{shao2024deepseekmath}
+Zhihong Shao, Peiyi Wang, Qihao Zhu, Runxin Xu, Junxiao Song, Xiao Bi, Haowei Zhang, Mingchuan Zhang, YK~Li, Y~Wu, et~al.
+\newblock Deepseekmath: Pushing the limits of mathematical reasoning in open language models.
+\newblock \emph{arXiv preprint arXiv:2402.03300}, 2024{\natexlab{b}}.
+
+\bibitem[Shen et~al.(2025)Shen, Zeng, Qi, Hong, Chen, Lu, Wornell, Das, Cox, and Gan]{shen2025satori}
+Maohao Shen, Guangtao Zeng, Zhenting Qi, Zhang-Wei Hong, Zhenfang Chen, Wei Lu, Gregory Wornell, Subhro Das, David Cox, and Chuang Gan.
+\newblock Satori: Reinforcement learning with chain-of-action-thought enhances llm reasoning via autoregressive search.
+\newblock \emph{arXiv preprint arXiv:2502.02508}, 2025.
+
+\bibitem[Sheng et~al.(2024)Sheng, Zhang, Ye, Wu, Zhang, Zhang, Peng, Lin, and Wu]{sheng2024hybridflow}
+Guangming Sheng, Chi Zhang, Zilingfeng Ye, Xibin Wu, Wang Zhang, Ru~Zhang, Yanghua Peng, Haibin Lin, and Chuan Wu.
+\newblock Hybridflow: A flexible and efficient rlhf framework.
+\newblock \emph{arXiv preprint arXiv: 2409.19256}, 2024.
+
+\bibitem[Shepard and Metzler(1971)]{shepard1971mental}
+Roger~N Shepard and Jacqueline Metzler.
+\newblock Mental rotation of three-dimensional objects.
+\newblock \emph{Science}, 171\penalty0 (3972):\penalty0 701--703, 1971.
+
+\bibitem[Su et~al.(2025)Su, Li, Song, Hao, Yang, Zhang, Chen, Gu, Li, Qu, et~al.]{su2025openthinkimg}
+Zhaochen Su, Linjie Li, Mingyang Song, Yunzhuo Hao, Zhengyuan Yang, Jun Zhang, Guanjie Chen, Jiawei Gu, Juntao Li, Xiaoye Qu, et~al.
+\newblock Openthinkimg: Learning to think with images via visual tool reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2505.08617}, 2025.
+
+\bibitem[Team(2024)]{team2024chameleon}
+Chameleon Team.
+\newblock Chameleon: Mixed-modal early-fusion foundation models.
+\newblock \emph{arXiv preprint arXiv:2405.09818}, 2024.
+
+\bibitem[Team(2025)]{chameleonteam2025chameleonmixedmodalearlyfusionfoundation}
+Chameleon Team.
+\newblock Chameleon: Mixed-modal early-fusion foundation models, 2025.
+\newblock URL \url{https://arxiv.org/abs/2405.09818}.
+
+\bibitem[Tong et~al.(2024)Tong, Fan, Zhu, Xiong, Chen, Sinha, Rabbat, LeCun, Xie, and Liu]{tong2024metamorph}
+Shengbang Tong, David Fan, Jiachen Zhu, Yunyang Xiong, Xinlei Chen, Koustuv Sinha, Michael Rabbat, Yann LeCun, Saining Xie, and Zhuang Liu.
+\newblock Metamorph: Multimodal understanding and generation via instruction tuning.
+\newblock \emph{arXiv preprint arXiv:2412.14164}, 2024.
+
+\bibitem[Wang et~al.(2025)Wang, Song, Wang, Wang, Yu, Wei, and Wang]{wang2025autoregressive}
+Dianyi Wang, Wei Song, Yikun Wang, Siyuan Wang, Kaicheng Yu, Zhongyu Wei, and Jiaqi Wang.
+\newblock Autoregressive semantic visual reconstruction helps vlms understand better.
+\newblock \emph{arXiv preprint arXiv:2506.09040}, 2025.
+
+\bibitem[Wang et~al.(2024)Wang, Bai, Tan, Wang, Fan, Bai, Chen, Liu, Wang, Ge, et~al.]{wang2024qwen2}
+Peng Wang, Shuai Bai, Sinan Tan, Shijie Wang, Zhihao Fan, Jinze Bai, Keqin Chen, Xuejing Liu, Jialin Wang, Wenbin Ge, et~al.
+\newblock Qwen2-vl: Enhancing vision-language model's perception of the world at any resolution.
+\newblock \emph{arXiv preprint arXiv:2409.12191}, 2024.
+
+\bibitem[Wang et~al.(2023)Wang, Caccia, Ostapenko, Yuan, Wang, and Sordoni]{wang2023guiding}
+Xinyi Wang, Lucas Caccia, Oleksiy Ostapenko, Xingdi Yuan, William~Yang Wang, and Alessandro Sordoni.
+\newblock Guiding language model reasoning with planning tokens.
+\newblock \emph{arXiv preprint arXiv:2310.05707}, 2023.
+
+\bibitem[Wei et~al.(2023)Wei, Wang, Schuurmans, Bosma, Ichter, Xia, Chi, Le, and Zhou]{wei2023chainofthoughtpromptingelicitsreasoning}
+Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Brian Ichter, Fei Xia, Ed~Chi, Quoc Le, and Denny Zhou.
+\newblock Chain-of-thought prompting elicits reasoning in large language models, 2023.
+\newblock URL \url{https://arxiv.org/abs/2201.11903}.
+
+\bibitem[Wu et~al.(2025)Wu, Guan, Feng, Liu, Wu, Wang, Wu, and Tan]{wu2025reinforcing}
+Junfei Wu, Jian Guan, Kaituo Feng, Qiang Liu, Shu Wu, Liang Wang, Wei Wu, and Tieniu Tan.
+\newblock Reinforcing spatial reasoning in vision-language models with interwoven thinking and visual drawing.
+\newblock \emph{arXiv preprint arXiv:2506.09965}, 2025.
+
+\bibitem[Wu et~al.(2024)Wu, Zhao, Saxon, Bui, Wang, Zhang, and Chang]{wu2024vsp}
+Qiucheng Wu, Handong Zhao, Michael Saxon, Trung Bui, William~Yang Wang, Yang Zhang, and Shiyu Chang.
+\newblock Vsp: Assessing the dual challenges of perception and reasoning in spatial planning tasks for vlms.
+\newblock \emph{arXiv preprint arXiv:2407.01863}, 2024.
+
+\bibitem[Xie et~al.(2025)Xie, Chen, Mao, Xu, Kong, et~al.]{xie2025teaching}
+Zhihui Xie, Liyu Chen, Weichao Mao, Jingjing Xu, Lingpeng Kong, et~al.
+\newblock Teaching language models to critique via reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2502.03492}, 2025.
+
+\bibitem[Yang et~al.(2024{\natexlab{a}})Yang, Gribovskaya, Kassner, Geva, and Riedel]{yang2024large}
+Sohee Yang, Elena Gribovskaya, Nora Kassner, Mor Geva, and Sebastian Riedel.
+\newblock Do large language models latently perform multi-hop reasoning?
+\newblock \emph{arXiv preprint arXiv:2402.16837}, 2024{\natexlab{a}}.
+
+\bibitem[Yang et~al.(2025)Yang, Yang, Zhou, Chen, Zhang, Du, and Gan]{yang20253d}
+Yuncong Yang, Han Yang, Jiachen Zhou, Peihao Chen, Hongxin Zhang, Yilun Du, and Chuang Gan.
+\newblock 3d-mem: 3d scene memory for embodied exploration and reasoning.
+\newblock In \emph{Proceedings of the Computer Vision and Pattern Recognition Conference}, pages 17294--17303, 2025.
+
+\bibitem[Yang et~al.(2024{\natexlab{b}})Yang, Teng, Zheng, Ding, Huang, Xu, Yang, Hong, Zhang, Feng, et~al.]{yang2024cogvideox}
+Zhuoyi Yang, Jiayan Teng, Wendi Zheng, Ming Ding, Shiyu Huang, Jiazheng Xu, Yuanming Yang, Wenyi Hong, Xiaohan Zhang, Guanyu Feng, et~al.
+\newblock Cogvideox: Text-to-video diffusion models with an expert transformer.
+\newblock \emph{arXiv preprint arXiv:2408.06072}, 2024{\natexlab{b}}.
+
+\bibitem[Yu et~al.(2024)Yu, Xu, Weston, and Kulikov]{yu2024distilling}
+Ping Yu, Jing Xu, Jason Weston, and Ilia Kulikov.
+\newblock Distilling system 2 into system 1.
+\newblock \emph{arXiv preprint arXiv:2407.06023}, 2024.
+
+\bibitem[Zhang et~al.(2024{\natexlab{a}})Zhang, Du, Pang, Liu, Gao, and Lin]{zhang2024chain}
+Xuan Zhang, Chao Du, Tianyu Pang, Qian Liu, Wei Gao, and Min Lin.
+\newblock Chain of preference optimization: Improving chain-of-thought reasoning in llms.
+\newblock \emph{Advances in Neural Information Processing Systems}, 37:\penalty0 333--356, 2024{\natexlab{a}}.
+
+\bibitem[Zhang et~al.(2024{\natexlab{b}})Zhang, Zhang, Li, Zhao, Karypis, and Smola]{zhang2024multimodalchainofthoughtreasoninglanguage}
+Zhuosheng Zhang, Aston Zhang, Mu~Li, Hai Zhao, George Karypis, and Alex Smola.
+\newblock Multimodal chain-of-thought reasoning in language models, 2024{\natexlab{b}}.
+\newblock URL \url{https://arxiv.org/abs/2302.00923}.
+
+\bibitem[Zhou et~al.(2024)Zhou, Zhou, Hu, Lu, Gao, and Zhang]{zhou2024image}
+Qiji Zhou, Ruochen Zhou, Zike Hu, Panzhong Lu, Siyang Gao, and Yue Zhang.
+\newblock Image-of-thought prompting for visual reasoning refinement in multimodal large language models.
+\newblock \emph{arXiv preprint arXiv:2405.13872}, 2024.
+
+\end{thebibliography}

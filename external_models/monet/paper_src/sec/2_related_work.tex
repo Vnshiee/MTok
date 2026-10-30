@@ -1,0 +1,19 @@
+\section{Related Work}
+\label{sec:related_work}
+
+\subsection{Think with Images}
+These studies can be broadly divided into two categories based on how they obtain intermediate-step auxiliary images:
+(1) directly emphasizing visual content from the original image, such as grounding, cropping, or re-inputting selected image tokens \citep{sun2024visual, zheng2025deepeyes, zhang2025chain, sarch2025grounded, chung2025don, chen2025mint}; and
+(2) creating new visual content beyond the original image, such as invoking external tools or code interpreters to edit the image (e.g., drawing lines, adding bounding boxes, computing depth maps) \citep{hu2024visual, zhao2025pyvision, su2025openthinkimg, chen2025learning, qi2024cogcom, fu2025refocus, zhang2025thyme, zhou2025reinforced}, or generating new images via text-to-image models \citep{chern2025thinking, li2025imagine, xu2025visual}.
+
+While these approaches significantly enhance visual perception and reasoning, they also introduce key limitations.
+First, models trained for specific visual tools, such as bounding box prediction, struggle to generalize to tasks requiring more complex visual operations (e.g., visual math, spatial, or graphic reasoning).
+Second, tool-dependent reasoning increases the cognitive burden for training. Models often fail to generate valid tool calls or executable code without extensive supervision.
+Finally, reliance on external tools or interpreters necessitates asynchronous, multi-turn inference, complicating deployment and increasing latency.
+
+
+\subsection{Reasoning in Latent Space}
+Recent studies have explored training LLMs to reason with continuous latent embeddings—either by replacing discrete text tokens with self-generated continuous embeddings \citep{hao2024training, geiping2025scaling, shen2025codi, wei2025simcotsupervisedimplicit, butt2025softtokenshard, wang2025synadapt} or by using reweighted combinations of text embeddings \citep{yang2025machine, pham2025multimodal}. This line of research aims to enhance reasoning flexibility by enabling exploration in a continuous latent space rather than a discrete linguistic space, while also shortening reasoning chains.
+
+Building on this direction, several works have extended latent reasoning to MLLMs. \citet{yang2025machine, li2025latent} propose to align generated latent embeddings with those of auxiliary images. \citet{yang2025machine} further compresses image embeddings with mean pooling before alignment, which may potentially distort visual information, while \citet{li2025latent} focuses only on cropped image regions, which cannot encode visual operations over the entire image. \citet{pham2025multimodal} removes auxiliary images entirely, optimizing latent embeddings via next-token prediction, but with limited gains. Moreover, these methods neglect latent-space optimization during RL.
+%Our approach addresses these limitations from several aspects. To improve the generality of latent visual embeddings, we construct Monet-SFT-152K, encompassing diverse visual operations (Table \ref{tab:sft_data_statistics}). Instead of aligning latent and image embeddings directly, we align the representations of key observation tokens that follow them and allow latent embeddings to attend to auxiliary image features, enabling the model to automatically encode essential visual information into latent embeddings.

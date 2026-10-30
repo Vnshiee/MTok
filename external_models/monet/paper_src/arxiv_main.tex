@@ -1,0 +1,104 @@
+% CVPR 2026 Paper Template; see https://github.com/cvpr-org/author-kit
+
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+%%%%%%%%% PAPER TYPE  - PLEASE UPDATE FOR FINAL VERSION
+\usepackage[final]{arxiv}              % To produce the CAMERA-READY version
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{wrapfig}
+\usepackage{graphicx}        % for \resizebox
+\usepackage{booktabs}        % for \cmidrule, \toprule, \midrule, \bottomrule
+\usepackage[table]{xcolor} 
+\usepackage[most]{tcolorbox}
+\newtcolorbox{promptbox}[2][]{
+  colback=gray!5,
+  colframe=gray!40,
+  title={\textbf{#2}},
+  fonttitle=\bfseries,
+  left=1mm, right=1mm, top=1mm, bottom=1mm,
+  enhanced,
+  sharp corners,
+  #1
+}
+\definecolor{red4}{HTML}{febf92}
+\definecolor{blue4}{HTML}{77b1e2}
+\definecolor{green4}{HTML}{F5FFFA}
+\usepackage{xcolor} 
+% \usepackage[review]{cvpr}      % To produce the REVIEW version
+% \usepackage[pagenumbers]{cvpr} % To force page numbers, e.g. for an arXiv version
+
+% Import additional packages in the preamble file, before hyperref
+\input{preamble}
+
+% It is strongly recommended to use hyperref, especially for the review version.
+% hyperref with option pagebackref eases the reviewers' job.
+% Please disable hyperref *only* if you encounter grave issues, 
+% e.g. with the file validation for the camera-ready version.
+%
+% If you comment hyperref and then uncomment it, you should delete *.aux before re-running LaTeX.
+% (Or just hit 'q' on the first LaTeX run, let it finish, and you should be clear).
+\definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
+
+%%%%%%%%% PAPER ID  - PLEASE UPDATE
+\def\paperID{7696} % *** Enter the Paper ID here
+\def\confName{CVPR}
+\def\confYear{2026}
+
+
+%%%%%%%%% TITLE - PLEASE UPDATE
+\title{Monet: Reasoning in Latent Visual Space Beyond Images and Language}
+
+%%%%%%%%% AUTHORS - PLEASE UPDATE
+% \author{First Author\\
+% Institution1\\
+% Institution1 address\\
+% {\tt\small firstauthor@i1.org}
+% % For a paper whose authors are all at the same institution,
+% % omit the following lines up until the closing ``}''.
+% % Additional authors and addresses can be added with ``\and'',
+% % just like the second author.
+% % To save space, use either the email address or home page, not both
+% \and
+% Second Author\\
+% Institution2\\
+% First line of institution2 address\\
+% {\tt\small secondauthor@i2.org}
+% }
+\author{
+    Qixun Wang$^{1}$ \,\,
+    Yang Shi$^{1,2}$ \,\,
+    Yifei Wang$^{3}$\thanks{The work was done at MIT prior to joining Amazon.} \,\,
+    \\
+    Yuanxing Zhang$^{2}$ \,\,
+    Pengfei Wan$^{2}$ \,\,
+    Kun Gai$^{2}$ \,\,
+    Xianghua Ying$^{1}$\thanks{Corresponding Author} \,\,
+    Yisen Wang$^{1}$\footnotemark[2] \,\,
+    \\
+    $^{1}$Peking University \,\,
+    $^{2}$Kling Team \,\,
+    $^{3}$Amazon AGI SF Lab
+}
+
+\begin{document}
+\maketitle
+
+\input{sec/0_abstract}    
+\input{sec/1_intro}
+\input{sec/2_related_work}
+\input{sec/3_method}
+\input{sec/4_experiment}
+\input{sec/5_conclusion}
+
+{
+    \small
+    \bibliographystyle{ieeenat_fullname}
+    \bibliography{main}
+}
+
+% WARNING: do not forget to delete the supplementary pages from your submission 
+\input{sec/X_suppl}
+
+\end{document}

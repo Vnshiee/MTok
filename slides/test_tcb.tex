@@ -1,0 +1,25 @@
+\documentclass[aspectratio=169, 10pt]{beamer}
+\usetheme{metropolis}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+
+\definecolor{primary}{HTML}{1E293B}
+\definecolor{accent}{HTML}{0284C7}
+
+\tcbset{
+  colback=blue!5!white,
+  colframe=accent,
+  boxrule=1pt,
+  arc=3pt,
+  left=6pt,right=6pt,top=4pt,bottom=4pt
+}
+
+\begin{document}
+\begin{frame}{Tcolorbox Test}
+\begin{tcolorbox}[title=Test Box]
+This is a test of tcolorbox.
+\end{tcolorbox}
+\end{frame}
+\end{document}

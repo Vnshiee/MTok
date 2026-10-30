@@ -1,0 +1,177 @@
+\section{Experiments}
+\label{sec:exp}
+
+\subsection{Experimental Settings}
+\label{sec:exp-settings}
+
+\paragraph{Benchmarks.}
+We evaluate our approach on four spatial reasoning benchmarks. \textbf{VSP}~\citep{wu2024vsp} measures spatial planning in a simulated maze-navigation environment. In addition to its main task, we adopt its spatial reasoning subtask, which asks the model to predict the outcome of a prescribed action sequence. We extend the original binary choice to a three-way classification. 
+\textbf{BLINK-Jigsaw}~\citep{fu2024blink} systematically evaluates the capacity of multimodal large language models to extrapolate global structural and semantic information from incomplete visual inputs, thereby assessing their proficiency in reasoning about spatial organization and maintaining perceptual coherence at a fine-grained level. \textbf{SAT}~\citep{ray2024sat} evaluates both static and dynamic spatial relations.
+Additionally, we include the Mathematical Geometry subset of the recent \textbf{COMT}~\citep{cheng2025comt} to assess formal spatial reasoning in mathematical contexts.
+Full dataset details are provided in the supplementary material.
+
+\paragraph{Data Synthesis.}
+For each task, we sample 1k training instances for fine-tuning and 2k instances for reinforcement learning. 
+COMT uniquely provides interleaved multimodal reasoning trajectories, which we directly use as both helper images and reasoning supervision. For the other benchmarks, we synthesize helper images and reasoning thoughts following the procedure outlined in Sec.~\ref{sec:method-data-gen}.
+For VSP, the helper image is either the start map annotated with the red-arrow path (planning task) or the agent's current state snapshot (reasoning subtask). In Jigsaw, we concatenate one candidate patch beside the reference image. For SAT, we prompt a powerful video generation model \texttt{CogVideoX-5B}~\citep{yang2024cogvideox} to render a scene that matches the textual description. With the generated helper image, we then employ \texttt{Qwen2.5-VL 32B}~\citep{bai2025qwen2} as the external reasoning model $M_r$ to generate textual thoughts. Specifically, three distinct reasoning trajectories are generated per helper image to encourage diversity in model outputs. Full synthesis details are provided in the supplementary material.
+
+\paragraph{Baselines.}
+We compare our approach against both text-only baselines and recent unified multimodal models. First, we fine-tune the model directly using answer labels and also evaluate zero-shot reinforcement learning without any supervised warm-up. Next, using our synthetic data, we perform chain-of-thought supervised fine-tuning (CoT SFT) and then add reinforcement learning, giving a fair comparison.
+In addition, we benchmark against a unified model \textbf{Anole}~\citep{chern2024anole}, training with the same multimodal supervision, and \textbf{MVoT}~\citep{li2025imagine}, which generates action and state images but does not incorporate explicit reasoning thoughts during training.
+
+
+
+\paragraph{Implementation Details.}
+In this work, unless stated otherwise, all experiments use \texttt{Qwen2.5-VL 7B} as the base model. We perform supervised fine-tuning using a batch size of 8 and a cosine learning rate scheduler with an initial learning rate of 1e-5 for both stages. The random seed is fixed at 42 to ensure reproducibility.
+Reinforcement learning is implemented with the Verl framework. Unless stated otherwise, we use a latent token size of $k=4$ and a loss coefficient of $\gamma=0.1$.
+
+\subsection{Experimental Results}
+\label{sec:exp-results}
+
+We first evaluate the effectiveness of our method on the VSP benchmark. The results are shown in  Tab.~\ref{tab:main-exp-frozenlake}. We highlight the following findings.
+First, adding latent visual tokens to the reasoning process significantly improves the reasoning capability of VLMs compared to text-only baselines.
+Compared to directly fine-tuning the VLM with the synthesized data, our method achieves 3\% higher accuracy on the spatial reasoning task and 11\% on the spatial planning task. Also, with our two-stage training, \Model improves the CoT SFT + GRPO, by 2\% and 7\%, respectively. This demonstrates the effectiveness of the proposed two-stage training method. 
+Also, we test our method on COMT, Jigsaw, and SAT tasks and present the results in Tab.~\ref{tab:main-exp-spatial}, where we observe the consistent performance gains on both tasks, underscoring that interleaving compact visual cues consistently strengthens spatial reasoning ability. 
+
+\begin{table}[t]
+    \centering
+    \caption{\textbf{Experimental Results on Visual-Spatial Planning (VSP) tasks.} }
+    \scalebox{0.82}{
+    \begin{tabular}{lrrrrrrrrrrrr}
+        \toprule
+         \multirow{2}{*}{\textbf{VSP}} & \multicolumn{5}{c}{\textbf{Spatial Reasoning}} & \multicolumn{5}{c}{\textbf{Spatial Planning}} \\
+         \cmidrule(lr){2-6} \cmidrule(lr){7-11}
+        & Level 3 & Level 4 & Level 5 & Level 6 & Avg. & Level 3 & Level 4 & Level 5 & Level 6 & Avg. \\
+        \midrule
+        Zero-Shot & 0.32 & 0.23 & 0.40 & 0.32 & 0.32 & 0.10 & 0.08 & 0.05 & 0.01 & 0.06 \\
+        Direct SFT & 0.83 & 0.81 & 0.85 & 0.86 & 0.83 & 0.88 & 0.81 & 0.73 & 0.47 & 0.72 \\
+        CoT SFT & 0.88 & 0.86 & 0.80 & 0.83 & 0.84 & 0.68 & 0.53 & 0.35 & 0.31 & 0.47\\
+        GRPO & 0.54 & 0.49 & 0.76 & 0.67 & 0.62 & 0.42 & 0.35 & 0.26 & 0.08 & 0.28 \\
+        CoT SFT + GRPO & 0.89 &0.85 & 0.84 & 0.8 & 0.85 & 0.65 & 0.58 & 0.43 & 0.38 & 0.51 \\
+        \midrule
+        Anole & 0.46 & 0.51 & 0.49 & 0.63 & 0.52 & 0.02 & 0.01 & 0.00 & 0.00 & 0.01 \\
+        MVoT & 0.53 & 0.64 & 0.67 & 0.59 & 0.61 & 0.21 & 0.11 & 0.08 & 0.03 & 0.11 \\
+        \midrule
+        Ours (Direct) & 0.86 & 0.84 & \textbf{0.88} & 0.87 & 0.86 & \textbf{0.93} & \textbf{0.83} & \textbf{0.76} & \textbf{0.51} & \textbf{0.76} \\
+        Ours (CoT) & 0.87 & \textbf{0.92} & 0.86 & 0.84 & 0.87 & 0.75 & 0.63 & 0.53 & 0.39 & 0.58 \\
+         + w/ GRPO & \textbf{0.92} & 0.90 & 0.86 & \textbf{0.88} & \textbf{0.89} & 0.78 & 0.65 & 0.52 & 0.43 & 0.60 \\
+        \bottomrule
+    \end{tabular}
+    }
+    \label{tab:main-exp-frozenlake}
+\end{table}
+
+Additionally, we observe that unified model-based baselines such as MVoT and Anole, despite explicitly generating image tokens, perform poorly when faced with text and image interleave reasoning. After fine-tuning on the same data, they achieve only 61\% accuracy on the spatial reasoning task and 11\% on the spatial planning task. Notably, Anole struggles to even generate valid answers for the spatial planning task post fine-tuning.
+Following the setup in~\cite{li2025imagine}, we construct interleaved reasoning trajectories by combining textual thoughts with simulated state images after each action step for the spatial reasoning task. While our reproduced results are lower than those reported in their paper, we attribute this discrepancy to the difference in training data. They use 6,846 samples, whereas we training with the same 1,000 samples to ensure a fair comparison. Even when compared to their reported results, our model still gains an additional 2\% improvement.
+These findings further underscore the advantage of our latent design over current unified approaches.
+
+
+
+\begin{table}[t]
+    \centering
+    \caption{\textbf{Experimental Results on COMT, Jigsaw, and SAT tasks.}}
+    \scalebox{0.92}{
+    \begin{tabular}{lrrrrrrr}
+        \toprule
+        \multirow{2}{*}{Method} & \multirow{2}{*}{COMT} & \multirow{2}{*}{Jigsaw} & \multicolumn{3}{c}{SAT Synthetic} & \multirow{2}{*}{SAT Real}\\
+        \cmidrule(lr){4-6}
+         &  &  & GoalAim & ObjM & Avg. & \\
+        \midrule
+        Zero-Shot & 0.63 & 0.58 & 0.50 & 0.63 & 0.57 & 0.49 \\
+        Direct SFT & 0.71 & 0.87 & 0.95 & 0.95 & 0.95 & 0.67\\
+        CoT SFT & 0.75 & 0.83 & 0.97 & 0.90 & 0.94 & 0.66 \\
+        GRPO & - & 0.85 & 0.85 & 0.80 & 0.83 & 0.71 \\
+        SFT + GRPO & - & 0.86 & 0.93 & 0.85 & 0.89 & 0.65 \\
+        \midrule
+        Ours & \textbf{0.77} & \textbf{0.88} & \textbf{0.98} & \textbf{0.98} & \textbf{0.98} & \textbf{0.72} \\
+        \bottomrule
+    \end{tabular}
+    }
+    \label{tab:main-exp-spatial}
+\end{table}
+
+\begin{table}[t]
+    \centering
+    \caption{\textbf{Experimental Results with Qwen2.5-VL 3B on COMT, Jigsaw, and SAT tasks.}}
+    \scalebox{0.92}{
+    \begin{tabular}{lrrrrrrr}
+        \toprule
+        \multirow{2}{*}{Method} & \multirow{2}{*}{COMT} & \multirow{2}{*}{Jigsaw} & \multicolumn{3}{c}{SAT Synthetic} & \multirow{2}{*}{SAT Real}\\
+        \cmidrule(lr){4-6}
+         &  &  & GoalAim & ObjM & Avg. & \\
+        \midrule
+        Zero-Shot & 0.40 & 0.45 & 0.50 & 0.38 & 0.44 & 0.51 \\
+        Direct SFT & 0.67 & 0.80 & 0.82 & 0.83 & 0.83 & 0.55\\
+        CoT SFT & 0.65 & 0.59 & 0.73 & 0.88 & 0.71 & 0.54 \\
+        GRPO & - & 0.54 & 0.78 & 0.80 & 0.79 & 0.54 \\
+        SFT + GRPO & - & 0.72 & 0.82 & 0.85 & 0.84 & 0.52 \\
+        \midrule
+        Ours & \textbf{0.68} & \textbf{0.85} & \textbf{0.85} & \textbf{0.93} & \textbf{0.89} & \textbf{0.64} \\
+        \bottomrule
+    \end{tabular}
+    }
+    \label{tab:main-exp-spatial-3B}
+\end{table}
+
+
+We notice that on VSP spatial planning task, fine-tuning with synthesized reasoning thoughts performs significantly worse than training directly on answer labels, both with and without our latent design. Two factors likely contribute to this outcome. First, as noted in prior work~\citep{li2025think}, certain visual tasks that rely heavily on perception may not benefit from explicit reasoning during fine-tuning. Second, the synthesized thoughts are generated by Qwen2.5-VL-32B; although generally sound, they are not flawless, and any imperfections propagate into the base model. Likely, in SAT, the helper images are produced by a video generation model without ground-truth annotations, which can introduce further noise to the latent prior. Despite these challenges, our latent reasoning pipeline still closes much of the performance gap, highlighting its practical robustness.
+
+Moreover, reinforcement learning can further improve the performance of our method. As shown in Tab.~\ref{tab:main-exp-frozenlake}, by weaving latent visual tokens within the text trajectories, instead of placing them at the start, our model can naturally explore diverse sequences. After optimizing with GRPO, \Model achieves extra gains (+2\% accuracy) on VSP tasks. These results further confirm that interleaved latent cues provide informative guidance with flexible reasoning, highlighting the potential of our latent design.
+
+\subsection{Ablation Study}
+\label{sec:exp-ablation-study}
+
+\begin{wrapfigure}{r}{0.6\textwidth}
+    \centering
+    % \vspace{-4mm}
+    \caption{\textbf{Ablation Study of Training Stages on VSP Spatial Planning task.} Both training stages work jointly to achieve better reasoning performance.}
+    \begin{tabular}{lrrrrr}
+        \toprule
+        & \multicolumn{5}{c}{\textbf{VSP Spatial Planning}} \\
+        \cmidrule(lr){2-6}
+        Method & 3 & 4 & 5 & 6 & Avg. \\
+        \midrule
+        Ours & 0.75 & 0.63 & 0.53 & 0.39 & 0.58\\
+        - w/o Stage 1 & 0.69 & 0.58 & 0.46 & 0.36 & 0.52 \\
+        - w/o Stage 2 & 0.38 & 0.19 & 0.16 & 0.09 & 0.21 \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:main-ablation-training-stage}
+\end{wrapfigure}
+
+In this section, we first conduct an ablation study to evaluate the influence of the two stages of our framework. 
+Tab.~\ref{tab:main-ablation-training-stage} reports the effect of removing each training phase. Training with only the first phase, which jointly supervises text and latent visual tokens, anchors the latent embeddings but leaves them constrained and lowers performance, similar to the plight of unified models.
+
+Training with only the second stage, which relies on text loss alone while letting latent tokens evolve freely, performs slightly better the text-only baseline. Without the grounding supplied by the first stage, the latent vectors drift into regions of the multimodal embedding space that do not aid reasoning.
+This outcome contrasts with findings on LLMs in Coconut~\citep{hao2024training}, where unsupervised latent vectors can benefit subsequent reasoning. The difference indicates that visual and textual subspaces in VLMs remain heterogeneous enough that a grounding phase is effective. These ablations confirm that the first stage aligns latent tokens with visual features, the second stage allows them to adapt to the task, and both steps are necessary for the final performance. We also include a deeper analysis of the generated latent embeddings in Sec.~\ref{sec:analysis-latent-behavior}.
+
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+    \centering
+    % \vspace{-4mm}
+    \caption{\textbf{Ablation Study of Latent Size $k$ and Loss Coefficient $\gamma$ on VSP Spatial Reasoning.} Our training pipeline remains robust and superior performance across different hyperparameters.}
+    \begin{tabular}{llrrrrr}
+        \toprule
+        \multirow{2}{*}{$k$} & \multirow{2}{*}{$\gamma$} &\multicolumn{5}{c}{\textbf{VSP Spatial Reasoning}} \\
+        \cmidrule(lr){3-7}
+        & & 3 & 4 & 5 & 6 & Avg. \\
+        \midrule
+        2 & 0.1 & 0.85 & 0.86 & 0.89 & \textbf{0.93} & 0.86 \\
+        4 & 0.1 & \textbf{0.87} & \textbf{0.92} & 0.86 & 0.84 & 0.87  \\
+        6 & 0.1 & 0.85 & 0.90 & \textbf{0.91} & 0.87 & \textbf{0.88} \\
+        8 & 0.1 & 0.77 & 0.77 & 0.74 & 0.70 & 0.75 \\
+        4 & 0.5 & 0.84 & 0.91 & 0.84 & 0.78 & 0.84 \\
+        4 & 1 & 0.77 & 0.85 & 0.85 & 0.87 & 0.83 \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:main-ablation-latent}
+\end{wrapfigure}
+
+To delve deeper into the robustness of our framework, we investigate the influence of hyperparameters: latent token size $k$ and the multimodal loss coefficient $\gamma$. 
+As Tab.~\ref{tab:main-ablation-latent} shows, adjusting the loss coefficient $\gamma$ has a moderate effect. 
+A larger $\gamma$ weights the latent-alignment loss less in the first stage.
+When $\gamma$ approaches infinity, the first stage becomes equivalent to skipping visual supervision entirely, in other words, the second stage. This gives a poor initialization for subsequent training.
+Even so, after the second stage, each $\gamma$ tested still obtains over 80\% accuracy, which attests to the overall robustness of the framework.
+
+
+We observe that varying the latent size $k$ from 2 to 6 yields consistently strong performance, with $k=6$ showing a slight improvement—highlighting the resilience of our latent design. However, increasing $k$ to 8 results in a significant performance drop around 13\%, likely due to error accumulation in longer latent sequences under autoregressive non-decoding generation. These observations are consistent with prior findings that optimal latent reasoning performance in LLMs typically occurs with fewer than 6 latent tokens~\citep{hao2024training}.

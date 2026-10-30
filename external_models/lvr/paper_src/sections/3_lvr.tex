@@ -1,0 +1,130 @@
+\section{Latent Visual Reasoning}\label{sec:lvr}
+In this section, we introduce \modelfullname, a new paradigm that enables MLLMs to reason jointly over text and visual tokens. The overall inference pipeline is illustrated in Figure~\ref{fig:main}. At a high level, \modelname is trained to reconstruct visual semantics relevant to both the input image and the accompanying text query. These reconstructed semantics, which we term \textit{latent visual thoughts}, are then combined with the original inputs to guide the generation of textual responses.
+
+% We begin with an overview of the \modelname architecture, which is built upon the Qwen-2.5-VL series \citep{Qwen2.5-VL} (\S\ref{ssec:lvr_overview}). We then describe a two-stage training pipeline that jointly learns to reconstruct visual semantics and generate text (\S\ref{ssec:lvr_trainingPipeline}) via Supervised Finetuning and Reinforcement Learning. Finally, we introduce decoding strategies that enable the model to switch flexibly between \modelfullname and regular text generation (\S\ref{ssec:lvr_decoding}).
+
+We begin by providing an overview of the \modelname architecture, which is built on the Qwen-2.5-VL series \citep{Qwen2.5-VL} (\S\ref{ssec:lvr_overview}). Next, we present a two-stage training pipeline—combining supervised fine-tuning and reinforcement learning—that jointly teaches the model to reconstruct visual semantics and generate text (\S\ref{ssec:lvr_trainingPipeline}). Finally, we introduce decoding strategies that allow the model to flexibly alternate between \modelfullname and standard text generation (\S\ref{ssec:lvr_decoding}) during the inference.
+
+%We begin with an overview of the \modelname architecture, which is built upon the Qwen-2.5-VL series \citep{Qwen2.5-VL} (\S\ref{ssec:lvr_overview}), followed by the optimization details, including datasets, framework, and hardware configuration (\S\ref{ssec:lvr_trainingDetails}). We then describe a two-stage training pipeline that jointly learns to reconstruct visual semantics and generate text (\S\ref{ssec:lvr_trainingPipeline}) via Supervised Finetuning and Reinforcement Learning. Finally, we introduce decoding strategies that enable the model to switch flexibly between \modelfullname and regular text generation (\S\ref{ssec:lvr_decoding}).
+
+
+% Overview
+\subsection{Method Overview}\label{ssec:lvr_overview}
+% Fig.~\ref{fig:main} visualizes the architecture of \modelname, which consists of the same key components as a standard MLLM: a vision encoder \( vision(\cdot) \), an LLM backbone \( {\theta}(\cdot) \), and a multimodal projection module \( proj(\cdot) \) that bridges the two modalities. Given an input consisting of an image-question pair \((\mathbf{X}_v, \mathbf{X}_t)\), the vision encoder first processes the image \(\mathbf{X}_v\) into visual features \(\mathbf{V}\), represented as \( vision(\mathbf{X}_v) = \mathbf{V} \). Meanwhile, the textual question \(\mathbf{X}_t\) is encoded into language features \(\mathbf{T}\) through the embedding layers of the language model. Since the visual and textual features reside in different latent spaces, the multimodal projection module \( proj(\cdot) \) transforms the visual features into a representation compatible with the language model’s latent space, denoted as \( proj(\mathbf{V}) = \mathbf{V}_T \).
+
+% In standard MLLMs, \(\mathbf{V}_T\) and \(\mathbf{T}\) are jointly fed into the LLM  \( {\theta}(\cdot) \), which auto-regressively computes hidden states at each position and maps them, via the language modeling head, to discrete tokens in the vocabulary.
+
+
+Fig.~\ref{fig:main} illustrates the architecture of \modelname, which largely follows the standard MLLM design. It consists of three key components: a vision encoder \( vision(\cdot) \), an LLM backbone \( \theta(\cdot) \), and a multimodal projector \( proj(\cdot) \) that aligns the two modalities. Given an input image–question pair \((\mathbf{X}_v, \mathbf{X}_t)\), the vision encoder transforms the image into visual features \( \mathbf{V} = vision(\mathbf{X}_v) \). In parallel, the textual question \(\mathbf{X}_t\) is embedded into language features \(\mathbf{T}\) by the LLM’s embedding layers. Since visual and textual features reside in distinct latent spaces, the projector \( proj(\cdot) \) maps the visual features into a representation aligned with the language model’s latent space, denoted as \( \mathbf{V}_T = proj(\mathbf{V}) \).  
+
+In standard MLLMs, both $\mathbf{V}_T$ and $\mathbf{T}$ are passed into the LLM $\theta(\cdot)$. However, the decoding process remains strictly text-centric: hidden states are computed auto-regressively and mapped, through the language modeling head, to discrete tokens in the vocabulary. Thus, while visual information can guide the reasoning process, the output space is still constrained to text tokens, limiting the model’s ability to directly reason over visual semantics.  
+
+To overcome this limitation, we propose \modelname, which extends the conventional text-only generation paradigm by enabling interleaved \modelfullname. When the special token $<\vert\texttt{lvr\_start}\vert>$ is generated, the model enters a latent reasoning mode, where it reconstructs visual semantics in the space of $\mathbf{V}_T$ to better support answering the textual query. The hidden states produced in this mode are directly propagated as input embeddings to subsequent positions until a stopping criterion is reached. At that point, the model generate the token $<\vert\texttt{lvr\_end}\vert>$ and resumes standard text generation. The hidden-state sequence produced during the \modelname segment can be regarded as an analogue of human's ``visual thinking,'' where query-relevant visual semantics are mentally reconstructed to enhance the precision of reasoning and answering.
+
+
+% DATA
+% \subsection{Model Settings and Data Collection}\label{ssec:lvr_trainingDetails}
+% We adopt the Qwen-2.5-VL series 3B and 7B checkpoints as our base models. Both feature a native dynamic-resolution visual encoder, which encodes images into a variable number of tokens depending on image size (in pixels).
+
+% Our training data consists of three key fields: the image, the question, and a bounding box marking the region of interest in the image essential for answering the question. We use \textsc{Visual COT}~\citep{visualcot} as the primary training source. \textsc{Visual COT} is a large-scale VQA dataset containing 438k question–answer pairs, each annotated with bounding boxes that highlight the critical regions needed to derive the answer. Each instance is provided in a \textit{question–bounding box–answer} format, making it particularly well suited for \modelname.
+
+% For a given image, the image processor of the model will first crop the image into a grid of visual patches which will later be flattened in raster order and encoded into visual tokens by the visual encoder.\footnote{The Qwen image encoder applies a more complex flattening procedure, which is detailed in our released code.} Given a bounding box of ROI in the original image, \modelname takes $O(1)$ time to select the bounded visual patches and obtain their indices in the sequence of flatten visual tokens. We calculate the index list by each bounding box for later use in the training pipeline.
+
+% Thus, each training instance for \modelname is represented as: the image $V$, the question $T$, the list of token indexes for \modelname supervision $lvr\_tokens=[...]$, and the final response$T_{ans}$. This data preparation process requires no model inference and the only model-dependent step is the extraction of token indexes which relies on the model's image processor to compute indexes.
+
+% SFT+RL
+\subsection{Two-stage Training Pipeline}\label{ssec:lvr_trainingPipeline}
+% To enable the model to learn the proposed latent-space–based visual thinking, we employ a two-stage training pipeline consisting of supervised fine-tuning followed by reinforcement learning.
+
+\subsubsection{Supervised Finetuning.}\label{ssec:lvr_sft} 
+We begin with supervised fine-tuning (SFT) to instill the basic pattern of latent visual reasoning. During this stage, we explicitly supervise the reasoning content by forcing the MLLM to use its latent space embeddings (i.e., last hidden states) to reconstruct the ground-truth regions of interest for each image–text pair. Since the reconstruction loss directly dictates what the model must reason about, the reasoning process is constrained rather than free-form. We therefore characterize this stage as a teacher-forcing paradigm for latent visual reasoning: although restrictive, it allows the model to quickly acquire the fundamental ability to reason in the latent space.
+
+% The data of SFT is an image, a question and the bounding box of a ROI related to the query. Given a bounding box of ROI in the original image, \modelname takes $O(1)$ time to select the bounded visual patches and obtain their indices in the sequence of flatten visual tokens. During the forward, 
+% Each image is encoded into a flattened sequence of visual tokens in the semantics space, appended by the embeddings of the text tokens. A subset of these visual tokens will be selected based on the indices stored in $lvr\_tokens$ and wrap them up by $<\vert\texttt{lvr\_start}\vert>$ and $<\vert\texttt{lvr\_end}\vert>$ as the \modelfullname process. The rest of the textual response will be added to the sequence.
+
+
+% Each instance of SFT data consists of an image, a question, and a pre-annotated bounding box of a region of interest (ROI) relevant to the query. For a given image, the image processor of the model will first crop the image into a grid of visual patches. Given an ROI bounding box in the original image, \modelname efficiently selects the corresponding visual patches and locates them in $O(1)$ time by retrieving their indices ($\mathbf{I}=\{I_1, I_2, I_3, \dots\}$) from the sequence of flattened visual tokens. During the forward pass, each image is encoded into a flattened sequence of visual tokens in the semantic space, followed by the embeddings of the text tokens. A subset of visual tokens indexed by $lvr\_tokens$ is then gathered using the indices list $\mathbf{I}$ retrieved in the previous step. Owing to the design of the ViT encoder, these features directly correspond to the visual patches within the ROI. The selected tokens are enclosed by the special markers $<\vert\texttt{lvr\_start}\vert>$ and $<\vert\texttt{lvr\_end}\vert>$, thereby defining the \modelfullname process. Finally, the remaining textual response is appended to the sequence for generation.
+
+Each SFT instance consists of an image-question pair, accompanied by a pre-annotated bounding box of a region of interest (ROI) relevant to the query. For a given image, the model’s image processor first crops it into a grid of visual patches. Based on the ROI bounding box, \modelname efficiently selects the corresponding patches and retrieves their indices $\mathbf{I}=\{I_1, I_2, I_3, \dots, I_{T_v}\}$ from the sequence of flattened visual patches in $O(1)$ time. During the forward pass, the image is encoded into a  sequence of visual embeddings in the semantic space, followed by the embeddings of the text tokens. A subset of visual embeddings $\mathbf{v} = \{v_1, v_2, \dots, v_{T_v} \} $ is then gathered using the index list $\mathbf{I}$, which—by design of the ViT encoder—directly corresponds to the visual patches within the ROI. These selected tokens are enclosed by the special tokens $<\vert\texttt{lvr\_start}\vert>$ and $<\vert\texttt{lvr\_end}\vert>$, thereby defining the \modelfullname process. Finally, the remaining textual response is appended to the sequence for generation.
+
+We train our model with two joint learning objectives that explicitly couple latent visual reasoning with downstream text generation.
+
+\stitle{Visual Reconstruction Loss.}  
+During latent reasoning, the model predicts a sequence of the final hidden states $\{ \mathbf{h}_t \}_{t=1}^{T_v}$ that are expected to encode the underlying visual semantics.  
+We enforce these hidden states to approximate the ground-truth visual embeddings $\{ \mathbf{v}_t \}_{t=1}^{T_v}$ via a mean squared error (MSE) objective:
+\begin{equation}
+\mathcal{L}_{\mathrm{LVR}} 
+= \frac{1}{T_v} \sum_{t=1}^{T_v} \big\| \mathbf{h}_t - \mathbf{v}_t \big\|_2^2 .
+\end{equation}
+
+\stitle{Next-Token Prediction (NTP) Loss.}  
+For the subsequent language modeling phase, the model generates the final response tokens $\{ y_t \}_{t=1}^{T_y}$ to answer the visual question.  
+We adopt the standard cross-entropy (CE) loss to maximize the likelihood of the ground-truth sequence:
+\begin{equation}
+\mathcal{L}_{\mathrm{NTP}}
+= - \frac{1}{T_y} \sum_{t=1}^{T_y} 
+\log p_\theta\!\left( y_t \mid y_{<t}, \mathbf{h}_{1:T_v} \right).
+\end{equation}
+
+\paragraph{Joint Objective.}  
+The overall training loss is a weighted sum of the two components:
+\begin{equation}
+\mathcal{L} =  \mathcal{L}_{\mathrm{NTP}} + \lambda_{\mathrm{LVR}} \cdot \mathcal{L}_{\mathrm{LVR}},
+\end{equation}
+where $\lambda_{\mathrm{LVR}}$ is a hyperparameter to balance reconstruction and generation signals.
+
+\subsubsection{Reinforcement Learning}
+We employ GRPO to further refine the interaction between \modelname and standard text generation. In this stage, rewards are computed solely based on output accuracy and adherence to the required response format. Unlike supervised fine-tuning, no constraints are imposed on the intermediate outputs of \modelname, allowing the model to freely explore the latent visual reasoning space. This relaxation also removes the need for pre-annotated ROI bounding boxes, as GRPO training can be performed directly on image–text pairs. Moreover, GRPO implicitly encourages the generation of the $<\vert\texttt{lvr\_start}\vert>$ token, thereby increasing the likelihood of activating the \modelname process during response generation.
+
+% However, it is not trivial to directly apply the standard GRPO algorithm on LVR
+% A key challenge arises because the policy-gradient loss is defined over token distributions, while the latent reasoning process itself has no explicit token distribution. \textbf{To bridge this gap, we introduce $GRPO_{\text{latent}}$, which can be applied to any latent-reasoning model.}
+
+However, directly applying the standard GRPO algorithm to \modelname is non-trivial. The key challenge lies in the mismatch between the policy-gradient loss, which is defined over token distributions, and the latent reasoning process, which lacks an explicit token distribution. \textbf{To address this issue, we propose $GRPO_{{latent}}$, a variant that can be seamlessly applied to any latent-reasoning model.}
+
+% ==== Objective: group-averaged clipped surrogate with KL ====
+\begin{align}
+J_{\mathrm{GRPO_{latent}}}(\theta) \;=\; 
+\mathbb{E}_{q,I,\; o \sim \pi_{\theta_{\mathrm{old}}}}
+\Bigg[
+&\frac{1}{|y|}\sum_{t=1}^{|y|}
+\min\Big(
+r_{t}(\theta)\,\hat{A}_{t},\;
+\mathrm{clip}\big(r_{t}(\theta),\,1-\varepsilon,\,1+\varepsilon\big)\,\hat{A}_{t}
+\Big) \nonumber \\
+&-\;\beta\, D_{\mathrm{KL}}\!\big(\pi_{\theta}(\cdot\mid q,I)\,\|\,\pi_{\mathrm{ref}}(\cdot\mid q,I)\big)
+\Bigg]
+\end{align}
+Here, the token-wise importance ratio $r_{i,t}(\theta)$ for a text token $y_{i,t}$ is computed using a teacher-forcing log-probability pass, where \textbf{the latent reasoning hidden states are replayed from the original rollout}:
+\begin{equation}
+r_{i,t}(\theta) = \frac{\pi_{\theta}(y_{i,t}\mid q, I, \widetilde{h}^{\mathrm{latent}}_{i}, y_{i,<t})}{\pi_{\theta_{\mathrm{old}}}(y_{i,t}\mid q, I, \widetilde{h}^{\mathrm{latent}}_{i}, y_{i,<t})}
+\end{equation}
+
+During rollout we record the last hidden states of \modelname processes
+\[
+\widetilde{h}^{\mathrm{latent}}_{i} \;=\; \{ h^{\mathrm{latent}}_{i,1}, \dots, h^{\mathrm{latent}}_{i,L} \}.
+\]
+To evaluate importance ratios, we perform a teacher-forcing forward pass under both $\pi_{\theta}$ and $\pi_{\theta_{\mathrm{old}}}$. The recorded hidden states $\widetilde{h}^{\mathrm{latent}}_{i}$ are patched into the latent-reasoning positions of the model, thereby restoring the exact context preceding text generation and ensuring consistent conditional log-probabilities for the output sequence.
+
+Rewards are derived solely from the text output $y$. We incorporate two reward types: a \textbf{format reward}, which equals 1 if the response contains both $<\vert\texttt{lvr\_start}\vert>$ and $<\vert\texttt{lvr\_end}\vert>$ tokens and 0 otherwise, and an \textbf{accuracy reward}, which equals 1 if the answer is correct and 0 otherwise. The format reward will encourage \modelname process in the response while the accuracy reward indirectly supervises the latent reasoning process through its impact on text generation.
+
+Finally, the group-normalized reward is defined as:
+\begin{align}
+\tilde{R}_i \;=\; \frac{R(y_i)-\mathrm{mean}(R(y_{1}),\dots,R(y_{G}))}
+{\mathrm{std}(R(y_{1}),\dots,R(y_{G}))}, \qquad
+\hat{A}_{i,t} \;=\; \tilde{R}_i \quad (\forall t\in\{1,\dots,|y_i|\}).
+\label{eq:adv_text_only}
+\end{align}
+
+% Inference
+
+
+\subsection{Decoding Strategies}\label{ssec:lvr_decoding}
+Our initial results reveal that decoding in \modelname can be challenging, as it is often unclear when the model should exit the \modelname process. Specifically, when the next-token prediction introduces a $<\vert\texttt{lvr\_start}\vert>$ token, the decoder switches into the \modelname mode, passing the last hidden states instead of the language model head’s predicted tokens. During this phase, the language model head continues producing token predictions, but it should ideally emit $<\vert\texttt{lvr\_end}\vert>$ once an optimal length of latent reasoning has been reached, reconstructing all necessary visual semantics for the current task. In practice, however, the predicted tokens during latent reasoning are often unstable, motivating us to propose three decoding strategies:
+\begin{itemize}[left=0pt]
+    \item \textbf{Fixed Token}: assigns a constant budget of reasoning steps. Once the budget is reached, the model immediately exits latent reasoning mode.
+    \item \textbf{Latent End Token}: introduces a trainable tensor in the hidden state space. When the last hidden state approaches this tensor, the decoder resumes text-token generation.
+    \item \textbf{Mode Switching Loss}: adds an auxiliary loss term during SFT that supervises the token distribution predicted by the language model head in the latent reasoning phase. A BCE loss encourages the distribution of the final latent reasoning token toward $<\vert\texttt{lvr\_end}\vert>$ (close to 1), while all intermediate tokens are pushed away from $<\vert\texttt{lvr\_end}\vert>$ (close to 0). At inference time, the model exits latent reasoning mode once $<\vert\texttt{lvr\_end}\vert>$ is predicted.
+\end{itemize}
+
+Empirically, we find that \textbf{Fixed Token} achieves the best performance, while \textbf{Mode Switching Loss} fails to work as intended. A detailed analysis is provided in Section~\ref{ssec:exp_ablation}.
+
