@@ -1,0 +1,180 @@
+diff --git a/src/model/qwen_lvr_model.py b/src/model/qwen_lvr_model.py
+index bd29447..be172f1 100644
+--- a/src/model/qwen_lvr_model.py
++++ b/src/model/qwen_lvr_model.py
+@@ -54,10 +54,41 @@ from transformers.integrations.fsdp import is_fsdp_managed_module
+ 
+ 
+ from src.model.lvr_heads import LVRHead, LVRHeadGLU
++from transformers.models.qwen2_5_vl.modeling_qwen2_5_vl import Qwen2_5_VLModel
++
++def _qwen_get_image_features(self, pixel_values, image_grid_thw=None, **kwargs):
++    parent = getattr(self, "_parent", None)
++    visual = getattr(parent, "visual", None) if parent is not None else (getattr(self, "_visual", None) or getattr(self, "visual", None))
++    pixel_values = pixel_values.type(visual.dtype)
++    image_embeds = visual(pixel_values, grid_thw=image_grid_thw, **kwargs)
++    if image_grid_thw is not None:
++        spatial_merge_size = getattr(visual, "spatial_merge_size", 2)
++        split_sizes = (image_grid_thw.prod(-1) // (spatial_merge_size**2)).tolist()
++        return list(torch.split(image_embeds, split_sizes))
++    return [image_embeds]
++
++def _qwen_get_rope_index(self, *args, **kwargs):
++    parent = getattr(self, "_parent", None)
++    if parent is not None and hasattr(parent, "get_rope_index"):
++        return parent.get_rope_index(*args, **kwargs)
++    raise AttributeError("No parent Qwen model found for get_rope_index")
++
++def _get_rope_deltas(self):
++    return getattr(self, "_rope_deltas_val", None) or getattr(getattr(self, "_parent", self), "rope_deltas", None)
++
++def _set_rope_deltas(self, val):
++    object.__setattr__(self, "_rope_deltas_val", val)
++
++Qwen2_5_VLModel.get_image_features = _qwen_get_image_features
++Qwen2_5_VLModel.get_rope_index = _qwen_get_rope_index
++Qwen2_5_VLModel.language_model = property(lambda self: self)
++Qwen2_5_VLModel.rope_deltas = property(_get_rope_deltas, _set_rope_deltas)
+ 
+ class QwenWithLVR(Qwen2_5_VLForConditionalGeneration):
+     def __init__(self, config):
+         super().__init__(config)
++        object.__setattr__(self.model, "_parent", self)
++        object.__setattr__(self.model, "_visual", self.visual)
+         if config.lvr_head:
+             self._init_lvr_head(config.lvr_head_type)
+         if config.latent_end_token:
+@@ -135,9 +166,14 @@ class QwenWithLVR(Qwen2_5_VLForConditionalGeneration):
+         tokenizer = kwargs.pop("tokenizer", None)  # Pull this out first, we only use it for stopping criteria
+         assistant_tokenizer = kwargs.pop("assistant_tokenizer", None)  # only used for assisted generation
+ 
+-        generation_config, model_kwargs = self._prepare_generation_config(
+-            generation_config, use_model_defaults, **kwargs
+-        )
++        try:
++            generation_config, model_kwargs = self._prepare_generation_config(
++                generation_config, use_model_defaults, **kwargs
++            )
++        except TypeError:
++            generation_config, model_kwargs = self._prepare_generation_config(
++                generation_config, **kwargs
++            )
+         self._validate_model_kwargs(model_kwargs.copy())
+         self._validate_assistant(assistant_model, tokenizer, assistant_tokenizer)
+ 
+@@ -443,7 +479,7 @@ class QwenWithLVR(Qwen2_5_VLForConditionalGeneration):
+                     os.environ["TOKENIZERS_PARALLELISM"] = "0"
+                     model_forward = self.get_compiled_call(generation_config.compile_config)
+ 
+-            if generation_config.prefill_chunk_size is not None:
++            if getattr(generation_config, "prefill_chunk_size", None) is not None:
+                 model_kwargs = self._prefill_chunking(input_ids, generation_config, **model_kwargs)
+                 is_prefill = False
+             else:
+@@ -670,7 +706,7 @@ class QwenWithLVR(Qwen2_5_VLForConditionalGeneration):
+                     os.environ["TOKENIZERS_PARALLELISM"] = "0"
+                     model_forward = self.get_compiled_call(generation_config.compile_config)
+ 
+-            if generation_config.prefill_chunk_size is not None:
++            if getattr(generation_config, "prefill_chunk_size", None) is not None:
+                 model_kwargs = self._prefill_chunking(input_ids, generation_config, **model_kwargs)
+                 is_prefill = False
+             else:
+@@ -940,7 +976,7 @@ class QwenWithLVR(Qwen2_5_VLForConditionalGeneration):
+                 os.environ["TOKENIZERS_PARALLELISM"] = "0"
+                 model_forward = self.get_compiled_call(generation_config.compile_config)
+ 
+-        if generation_config.prefill_chunk_size is not None:
++        if getattr(generation_config, "prefill_chunk_size", None) is not None:
+             model_kwargs = self._prefill_chunking(input_ids, generation_config, **model_kwargs)
+             is_prefill = False
+         else:
+diff --git a/src/train/monkey_patch_forward_lvr.py b/src/train/monkey_patch_forward_lvr.py
+index 2b68b6e..cb27eaf 100644
+--- a/src/train/monkey_patch_forward_lvr.py
++++ b/src/train/monkey_patch_forward_lvr.py
+@@ -3,7 +3,11 @@ from typing import Optional, List, Union, Tuple
+ from torch.nn import CrossEntropyLoss, MSELoss, L1Loss
+ import numpy as np
+ import transformers.models.qwen2_5_vl.modeling_qwen2_5_vl
+-from transformers.utils import is_torchdynamo_compiling,TransformersKwargs
++from transformers.utils import is_torchdynamo_compiling
++try:
++    from transformers.utils import TransformersKwargs
++except ImportError:
++    TransformersKwargs = dict
+ from transformers.processing_utils import Unpack
+ from src.constants import IGNORE_INDEX
+ import torch.distributed as dist
+@@ -283,7 +287,7 @@ def qwen2_5_mixed_modality_forward_lvr(
+                 else:
+                     delta = torch.zeros((batch_size, seq_length), device=inputs_embeds.device)
+                 delta = delta.repeat_interleave(batch_size // delta.shape[0], dim=1)
+-                position_ids += delta.to(position_ids.device)
++                position_ids = position_ids + delta.to(position_ids.device)
+ 
+     outputs = self.model.language_model(
+             input_ids=None,
+@@ -523,7 +527,7 @@ def qwen2_5_mixed_modality_forward_lvr_inference(
+                 else:
+                     delta = torch.zeros((batch_size, seq_length), device=inputs_embeds.device)
+                 delta = delta.repeat_interleave(batch_size // delta.shape[0], dim=1)
+-                position_ids += delta.to(position_ids.device)
++                position_ids = position_ids + delta.to(position_ids.device)
+ 
+     outputs = self.model.language_model(
+             input_ids=None,
+@@ -766,7 +770,7 @@ def qwen2_5_mixed_modality_forward_lvr_with_head(
+             else:
+                 delta = torch.zeros((batch_size, seq_length), device=inputs_embeds.device)
+             delta = delta.repeat_interleave(batch_size // delta.shape[0], dim=1)
+-            position_ids += delta.to(position_ids.device)
++            position_ids = position_ids + delta.to(position_ids.device)
+ 
+     outputs = self.model.language_model(
+         input_ids=None,
+@@ -1019,7 +1023,7 @@ def qwen2_5_mixed_modality_forward_lvr_with_head_inference(
+             else:
+                 delta = torch.zeros((batch_size, seq_length), device=inputs_embeds.device)
+             delta = delta.repeat_interleave(batch_size // delta.shape[0], dim=1)
+-            position_ids += delta.to(position_ids.device)
++            position_ids = position_ids + delta.to(position_ids.device)
+ 
+     outputs = self.model.language_model(
+         input_ids=None,
+@@ -1268,7 +1272,7 @@ def qwen2_5_mixed_modality_forward_lvr_with_head_with_modeSwitchLoss(
+             else:
+                 delta = torch.zeros((batch_size, seq_length), device=inputs_embeds.device)
+             delta = delta.repeat_interleave(batch_size // delta.shape[0], dim=1)
+-            position_ids += delta.to(position_ids.device)
++            position_ids = position_ids + delta.to(position_ids.device)
+ 
+     outputs = self.model.language_model(
+         input_ids=None,
+@@ -1539,7 +1543,7 @@ def qwen2_5_mixed_modality_forward_lvr_with_head_with_latentEndToken(
+             else:
+                 delta = torch.zeros((batch_size, seq_length), device=inputs_embeds.device)
+             delta = delta.repeat_interleave(batch_size // delta.shape[0], dim=1)
+-            position_ids += delta.to(position_ids.device)
++            position_ids = position_ids + delta.to(position_ids.device)
+ 
+     outputs = self.model.language_model(
+         input_ids=None,
+@@ -1805,7 +1809,7 @@ def qwen2_5_mixed_modality_forward_lvr_with_latentEndToken(
+             else:
+                 delta = torch.zeros((batch_size, seq_length), device=inputs_embeds.device)
+             delta = delta.repeat_interleave(batch_size // delta.shape[0], dim=1)
+-            position_ids += delta.to(position_ids.device)
++            position_ids = position_ids + delta.to(position_ids.device)
+ 
+     outputs = self.model.language_model(
+         input_ids=None,
+@@ -2012,7 +2016,7 @@ def qwen2_5_mixed_modality_forward_lvr_rl(
+             else:
+                 delta = torch.zeros((batch_size, seq_length), device=inputs_embeds.device)
+             delta = delta.repeat_interleave(batch_size // delta.shape[0], dim=1)
+-            position_ids += delta.to(position_ids.device)
++            position_ids = position_ids + delta.to(position_ids.device)
+ 
+     outputs = self.model(
+         input_ids=None,
