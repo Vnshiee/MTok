@@ -1,23 +1,30 @@
 diff --git a/src/model/qwen_lvr_model.py b/src/model/qwen_lvr_model.py
-index bd29447..be172f1 100644
+index bd29447..c90f2b9 100644
 --- a/src/model/qwen_lvr_model.py
 +++ b/src/model/qwen_lvr_model.py
-@@ -54,10 +54,41 @@ from transformers.integrations.fsdp import is_fsdp_managed_module
+@@ -54,10 +54,50 @@ from transformers.integrations.fsdp import is_fsdp_managed_module
  
  
  from src.model.lvr_heads import LVRHead, LVRHeadGLU
 +from transformers.models.qwen2_5_vl.modeling_qwen2_5_vl import Qwen2_5_VLModel
 +
 +def _qwen_get_image_features(self, pixel_values, image_grid_thw=None, **kwargs):
++    if not torch.is_grad_enabled() and getattr(self, "_cached_pv_ref", None) is pixel_values:
++        return getattr(self, "_cached_vis_feats")
 +    parent = getattr(self, "_parent", None)
 +    visual = getattr(parent, "visual", None) if parent is not None else (getattr(self, "_visual", None) or getattr(self, "visual", None))
-+    pixel_values = pixel_values.type(visual.dtype)
-+    image_embeds = visual(pixel_values, grid_thw=image_grid_thw, **kwargs)
++    pv_typed = pixel_values.type(visual.dtype)
++    image_embeds = visual(pv_typed, grid_thw=image_grid_thw, **kwargs)
 +    if image_grid_thw is not None:
 +        spatial_merge_size = getattr(visual, "spatial_merge_size", 2)
 +        split_sizes = (image_grid_thw.prod(-1) // (spatial_merge_size**2)).tolist()
-+        return list(torch.split(image_embeds, split_sizes))
-+    return [image_embeds]
++        res = list(torch.split(image_embeds, split_sizes))
++    else:
++        res = [image_embeds]
++    if not torch.is_grad_enabled():
++        object.__setattr__(self, "_cached_pv_ref", pixel_values)
++        object.__setattr__(self, "_cached_vis_feats", res)
++    return res
 +
 +def _qwen_get_rope_index(self, *args, **kwargs):
 +    parent = getattr(self, "_parent", None)
@@ -38,13 +45,15 @@ index bd29447..be172f1 100644
  
  class QwenWithLVR(Qwen2_5_VLForConditionalGeneration):
      def __init__(self, config):
++        if isinstance(getattr(config, "text_config", None), dict):
++            delattr(config, "text_config")
          super().__init__(config)
 +        object.__setattr__(self.model, "_parent", self)
 +        object.__setattr__(self.model, "_visual", self.visual)
          if config.lvr_head:
              self._init_lvr_head(config.lvr_head_type)
          if config.latent_end_token:
-@@ -135,9 +166,14 @@ class QwenWithLVR(Qwen2_5_VLForConditionalGeneration):
+@@ -135,9 +175,14 @@ class QwenWithLVR(Qwen2_5_VLForConditionalGeneration):
          tokenizer = kwargs.pop("tokenizer", None)  # Pull this out first, we only use it for stopping criteria
          assistant_tokenizer = kwargs.pop("assistant_tokenizer", None)  # only used for assisted generation
  
@@ -62,7 +71,7 @@ index bd29447..be172f1 100644
          self._validate_model_kwargs(model_kwargs.copy())
          self._validate_assistant(assistant_model, tokenizer, assistant_tokenizer)
  
-@@ -443,7 +479,7 @@ class QwenWithLVR(Qwen2_5_VLForConditionalGeneration):
+@@ -443,7 +488,7 @@ class QwenWithLVR(Qwen2_5_VLForConditionalGeneration):
                      os.environ["TOKENIZERS_PARALLELISM"] = "0"
                      model_forward = self.get_compiled_call(generation_config.compile_config)
  
@@ -71,7 +80,7 @@ index bd29447..be172f1 100644
                  model_kwargs = self._prefill_chunking(input_ids, generation_config, **model_kwargs)
                  is_prefill = False
              else:
-@@ -670,7 +706,7 @@ class QwenWithLVR(Qwen2_5_VLForConditionalGeneration):
+@@ -670,7 +715,7 @@ class QwenWithLVR(Qwen2_5_VLForConditionalGeneration):
                      os.environ["TOKENIZERS_PARALLELISM"] = "0"
                      model_forward = self.get_compiled_call(generation_config.compile_config)
  
@@ -80,7 +89,7 @@ index bd29447..be172f1 100644
                  model_kwargs = self._prefill_chunking(input_ids, generation_config, **model_kwargs)
                  is_prefill = False
              else:
-@@ -940,7 +976,7 @@ class QwenWithLVR(Qwen2_5_VLForConditionalGeneration):
+@@ -940,7 +985,7 @@ class QwenWithLVR(Qwen2_5_VLForConditionalGeneration):
                  os.environ["TOKENIZERS_PARALLELISM"] = "0"
                  model_forward = self.get_compiled_call(generation_config.compile_config)
  
