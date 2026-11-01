@@ -1,0 +1,208 @@
+{
+  "id": "NOVAglow646/Monet-SFT-7B",
+  "author": "NOVAglow646",
+  "sha": "67919cada4e1e6bbc013819a4d483d9bb914d629",
+  "downloads": 0,
+  "tags": [
+    "safetensors",
+    "region:us"
+  ],
+  "siblings": [
+    {
+      "rfilename": ".gitattributes",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/added_tokens.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/chat_template.jinja",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/config.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/generation_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/merges.txt",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/model-00001-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/model-00002-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/model-00003-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/model-00004-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/model.safetensors.index.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/preprocessor_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/special_tokens_map.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/tokenizer.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/tokenizer_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/video_preprocessor_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage1/vocab.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/added_tokens.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/chat_template.jinja",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/config.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/generation_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/merges.txt",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/model-00001-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/model-00002-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/model-00003-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/model-00004-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/model.safetensors.index.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/preprocessor_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/special_tokens_map.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/tokenizer.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/tokenizer_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/video_preprocessor_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage2/vocab.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/added_tokens.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/chat_template.jinja",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/config.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/generation_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/merges.txt",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/model-00001-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/model-00002-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/model-00003-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/model-00004-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/model.safetensors.index.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/preprocessor_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/special_tokens_map.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/tokenizer.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/tokenizer_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/video_preprocessor_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "stage3/vocab.json",
+      "size": null
+    }
+  ]
+}

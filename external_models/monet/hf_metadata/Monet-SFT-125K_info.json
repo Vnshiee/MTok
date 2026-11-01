@@ -1,0 +1,64 @@
+{
+  "id": "NOVAglow646/Monet-SFT-125K",
+  "author": "NOVAglow646",
+  "sha": "c77a2df9624e3e1e229dda90139453181e018eb8",
+  "downloads": 1653,
+  "siblings": [
+    {
+      "rfilename": ".gitattributes",
+      "size": null
+    },
+    {
+      "rfilename": "CogCoM/images.zip",
+      "size": null
+    },
+    {
+      "rfilename": "CogCoM/train.json",
+      "size": null
+    },
+    {
+      "rfilename": "README.md",
+      "size": null
+    },
+    {
+      "rfilename": "ReFocus/images.zip",
+      "size": null
+    },
+    {
+      "rfilename": "ReFocus/train.json",
+      "size": null
+    },
+    {
+      "rfilename": "Visual_CoT/images.zip",
+      "size": null
+    },
+    {
+      "rfilename": "Visual_CoT/train.json",
+      "size": null
+    },
+    {
+      "rfilename": "Zebra_CoT_count/images.zip",
+      "size": null
+    },
+    {
+      "rfilename": "Zebra_CoT_count/train.json",
+      "size": null
+    },
+    {
+      "rfilename": "Zebra_CoT_geometry/images.zip",
+      "size": null
+    },
+    {
+      "rfilename": "Zebra_CoT_geometry/train.json",
+      "size": null
+    },
+    {
+      "rfilename": "Zebra_CoT_visual_search/images.zip",
+      "size": null
+    },
+    {
+      "rfilename": "Zebra_CoT_visual_search/train.json",
+      "size": null
+    }
+  ]
+}

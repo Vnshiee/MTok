@@ -1,0 +1,91 @@
+{
+  "id": "NOVAglow646/Monet-7B",
+  "author": "NOVAglow646",
+  "sha": "39c1e320a3e15c357bff911fda263923edbdda37",
+  "downloads": 1006,
+  "tags": [
+    "transformers",
+    "safetensors",
+    "qwen2_5_vl",
+    "image-text-to-text",
+    "conversational",
+    "en",
+    "arxiv:2511.21395",
+    "base_model:Qwen/Qwen2.5-VL-7B-Instruct",
+    "base_model:finetune:Qwen/Qwen2.5-VL-7B-Instruct",
+    "license:mit",
+    "text-generation-inference",
+    "endpoints_compatible",
+    "region:us"
+  ],
+  "siblings": [
+    {
+      "rfilename": ".gitattributes",
+      "size": null
+    },
+    {
+      "rfilename": "README.md",
+      "size": null
+    },
+    {
+      "rfilename": "added_tokens.json",
+      "size": null
+    },
+    {
+      "rfilename": "chat_template.json",
+      "size": null
+    },
+    {
+      "rfilename": "config.json",
+      "size": null
+    },
+    {
+      "rfilename": "generation_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "merges.txt",
+      "size": null
+    },
+    {
+      "rfilename": "model-00001-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "model-00002-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "model-00003-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "model-00004-of-00004.safetensors",
+      "size": null
+    },
+    {
+      "rfilename": "model.safetensors.index.json",
+      "size": null
+    },
+    {
+      "rfilename": "preprocessor_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "special_tokens_map.json",
+      "size": null
+    },
+    {
+      "rfilename": "tokenizer.json",
+      "size": null
+    },
+    {
+      "rfilename": "tokenizer_config.json",
+      "size": null
+    },
+    {
+      "rfilename": "vocab.json",
+      "size": null
+    }
+  ]
+}
