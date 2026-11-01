@@ -1,0 +1,287 @@
+{
+  "timestamp": "2026-11-01 22:57:20",
+  "model_id": "NOVAglow646/Monet-7B",
+  "device": "NVIDIA A100-PCIE-40GB",
+  "token_audit": {
+    "abs_vis_pad": {
+      "token": "<abs_vis_token_pad>",
+      "id": 151665,
+      "l2_norm": 0.0,
+      "mean": -6.559618241350901e-41,
+      "std": 0.0,
+      "is_zero": true
+    },
+    "abs_vis_start": {
+      "token": "<abs_vis_token>",
+      "id": 151666,
+      "l2_norm": 0.006057447288185358,
+      "mean": 5.558596853916242e-07,
+      "std": 0.00010119513899553567,
+      "is_zero": false
+    },
+    "abs_vis_end": {
+      "token": "</abs_vis_token>",
+      "id": 151667,
+      "l2_norm": 0.004710641223937273,
+      "mean": 6.652764454884164e-07,
+      "std": 7.869390537962317e-05,
+      "is_zero": false
+    },
+    "observation_start": {
+      "token": "<observation>",
+      "id": 151668,
+      "l2_norm": 0.007087379693984985,
+      "mean": -1.4010621498528053e-06,
+      "std": 0.00011839460057672113,
+      "is_zero": false
+    },
+    "observation_end": {
+      "token": "</observation>",
+      "id": 151669,
+      "l2_norm": 0.006404786370694637,
+      "mean": -1.616608074073156e-07,
+      "std": 0.00010699925041990355,
+      "is_zero": false
+    },
+    "reference_avg_norm": 0.8782435655593872
+  },
+  "baseline_trajectory": {
+    "num_latents": 10,
+    "latent_norms": [
+      307.0989685058594,
+      305.2151184082031,
+      295.51025390625,
+      288.3843078613281,
+      290.0768737792969,
+      289.5893859863281,
+      288.7048645019531,
+      287.0703430175781,
+      286.5173645019531,
+      286.4211730957031
+    ],
+    "cos_sims": [
+      0.7745119333267212,
+      0.8883589506149292,
+      0.955377995967865,
+      0.9831058382987976,
+      0.9937086701393127,
+      0.9968420267105103,
+      0.9984416365623474,
+      0.9991983771324158,
+      0.999502956867218
+    ],
+    "mean_cos_sim": 0.9543387095133463,
+    "generated_text": "<abs_vis_token></abs_vis_token>The image primarily depicts  a  road  that  is  built  through  a  mountainous terrain, indicating the main object is the  road itself. The  bus is just a  secondary element,  traveling along  the road.Therefore, the final answer is \\boxed{a road}.<|im_end|>",
+    "token_count": 65,
+    "singular_values": [
+      317.85302734375,
+      157.6947479248047,
+      83.75613403320312,
+      50.96917724609375,
+      27.385950088500977,
+      14.337678909301758,
+      5.738118648529053,
+      2.794114112854004,
+      1.7295711040496826,
+      2.2334079403663054e-05
+    ],
+    "energy_top1": 0.7400941252708435,
+    "energy_top3": 0.9736493229866028
+  },
+  "interventions": {
+    "C0_natural": {
+      "num_latents": 10,
+      "latent_norms": [
+        307.0989685058594,
+        305.2151184082031,
+        295.51025390625,
+        288.3843078613281,
+        290.0768737792969,
+        289.5893859863281,
+        288.7048645019531,
+        287.0703430175781,
+        286.5173645019531,
+        286.4211730957031
+      ],
+      "cos_sims": [
+        0.7745119333267212,
+        0.8883589506149292,
+        0.955377995967865,
+        0.9831058382987976,
+        0.9937086701393127,
+        0.9968420267105103,
+        0.9984416365623474,
+        0.9991983771324158,
+        0.999502956867218
+      ],
+      "mean_cos_sim": 0.9543387095133463,
+      "generated_text": "<abs_vis_token></abs_vis_token>The image primarily depicts  a  road  that  is  built  through  a  mountainous terrain, indicating the main object is the  road itself. The  bus is just a  secondary element,  traveling along  the road.Therefore, the final answer is \\boxed{a road}.<|im_end|>",
+      "token_count": 65,
+      "singular_values": [
+        317.85302734375,
+        157.6947479248047,
+        83.75613403320312,
+        50.96917724609375,
+        27.385950088500977,
+        14.337678909301758,
+        5.738118648529053,
+        2.794114112854004,
+        1.7295711040496826,
+        2.2334079403663054e-05
+      ],
+      "energy_top1": 0.7400941252708435,
+      "energy_top3": 0.9736493229866028
+    },
+    "C1_zero": {
+      "num_latents": 10,
+      "latent_norms": [
+        307.0989685058594,
+        324.0265197753906,
+        331.0973205566406,
+        331.8678283691406,
+        332.6278076171875,
+        330.45166015625,
+        285.4312744140625,
+        267.97064208984375,
+        272.7325439453125,
+        270.3441162109375
+      ],
+      "cos_sims": [
+        0.9587882161140442,
+        0.9843692779541016,
+        0.997368335723877,
+        0.9991952180862427,
+        0.9955365061759949,
+        0.9082187414169312,
+        0.9263964891433716,
+        0.9411510229110718,
+        0.9766454696655273
+      ],
+      "mean_cos_sim": 0.9652965863545736,
+      "generated_text": "<abs_vis_token></abs_vis_token>The main object in this image is the  bus.<|im_end|>",
+      "token_count": 14,
+      "singular_values": [
+        279.9631042480469,
+        136.23536682128906,
+        78.34971618652344,
+        62.17530822753906,
+        38.80199432373047,
+        33.37439727783203,
+        22.874643325805664,
+        11.989066123962402,
+        4.751149654388428,
+        3.093220220762305e-05
+      ],
+      "energy_top1": 0.7109052538871765,
+      "energy_top3": 0.9349243640899658
+    },
+    "C2_noise": {
+      "num_latents": 10,
+      "latent_norms": [
+        307.0989685058594,
+        269.3562316894531,
+        278.0235595703125,
+        287.2101135253906,
+        289.69793701171875,
+        266.01617431640625,
+        252.9755401611328,
+        293.8253479003906,
+        285.0480041503906,
+        290.4937438964844
+      ],
+      "cos_sims": [
+        0.3159315884113312,
+        0.4822307825088501,
+        0.5787283778190613,
+        0.6922323107719421,
+        0.4742489457130432,
+        0.3160182237625122,
+        0.25316494703292847,
+        0.4993716776371002,
+        0.3829765319824219
+      ],
+      "mean_cos_sim": 0.4438781539599101,
+      "generated_text": "<abs_vis_token></abs_vis_token>The main object in the image is  the  bus traveling on the  road.<|im_end|>",
+      "token_count": 20,
+      "singular_values": [
+        292.4674377441406,
+        246.87469482421875,
+        227.69131469726562,
+        212.69561767578125,
+        203.5460205078125,
+        187.09274291992188,
+        172.82235717773438,
+        171.56976318359375,
+        152.37200927734375,
+        4.3491476390045136e-05
+      ],
+      "energy_top1": 0.21250277757644653,
+      "energy_top3": 0.4927116632461548
+    },
+    "C3_donor": {
+      "num_latents": 10,
+      "latent_norms": [
+        307.0989685058594,
+        290.96875,
+        285.79571533203125,
+        292.6680908203125,
+        274.55096435546875,
+        280.1265563964844,
+        272.8320617675781,
+        268.89739990234375,
+        216.62109375,
+        279.5623779296875
+      ],
+      "cos_sims": [
+        0.4175947606563568,
+        0.5335904359817505,
+        0.4548385739326477,
+        0.5113608837127686,
+        0.7447398900985718,
+        0.48102056980133057,
+        0.23657041788101196,
+        0.2852599620819092,
+        0.46620047092437744
+      ],
+      "mean_cos_sim": 0.45901955167452496,
+      "generated_text": "<abs_vis_token></abs_vis_token>The main object in the image is  the  bus traveling on the  road.<|im_end|>",
+      "token_count": 20,
+      "singular_values": [
+        289.67266845703125,
+        240.8328857421875,
+        235.30911254882812,
+        214.46514892578125,
+        191.06396484375,
+        181.642822265625,
+        170.9905242919922,
+        142.013671875,
+        128.3562774658203,
+        3.1376941478811204e-05
+      ],
+      "energy_top1": 0.22159968316555023,
+      "energy_top3": 0.5210022330284119
+    }
+  },
+  "quota_sweep": {
+    "K=0": {
+      "token_count": 65,
+      "generated_text": "The image primarily depicts a  road  cutting through a  mountainous landscape. The road is the central element, with a  bus visible on it, indicating its significance in the scene. The  bus is the primary object on the road, serving as a key point of interest within the image.Therefore, the final answer"
+    },
+    "K=1": {
+      "token_count": 4,
+      "generated_text": "<abs_vis_token></abs_vis_token>bus<|im_end|>"
+    },
+    "K=3": {
+      "token_count": 67,
+      "generated_text": "<abs_vis_token></abs_vis_token>The image primarily depicts  a  road  that  is  built  through  a  mountainous  terrain,  with  a  vehicle  visible  on  it.  The  road  is  the  most  prominent  feature  in  the image,  running  through  the  mountain"
+    },
+    "K=5": {
+      "token_count": 67,
+      "generated_text": "<abs_vis_token></abs_vis_token>The image primarily depicts  a  road  that  is  built  through  a  mountainous  terrain,  with  a  vehicle  visible  on  it.  The  road  is  the  most  prominent  feature  in  the image,  running  through  the  mountain"
+    },
+    "K=10": {
+      "token_count": 65,
+      "generated_text": "<abs_vis_token></abs_vis_token>The image primarily depicts  a  road  that  is  built  through  a  mountainous terrain, indicating the main object is the  road itself. The  bus is just a  secondary element,  traveling along  the road.Therefore, the final answer is \\boxed{a road}.<|im_end|>"
+    }
+  }
+}
