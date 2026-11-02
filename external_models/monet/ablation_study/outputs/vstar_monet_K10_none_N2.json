@@ -1,0 +1,37 @@
+{
+  "summary": {
+    "tag": "vstar_monet_K10_none_N2",
+    "benchmark": "vstar",
+    "model_mode": "monet",
+    "quota": 10,
+    "intervention": "none",
+    "num_evaluated": 2,
+    "correct_count": 2,
+    "accuracy": 100.0,
+    "pair_accuracy": null,
+    "elapsed_seconds": 5.968258857727051,
+    "timestamp": "2026-11-01 23:02:57"
+  },
+  "predictions": [
+    {
+      "id": "0",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The glove in the image is blue and appears to be made of a material that is commonly used for food handling, which is \\boxed{rubber}.<|im_end|>",
+      "token_count": 34,
+      "mean_cos_sim": 0.9549657437536452
+    },
+    {
+      "id": "1",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The dustpan is  blue, so the correct answer is \\boxed{C}.<|im_end|>",
+      "token_count": 20,
+      "mean_cos_sim": 0.9517355561256409
+    }
+  ]
+}

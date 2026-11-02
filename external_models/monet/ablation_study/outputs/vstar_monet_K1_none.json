@@ -1,0 +1,1927 @@
+{
+  "summary": {
+    "tag": "vstar_monet_K1_none",
+    "benchmark": "vstar",
+    "model_mode": "monet",
+    "quota": 1,
+    "intervention": "none",
+    "num_evaluated": 191,
+    "correct_count": 146,
+    "accuracy": 76.43979057591623,
+    "pair_accuracy": null,
+    "elapsed_seconds": 402.4741430282593,
+    "timestamp": "2026-11-01 23:57:11"
+  },
+  "predictions": [
+    {
+      "id": "0",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe glove in the image is blue and appears to be made of a material that is commonly used for food handling, which is rubber. Therefore, the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 43,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "1",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "2",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A church with a poster of a  animal. The animal depicted in the poster is a  dove.<|im_end|>",
+      "token_count": 24,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "3",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "4",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A walking woman is observed.<|im_end|>",
+      "token_count": 9,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "5",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "6",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "7",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "D",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "8",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "9",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "10",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "11",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "12",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "13",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A green cart is visible in the image.<|im_end|>",
+      "token_count": 12,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "14",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>Bmickey mouse is on the clock.<|im_end|>",
+      "token_count": 12,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "15",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "16",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "17",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "18",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "19",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A white bucket is visible near the building.<|im_end|>",
+      "token_count": 12,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "20",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "21",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A spider is on the blue sail.<|im_end|>",
+      "token_count": 11,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "22",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A black SUV is visible in the distance.<|im_end|>",
+      "token_count": 12,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "23",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "24",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "25",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "26",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "27",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "D",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "28",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "29",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "30",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A purple collar is visible on the dog.<|im_end|>",
+      "token_count": 12,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "31",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "32",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "33",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "34",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "C",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "35",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "36",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "37",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A clock is visible in the image, and its color is  \\boxed{black}.<|im_end|>",
+      "token_count": 21,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "38",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "39",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "40",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "41",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "42",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A red van is visible in the image.<|im_end|>",
+      "token_count": 12,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "43",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>Csilver<|im_end|>",
+      "token_count": 5,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "44",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "C",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "45",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A handbag is visible in the image, and its color is clearly identifiable as  brown. The correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 31,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "46",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A white cap is visible on the man in the image.<|im_end|>",
+      "token_count": 15,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "47",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A fire hydrant is visible in the image, and its color is clearly  yellow. The correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 30,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "48",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "49",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "50",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A motorcycle is visible in the image, and the helmet on it is clearly  white. The correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 30,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "51",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A helmet is not visible in the image, so I cannot determine its color. The question cannot be answered with the provided image.<|im_end|>",
+      "token_count": 29,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "52",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A red suitcase is visible inside the store.<|im_end|>",
+      "token_count": 12,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "53",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "54",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "C",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "55",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "C",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "56",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A green box is visible on the cyclist.<|im_end|>",
+      "token_count": 12,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "57",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "58",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "59",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "C",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "60",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>Determine the breed of the dog in the image. The dog appears to be a large, light-colored breed with a fluffy coat, which is characteristic of a golden retriever.Therefore, the breed of the dog is \\boxed{D}.<|im_end|>",
+      "token_count": 52,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "61",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A white dog is visible in the background of the image.<|im_end|>",
+      "token_count": 15,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "62",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "63",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "64",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "65",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A broom is visible in the image, and its handle is  black. The correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 28,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "66",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "67",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "68",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A white flag is visible on the building.<|im_end|>",
+      "token_count": 12,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "69",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "D",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "70",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "71",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "72",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "D",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "73",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "74",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A purple umbrella is visible in the image.<|im_end|>",
+      "token_count": 12,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "75",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A backpack is visible on the left side of the image, and its color is clearly  gray. The correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 32,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "76",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "77",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "78",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "79",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "80",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "D",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A flute is a musical instrument, typically made of wood or metal, and is not typically black, white, or yellow. The most common color for a flute is silver, which is a metallic finish. Therefore, the color of the flute is \\boxed{silver}.<|im_end|>",
+      "token_count": 57,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "81",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A red flag is flying in front of the building.<|im_end|>",
+      "token_count": 14,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "82",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A can is visible in the image, and its color is silver.<|im_end|>",
+      "token_count": 17,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "83",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "84",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "D",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "85",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "86",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>Atrash can is located in the image.<|im_end|>",
+      "token_count": 12,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "87",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "88",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "89",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "90",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "91",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "92",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "93",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A helmet is visible on the person's head, and its color is clearly  white.<|im_end|>",
+      "token_count": 21,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "94",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A red backpack is visible on the right side of the image.<|im_end|>",
+      "token_count": 16,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "95",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A watchband is visible on the woman's wrist, and its color is clearly  purple. The correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 31,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "96",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "97",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "98",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A flag with three colors would be identifiable by distinct color separation, which is not evident from the image of the flag. The flag in the image appears to have two colors, red and white, with a clear separation between them. Therefore, the final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 60,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "99",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "100",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "101",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "102",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "103",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "104",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "105",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "106",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A blue stone is visible in the image, which is the earring.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "107",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A green apple is visible on the table.<|im_end|>",
+      "token_count": 12,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "108",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "109",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "C",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "110",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "111",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "112",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "113",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A green plastic bucket is visible in the background.<|im_end|>",
+      "token_count": 13,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "114",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "115",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe telephone is located to the right of the hand lamp.<|im_end|>",
+      "token_count": 17,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "116",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A red car is visible to the left of the police car in the image.<|im_end|>",
+      "token_count": 19,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "117",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe drum is located to the left of the yellow balloon in the image.<|im_end|>",
+      "token_count": 20,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "118",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A motorcycle is visible behind the dog. Therefore, the motorcycle is on the left side of the dog.<|im_end|>",
+      "token_count": 24,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "119",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A bicycle is visible to the right of the sculpture.<|im_end|>",
+      "token_count": 14,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "120",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A baby stroller is located to the right of the person in orange.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "121",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A red backpack is visible on the right side of the clock.<|im_end|>",
+      "token_count": 16,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "122",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B\nThe bell is located  below the clock on the tower.<|im_end|>",
+      "token_count": 17,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "123",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe orange luggage is located to the left of the purple umbrella.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "124",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A dog is visible on the left side of the golden tower.<|im_end|>",
+      "token_count": 16,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "125",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B\nThe image shows the  shark doll positioned  above the banana doll.<|im_end|>",
+      "token_count": 19,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "126",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A baby carriage is visible in the image. To determine its location relative to the trash can, I will focus on the relevant area.\n<abs_vis_token>The zoomed-in image clearly shows the baby carriage positioned to the left of the trash can.<|im_end|>",
+      "token_count": 50,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "127",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A seesaw is visible on the right side of the image. The red vehicle is also on the right side of the image. Therefore, the seesaw is on the right side of the red vehicle.<|im_end|>",
+      "token_count": 44,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "128",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "129",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "130",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A dog is visible in the image, and a wristband can be seen on its leg. To determine the side, I will focus on the dog's leg with the wristband.\nThe zoomed-in image clearly shows the  wristband on the  right leg of the dog, indicating the dog's right side.\n\nANSWER: The wristband is on the right side of the dog. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 91,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "131",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "132",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A soccer game is being played on the field. I need to locate the water dispenser and the soccer ball to determine their relative positions.<|im_end|>",
+      "token_count": 30,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "133",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A dog is visible on the left side of the scooter in the image.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "134",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A chair is visible to the right of the black trash can in the image. Therefore, the trash can is on the left side of the black chair.<|im_end|>",
+      "token_count": 34,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "135",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "136",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "137",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe blue bench is located to the left of the green door.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "138",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>Bicycle is not visible in the image, so I cannot determine the dog's position relative to it. The question cannot be accurately answered with the provided image.<|im_end|>",
+      "token_count": 35,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "139",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A blue truck is visible to the right of the white vehicle in the image. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 28,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "140",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "141",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe green statue is located to the left of the white statue.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "142",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "143",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe man with the yellow cap is located to the left of the lamp post.<|im_end|>",
+      "token_count": 21,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "144",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B\nThe green handbag is located to the left of the blue umbrella.<|im_end|>",
+      "token_count": 19,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "145",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A dog is visible on the right side of the image. To determine the position of the shopping cart relative to the dog, I will focus on the area around the dog and the shopping cart. A zoomed-in view will provide a clearer perspective of their spatial relationship.\nThe zoomed-in image clearly shows the shopping cart positioned to the left of the dog, indicating the dog is on the right side of the shopping cart.Therefore, the shopping cart is on the left side of the dog. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 111,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "146",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A switch is visible on the wall next to the towel rack. To determine its position relative to the towel, observe the towel's placement in relation to the switch. The towel is positioned to the left of the switch.Therefore, the final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 58,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "147",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B\nTo determine the relative position of the vehicles, I will analyze the image to identify the silver and red vehicles and their orientation.\nThe image clearly shows the silver vehicle positioned to the left of the red vehicle. The vehicles are facing towards the viewer, and the silver car is on the viewer's left side.\nTHOUGHT N: The silver vehicle is on the left side of the red vehicle, as observed in the image. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 99,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "148",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "149",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "150",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "151",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A chair is visible on the right side of the road.<|im_end|>",
+      "token_count": 15,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "152",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>Bowl is on the right side of the faucet.<|im_end|>",
+      "token_count": 14,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "153",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe white truck is positioned to the left of the red truck in the image.<|im_end|>",
+      "token_count": 21,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "154",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>B\nThe pillar box is located to the right of the telephone booth in the image.<|im_end|>",
+      "token_count": 21,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "155",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe motorcyclist is located on the left side of the truck in the image.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "156",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "157",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "158",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "159",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "160",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A blue suitcase is visible on the left side of the bus.<|im_end|>",
+      "token_count": 16,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "161",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A red car is visible behind the baby carriage. Given the perspective, the red car is on the left side of the baby carriage.<|im_end|>",
+      "token_count": 30,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "162",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "163",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B\nThe kid with the black shirt is located to the left of the kid with the blue shirt.<|im_end|>",
+      "token_count": 24,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "164",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe yellow car is located on the left side of the pool.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "165",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "166",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>Bottle is to the left of the box.<|im_end|>",
+      "token_count": 13,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "167",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "168",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A dog is on the left side of the blue bicycle.<|im_end|>",
+      "token_count": 15,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "169",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A keyboard is typically placed to the left of a guitar on a stage. The image shows the keyboard positioned to the left of the guitar.<|im_end|>",
+      "token_count": 31,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "170",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A dog is visible on the right side of the crosswalk.<|im_end|>",
+      "token_count": 16,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "171",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "172",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A ladder is visible on the left side of the wagon in the image.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "173",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "174",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A slide is visible on the right side of the image. The life buoy is located to the left of this slide. Therefore, the slide is on the right side of the life buoy.<|im_end|>",
+      "token_count": 41,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "175",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B\nThe green surfboard is located to the left of the purple umbrella.<|im_end|>",
+      "token_count": 19,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "176",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A broom is visible to the left of the folded chair.<|im_end|>",
+      "token_count": 16,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "177",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A soccer ball is visible on the  right side of the long bench in the image. The correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 30,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "178",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "179",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A bicycle is visible in the image. To determine the relative position of the bucket to the cyclist, I will focus on the area where the cyclist is located.\n<abs_vis_token>The zoomed-in image clearly shows the bicycle and the bucket positioned to the right of the cyclist. The bucket is located on the sidewalk to the right of the cyclist.<|im_end|>",
+      "token_count": 70,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "180",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A yellow van is visible in the image. To determine its location relative to the telephone booth, I will focus on the area where the van is located.\n<abs_vis_token>The zoomed-in image clearly shows the  yellow van on the right side of the frame, with the  red telephone booth positioned to its left.<|im_end|>",
+      "token_count": 65,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "181",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>B\nThe red balloon is positioned above the white balloon in the image.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "182",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A black vehicle is visible in the image, and it is positioned closer to the camera compared to the silver vehicle.<|im_end|>",
+      "token_count": 26,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "183",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A water bottle is closer to the camera than the vehicle.<|im_end|>",
+      "token_count": 15,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "184",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A scooter is visible on the right side of the image, while a cyclist is on the left. The scooter is positioned to the right of the cyclist.<|im_end|>",
+      "token_count": 34,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "185",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe volleyball is located to the left of the man wearing the white cap.<|im_end|>",
+      "token_count": 20,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "186",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "187",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A street lamp is visible on the right side of the image, positioned to the left of the blue van. Therefore, the final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 36,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "188",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe yellow umbrella is located to the left of the pink umbrella in the image.<|im_end|>",
+      "token_count": 21,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "189",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.0
+    },
+    {
+      "id": "190",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A white chair is visible on the right side of the street in the image.<|im_end|>",
+      "token_count": 19,
+      "mean_cos_sim": 0.0
+    }
+  ]
+}

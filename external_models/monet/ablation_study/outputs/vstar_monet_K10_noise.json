@@ -1,0 +1,1927 @@
+{
+  "summary": {
+    "tag": "vstar_monet_K10_noise",
+    "benchmark": "vstar",
+    "model_mode": "monet",
+    "quota": 10,
+    "intervention": "noise",
+    "num_evaluated": 191,
+    "correct_count": 152,
+    "accuracy": 79.58115183246073,
+    "pair_accuracy": null,
+    "elapsed_seconds": 539.2798116207123,
+    "timestamp": "2026-11-01 23:30:49"
+  },
+  "predictions": [
+    {
+      "id": "0",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The glove in the image is blue and appears to be made of a material that is commonly used for food handling, which is \\boxed{rubber}.<|im_end|>",
+      "token_count": 34,
+      "mean_cos_sim": 0.5383685363663567
+    },
+    {
+      "id": "1",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The dustpan is  blue, so the correct answer is \\boxed{C}.<|im_end|>",
+      "token_count": 20,
+      "mean_cos_sim": 0.6014940639336904
+    },
+    {
+      "id": "2",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The animal depicted in the poster is  a  dove, symbolizing peace. Therefore, the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 30,
+      "mean_cos_sim": 0.5162850452793969
+    },
+    {
+      "id": "3",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The woman is wearing  a  red scarf, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 23,
+      "mean_cos_sim": 0.5598293112383949
+    },
+    {
+      "id": "4",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The woman with the yellow backpack is  walking through the greenhouse, surrounded by tulips. Therefore, the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 32,
+      "mean_cos_sim": 0.5112304819954766
+    },
+    {
+      "id": "5",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The cart in the image is  green in color. Therefore, the correct answer is \\boxed{D}.<|im_end|>",
+      "token_count": 25,
+      "mean_cos_sim": 0.444694459438324
+    },
+    {
+      "id": "6",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the candles in the image is  yellow. Therefore, the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 26,
+      "mean_cos_sim": 0.4457918604214986
+    },
+    {
+      "id": "7",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "C",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The image shows the Apple logo, which is  a  single color, making the correct answer (C) white. The final answer is \\boxed{C}.<|im_end|>",
+      "token_count": 36,
+      "mean_cos_sim": 0.561716357866923
+    },
+    {
+      "id": "8",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The stool is located  on the right side of the image, and its color is clearly visible. Upon close inspection, the stool is blue. Therefore, the final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 43,
+      "mean_cos_sim": 0.5262921651204427
+    },
+    {
+      "id": "9",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The tissue box is located  on the  steering wheel of the truck, and its color is  blue. Therefore, the correct answer is (D).\nboxed{D}<|im_end|>",
+      "token_count": 38,
+      "mean_cos_sim": 0.5404074258274503
+    },
+    {
+      "id": "10",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The man's helmet is  yellow, so the correct answer is \\boxed{C}.<|im_end|>",
+      "token_count": 21,
+      "mean_cos_sim": 0.570556703541014
+    },
+    {
+      "id": "11",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The woman's shirt is  purple, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 21,
+      "mean_cos_sim": 0.5546587242020501
+    },
+    {
+      "id": "12",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The slippers in the image are blue, so the correct answer is \\boxed{C}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5264246198866103
+    },
+    {
+      "id": "13",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the cart is  green.<|im_end|>",
+      "token_count": 12,
+      "mean_cos_sim": 0.5025930338435702
+    },
+    {
+      "id": "14",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The cartoon character on the clock is  Mickey Mouse, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 24,
+      "mean_cos_sim": 0.5030143525865343
+    },
+    {
+      "id": "15",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the suitcase is clearly visible in the image. I will identify the color from the provided options.\n\nThe color of the suitcase is  \\boxed{brown}.<|im_end|>",
+      "token_count": 37,
+      "mean_cos_sim": 0.4940200348695119
+    },
+    {
+      "id": "16",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the little girl's shirt is clearly visible in the image. I will identify the color to answer the question.\n\nThe color of the little girl's shirt is \\boxed{pink}.<|im_end|>",
+      "token_count": 42,
+      "mean_cos_sim": 0.4864596525828044
+    },
+    {
+      "id": "17",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The bicycle in the image is clearly visible, and its color is  red. Therefore, the correct answer is \\boxed{D}.<|im_end|>",
+      "token_count": 30,
+      "mean_cos_sim": 0.5015419489807553
+    },
+    {
+      "id": "18",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The stool in the image is clearly identifiable as  made of  plastic, given its  shape and  texture. Therefore, the correct answer is \\boxed{C}.<|im_end|>",
+      "token_count": 37,
+      "mean_cos_sim": 0.3970857659975688
+    },
+    {
+      "id": "19",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the bucket is  \\boxed{white}.<|im_end|>",
+      "token_count": 15,
+      "mean_cos_sim": 0.603889114326901
+    },
+    {
+      "id": "20",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The shovel in the image is  blue, so the correct answer is \\boxed{C}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.6295465098487006
+    },
+    {
+      "id": "21",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The image shows a sailboat with a  blue sail that has  a spider design on it. Therefore, the animal on the blue sail is a spider.\n\nANSWER: The animal on the blue sail is a spider. The correct option is \\boxed{A}.<|im_end|>",
+      "token_count": 57,
+      "mean_cos_sim": 0.5088871916135153
+    },
+    {
+      "id": "22",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "D",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the SUV car in the image is  blue, so the correct answer is \\boxed{D}.<|im_end|>",
+      "token_count": 26,
+      "mean_cos_sim": 0.46034447683228386
+    },
+    {
+      "id": "23",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The image shows a  woman with  pink hair holding  a white handbag. Therefore, the color of the pink-haired woman's handbag is white.\n\nANSWER: The color of the pink-haired woman's handbag is \\boxed{white}. The correct option is (B).<|im_end|>",
+      "token_count": 61,
+      "mean_cos_sim": 0.569429357846578
+    },
+    {
+      "id": "24",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The car in the image is  black, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5867880781491598
+    },
+    {
+      "id": "25",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The bicycle in the image is  yellow, so the correct answer is \\boxed{D}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5392612649334801
+    },
+    {
+      "id": "26",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The parachute in the image is  yellow, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5573265122042762
+    },
+    {
+      "id": "27",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The motorcycle in the image is  orange in color. Therefore, the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 25,
+      "mean_cos_sim": 0.6093710396024916
+    },
+    {
+      "id": "28",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The woman is wearing  a  jacket that is  blue in color. Therefore, the final answer is \\boxed{C}.<|im_end|>",
+      "token_count": 29,
+      "mean_cos_sim": 0.6339957581626045
+    },
+    {
+      "id": "29",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The man is wearing  a  red cap, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 23,
+      "mean_cos_sim": 0.4453980690903134
+    },
+    {
+      "id": "30",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The pet collar is  visible in the image, and its color is  purple. Therefore, the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 31,
+      "mean_cos_sim": 0.5328302250968086
+    },
+    {
+      "id": "31",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the telephone is \\boxed{white}.<|im_end|>",
+      "token_count": 14,
+      "mean_cos_sim": 0.48021044664912754
+    },
+    {
+      "id": "32",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The water bottle in the image is clearly visible, and its color is  \\boxed{red}.<|im_end|>",
+      "token_count": 23,
+      "mean_cos_sim": 0.6378386285569932
+    },
+    {
+      "id": "33",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The man is wearing  a  cap that is  gray in color. Therefore, the correct answer is \\boxed{C}.<|im_end|>",
+      "token_count": 29,
+      "mean_cos_sim": 0.6105019251505533
+    },
+    {
+      "id": "34",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The helmet is  visible in the image, and its color is  green. Therefore, the correct answer is (A).\n\nboxed{A}<|im_end|>",
+      "token_count": 32,
+      "mean_cos_sim": 0.5599717630280389
+    },
+    {
+      "id": "35",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The woman's bikini is  black, so the correct answer is \\boxed{C}.<|im_end|>",
+      "token_count": 21,
+      "mean_cos_sim": 0.559757928053538
+    },
+    {
+      "id": "36",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The flower in the image is clearly visible, and its color is \\boxed{white}.<|im_end|>",
+      "token_count": 21,
+      "mean_cos_sim": 0.4972866376241048
+    },
+    {
+      "id": "37",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "D",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The clock in the image is  red in color. Therefore, the correct answer is (D).\n\n\\boxed{D}<|im_end|>",
+      "token_count": 28,
+      "mean_cos_sim": 0.5726849238077799
+    },
+    {
+      "id": "38",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the motorcycle is clearly visible in the image. I will identify the color to answer the question.\n\nThe motorcycle is  orange, as indicated by its hue in the image.\n\nANSWER: The motorcycle is orange. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 57,
+      "mean_cos_sim": 0.5374702943695916
+    },
+    {
+      "id": "39",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The image shows a person carrying a bag, and the color of the bag is clearly visible. I need to identify the color of the bag from the provided options.\n\nThe bag in the image is clearly visible, and its color is  purple.\n\nANSWER: The color of the bag is \\boxed{purple}. The correct option is (C).<|im_end|>",
+      "token_count": 73,
+      "mean_cos_sim": 0.5214009980360667
+    },
+    {
+      "id": "40",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The motorcycle in the image is  blue, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5426531268490685
+    },
+    {
+      "id": "41",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The man is wearing  a  black cap. Therefore, the correct answer is \\boxed{C}.<|im_end|>",
+      "token_count": 24,
+      "mean_cos_sim": 0.49011999037530685
+    },
+    {
+      "id": "42",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The van in the image is  red, so the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5946240292655097
+    },
+    {
+      "id": "43",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The car in the image is clearly visible, and its color is  white. Therefore, the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 30,
+      "mean_cos_sim": 0.561247405078676
+    },
+    {
+      "id": "44",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "C",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The toothbrush is  located  in the  image, and its color is  visible. Upon close inspection, the toothbrush is  yellow in color.Therefore, the final answer is \\boxed{C}.<|im_end|>",
+      "token_count": 46,
+      "mean_cos_sim": 0.5392125911182828
+    },
+    {
+      "id": "45",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the handbag is  \\boxed{brown}.<|im_end|>",
+      "token_count": 16,
+      "mean_cos_sim": 0.5081208017137315
+    },
+    {
+      "id": "46",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The man is wearing  a  white cap. Therefore, the final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 24,
+      "mean_cos_sim": 0.5072077347172631
+    },
+    {
+      "id": "47",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The fire hydrant in the image is  yellow. Therefore, the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 25,
+      "mean_cos_sim": 0.6708670258522034
+    },
+    {
+      "id": "48",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The seesaw in the image is  red in color. Therefore, the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 26,
+      "mean_cos_sim": 0.6726265251636505
+    },
+    {
+      "id": "49",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The stool in the image is  white, so the correct answer is \\boxed{C}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.47903966241412693
+    },
+    {
+      "id": "50",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The motorcycle helmet is clearly visible in the image, and its color is  white. Therefore, the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 31,
+      "mean_cos_sim": 0.5968092183272043
+    },
+    {
+      "id": "51",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The helmet in the image is  red, so the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5369645489586724
+    },
+    {
+      "id": "52",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the luggage is clearly visible in the image. I will identify the color to determine the correct answer.\n\nThe luggage in the image is  red in color.\n\nTHOUGHT N: The luggage is  red, which corresponds to option (A).\n\nANSWER: The color of the luggage is \\boxed{A}.<|im_end|>",
+      "token_count": 69,
+      "mean_cos_sim": 0.5877897606955634
+    },
+    {
+      "id": "53",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the trash can is  green.<|im_end|>",
+      "token_count": 13,
+      "mean_cos_sim": 0.557507316271464
+    },
+    {
+      "id": "54",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The scooter in the image is  green, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5212721625963846
+    },
+    {
+      "id": "55",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the dress is clearly visible in the image. I will identify the color from the options provided.\n\nThe dress in the image is  red, as indicated by its hue and the options given.\n\nANSWER: The color of the dress is \\boxed{red}.<|im_end|>",
+      "token_count": 58,
+      "mean_cos_sim": 0.556222140789032
+    },
+    {
+      "id": "56",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the cyclist's box is  green, as indicated by the  green box in the image. Therefore, the final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 36,
+      "mean_cos_sim": 0.582067628701528
+    },
+    {
+      "id": "57",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The bicycle in the image is  red, so the correct answer is \\boxed{C}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.6185076104270087
+    },
+    {
+      "id": "58",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The flag in the image is  blue and yellow, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 24,
+      "mean_cos_sim": 0.550523555941052
+    },
+    {
+      "id": "59",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "C",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The bag is  visible on the cyclist, and its colors are  clearly discernible in the image. Therefore, the final answer is \\boxed{C}.<|im_end|>",
+      "token_count": 35,
+      "mean_cos_sim": 0.5735343760914273
+    },
+    {
+      "id": "60",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The dog in the image appears to be a  golden retriever due to its size, fur color, and overall body shape.Therefore, the breed of the dog is \\boxed{D}.<|im_end|>",
+      "token_count": 42,
+      "mean_cos_sim": 0.5959793527921041
+    },
+    {
+      "id": "61",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The dog in the image is  white, as indicated by its fur color. The options provided are (A) white, (B) brown, (C) golden, and (D) black. The correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 53,
+      "mean_cos_sim": 0.5042692853344811
+    },
+    {
+      "id": "62",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The motorcycle is located  to the left of the bus, and its color is clearly visible in the image. Upon close inspection, the motorcycle is black.Therefore, the final answer is \\boxed{D}.<|im_end|>",
+      "token_count": 45,
+      "mean_cos_sim": 0.466118186712265
+    },
+    {
+      "id": "63",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The car in the image is  silver in color. Therefore, the correct answer is (D).\n\n\\boxed{D}<|im_end|>",
+      "token_count": 28,
+      "mean_cos_sim": 0.47459251019689774
+    },
+    {
+      "id": "64",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The kid in the image has  curly hair, as indicated by the visual cues in the picture.<|im_end|>",
+      "token_count": 23,
+      "mean_cos_sim": 0.511638644668791
+    },
+    {
+      "id": "65",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The broom in the image is  black, so the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 23,
+      "mean_cos_sim": 0.5684382683700986
+    },
+    {
+      "id": "66",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the body of the bucket is  \\boxed{white}.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.554362823565801
+    },
+    {
+      "id": "67",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The scarf in the image is  green, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5727588004536099
+    },
+    {
+      "id": "68",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The flag is clearly visible in the image, and its color is identifiable as  white. Therefore, the correct answer is (A).\n\n\\boxed{A}<|im_end|>",
+      "token_count": 35,
+      "mean_cos_sim": 0.5599876741568247
+    },
+    {
+      "id": "69",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The oil painting depicts 2 people, the mother and the child. Therefore, the correct answer is \\boxed{C}.<|im_end|>",
+      "token_count": 28,
+      "mean_cos_sim": 0.5301311413447062
+    },
+    {
+      "id": "70",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The dog in the image is  black in color. Therefore, the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 25,
+      "mean_cos_sim": 0.5039959284994338
+    },
+    {
+      "id": "71",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the paraglider in the image is  blue, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 27,
+      "mean_cos_sim": 0.49191439151763916
+    },
+    {
+      "id": "72",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "D",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The woman is wearing  a  white dress, so the correct answer is \\boxed{D}.<|im_end|>",
+      "token_count": 23,
+      "mean_cos_sim": 0.4427138898107741
+    },
+    {
+      "id": "73",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the cleaning cloth is clearly visible in the image. I will identify the color from the provided options.\n\nThe cleaning cloth is  red in color. The correct option is (B).\n\nANSWER: The color of the cleaning cloth is \\boxed{red}.<|im_end|>",
+      "token_count": 57,
+      "mean_cos_sim": 0.5345382822884454
+    },
+    {
+      "id": "74",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The umbrella in the image is  purple, so the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5175713731182946
+    },
+    {
+      "id": "75",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the backpack is  \\boxed{gray}.<|im_end|>",
+      "token_count": 15,
+      "mean_cos_sim": 0.49885157744089764
+    },
+    {
+      "id": "76",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The umbrella in the image is  purple, so the correct answer is \\boxed{D}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5342234373092651
+    },
+    {
+      "id": "77",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The baby carriage is  black in color. The correct option is \\boxed{C}.<|im_end|>",
+      "token_count": 21,
+      "mean_cos_sim": 0.48489594128396774
+    },
+    {
+      "id": "78",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The watch on the woman's wrist is  \\boxed{silver}.<|im_end|>",
+      "token_count": 17,
+      "mean_cos_sim": 0.5316265126069387
+    },
+    {
+      "id": "79",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The bus in the image is  red, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.4724971387121413
+    },
+    {
+      "id": "80",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "D",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The flute in the picture is  silver in color. Therefore, the correct answer is \\boxed{D}.<|im_end|>",
+      "token_count": 25,
+      "mean_cos_sim": 0.5828002625041537
+    },
+    {
+      "id": "81",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The flag in the image is clearly  red in color. Therefore, the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 26,
+      "mean_cos_sim": 0.45047322577900356
+    },
+    {
+      "id": "82",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The soda can in the image is  green. The correct answer is \\boxed{D}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.4379607074790531
+    },
+    {
+      "id": "83",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the handbag is yellow, so the correct answer is \\boxed{D}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.4889577428499858
+    },
+    {
+      "id": "84",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "D",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The straw is clearly visible in the image, and its color is \\boxed{white}.<|im_end|>",
+      "token_count": 21,
+      "mean_cos_sim": 0.37519682778252494
+    },
+    {
+      "id": "85",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The bus in the image is  \\boxed{white}.<|im_end|>",
+      "token_count": 15,
+      "mean_cos_sim": 0.5912054247326322
+    },
+    {
+      "id": "86",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the trash can is  \\boxed{A}.<|im_end|>",
+      "token_count": 16,
+      "mean_cos_sim": 0.5515053570270538
+    },
+    {
+      "id": "87",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The guard is wearing  a  white  glove on his hand. Therefore, the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 28,
+      "mean_cos_sim": 0.6044699218538072
+    },
+    {
+      "id": "88",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The comb in the image is clearly visible, and its color is  purple. Therefore, the correct answer is \\boxed{C}.<|im_end|>",
+      "token_count": 30,
+      "mean_cos_sim": 0.5679197344515059
+    },
+    {
+      "id": "89",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the electric rickshaw is  \\boxed{yellow}.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.49996907512346905
+    },
+    {
+      "id": "90",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The truck in the image is  yellow, so the correct answer is (C).\nThe final answer is \\boxed{C}.<|im_end|>",
+      "token_count": 29,
+      "mean_cos_sim": 0.4985349542564816
+    },
+    {
+      "id": "91",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The chair in the image is  yellow, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5285198125574324
+    },
+    {
+      "id": "92",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the messenger bag is  \\boxed{red}.<|im_end|>",
+      "token_count": 16,
+      "mean_cos_sim": 0.4801672663953569
+    },
+    {
+      "id": "93",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the helmet is  white, as indicated by the visual information in the image.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.49286754926045734
+    },
+    {
+      "id": "94",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the backpack is clearly visible in the image. I will identify the color from the provided options.\n\nThe backpack is  red, so the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 41,
+      "mean_cos_sim": 0.5291202929284837
+    },
+    {
+      "id": "95",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The watchband is  purple in color. Therefore, the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 23,
+      "mean_cos_sim": 0.5214891566170586
+    },
+    {
+      "id": "96",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The bottle cap is  red in color. Therefore, the correct answer is \\boxed{C}.<|im_end|>",
+      "token_count": 23,
+      "mean_cos_sim": 0.4651109708680047
+    },
+    {
+      "id": "97",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The umbrella in the image is  blue, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5524900820520189
+    },
+    {
+      "id": "98",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The flag in the image has three colors: white, blue, and red, which are the colors of the Russian flag. Therefore, the correct answer is (B).\n\n\\boxed{B}<|im_end|>",
+      "token_count": 42,
+      "mean_cos_sim": 0.5254161357879639
+    },
+    {
+      "id": "99",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The dog in the image is  black and white, so the correct answer is \\boxed{D}.<|im_end|>",
+      "token_count": 24,
+      "mean_cos_sim": 0.5495816833443112
+    },
+    {
+      "id": "100",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The woman's handbag is clearly visible in the image, and its color is \\boxed{brown}.<|im_end|>",
+      "token_count": 24,
+      "mean_cos_sim": 0.5682875712712606
+    },
+    {
+      "id": "101",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The life buoy is  red and white, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5385312967830234
+    },
+    {
+      "id": "102",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The mailbox is  black in color. The final answer is \\boxed{C}.<|im_end|>",
+      "token_count": 20,
+      "mean_cos_sim": 0.5208115114106072
+    },
+    {
+      "id": "103",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The lock on the mailbox is clearly visible, and its color is  \\boxed{silver}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5704205301072862
+    },
+    {
+      "id": "104",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the tent is  green, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.49494048953056335
+    },
+    {
+      "id": "105",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The bottle cap is  blue, so the correct answer is \\boxed{D}.<|im_end|>",
+      "token_count": 20,
+      "mean_cos_sim": 0.44203859402073753
+    },
+    {
+      "id": "106",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The image shows the earring clearly, and its color is  blue. Therefore, the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 29,
+      "mean_cos_sim": 0.5067668226030138
+    },
+    {
+      "id": "107",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The apples in the image are  green, so the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5004758934179941
+    },
+    {
+      "id": "108",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The swim ring is located  to the left of the pool, and its color is clearly visible. Upon close inspection, the swim ring is  orange in color.Therefore, the final answer is \\boxed{D}.<|im_end|>",
+      "token_count": 47,
+      "mean_cos_sim": 0.6044028798739115
+    },
+    {
+      "id": "109",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The tablecloth is  green, so the correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 20,
+      "mean_cos_sim": 0.48156587613953483
+    },
+    {
+      "id": "110",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The hat is clearly visible in the image, and its color is  white. Therefore, the correct answer is \\boxed{D}.<|im_end|>",
+      "token_count": 30,
+      "mean_cos_sim": 0.4730747209654914
+    },
+    {
+      "id": "111",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The flag in the image is clearly  blue and yellow, as indicated by its colors and design.Therefore, the final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 34,
+      "mean_cos_sim": 0.534031781885359
+    },
+    {
+      "id": "112",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The bench in the image is clearly visible and has a distinct color. I will identify its color to answer the question.\n\nThe bench is  green in color.\n\nTHOUGHT N: The bench is green, which directly answers the question about its color.Therefore, the final answer is \\boxed{D}.<|im_end|>",
+      "token_count": 65,
+      "mean_cos_sim": 0.5077379677030776
+    },
+    {
+      "id": "113",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The color of the plastic bucket is  green, as indicated by the visual information in the image.<|im_end|>",
+      "token_count": 23,
+      "mean_cos_sim": 0.5800947149594625
+    },
+    {
+      "id": "114",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The plastic basin is clearly visible in the image, and its color is identifiable as \\boxed{pink}.<|im_end|>",
+      "token_count": 24,
+      "mean_cos_sim": 0.49106912480460274
+    },
+    {
+      "id": "115",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The telephone is located to the right of the hand lamp, as depicted in the image. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 30,
+      "mean_cos_sim": 0.4491779042614831
+    },
+    {
+      "id": "116",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The red car is located to the left of the police car in the image. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 28,
+      "mean_cos_sim": 0.499719210796886
+    },
+    {
+      "id": "117",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The drum is located on the left side of the yellow balloon, as the balloon is positioned to the right of the drum in the image. The balloon is floating above the drum, which is on the left side of the frame. The balloon is also to the right of the drum in the image.Therefore, the final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 74,
+      "mean_cos_sim": 0.4964646597703298
+    },
+    {
+      "id": "118",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The motorcycle is located to the left of the dog. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 23,
+      "mean_cos_sim": 0.5375072624948289
+    },
+    {
+      "id": "119",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The cyclist is positioned to the right of the sculpture, as indicated by their direction of travel relative to the sculpture's orientation in the image. The cyclist is on the right side of the sculpture.\n\nANSWER: The cyclist is on the right side of the sculpture. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 65,
+      "mean_cos_sim": 0.5054559773868985
+    },
+    {
+      "id": "120",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The baby stroller is located to the right of the person in the orange shirt. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 29,
+      "mean_cos_sim": 0.5348289476500617
+    },
+    {
+      "id": "121",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The red backpack is located on the right side of the clock, as observed in the image. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 31,
+      "mean_cos_sim": 0.49570852186944747
+    },
+    {
+      "id": "122",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The bell is located  below the clock on the tower. The options provided are (A) above and (B) below. Therefore, the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 40,
+      "mean_cos_sim": 0.48559556404749554
+    },
+    {
+      "id": "123",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The orange luggage is located to the right of the purple umbrella, as the umbrella is held by a person to the left of the luggage. The correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 40,
+      "mean_cos_sim": 0.5872279869185554
+    },
+    {
+      "id": "124",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The dog is located  to the left of the  golden tower. Therefore, the final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 28,
+      "mean_cos_sim": 0.5283793807029724
+    },
+    {
+      "id": "125",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The image shows the  shark doll positioned  above the banana doll. Therefore, the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 28,
+      "mean_cos_sim": 0.606670167711046
+    },
+    {
+      "id": "126",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The trash can is located to the right of the baby carriage. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 25,
+      "mean_cos_sim": 0.5757023360994127
+    },
+    {
+      "id": "127",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The seesaw is located on the right side of the image, relative to the red vehicle which is also on the right side of the image. Therefore, the seesaw is on the right side of the red vehicle.\n\nANSWER: The seesaw is on the right side of the red vehicle. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 72,
+      "mean_cos_sim": 0.56922357612186
+    },
+    {
+      "id": "128",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The umbrella is located to the right of the  traffic light, as seen in the image. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 31,
+      "mean_cos_sim": 0.5891731778780619
+    },
+    {
+      "id": "129",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The cyclist is on the  left side of the woman's handbag, as the woman is walking towards the right in the image. The cyclist is positioned to the left of the woman, making the final answer (B) left.<|im_end|>",
+      "token_count": 50,
+      "mean_cos_sim": 0.5581904384824965
+    },
+    {
+      "id": "130",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The dog is on the right side of the woman, and the wristband is on the left side of the woman. Therefore, the wristband is on the left side of the dog.\n\nANSWER: The wristband is on the left side of the dog. The correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 65,
+      "mean_cos_sim": 0.5268420610162947
+    },
+    {
+      "id": "131",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The dog is on the  right side of the train, as it is visible  beyond the train's window on the platform. Therefore, the final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 40,
+      "mean_cos_sim": 0.5824795795811547
+    },
+    {
+      "id": "132",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The soccer ball is located to the right of the water dispenser on the field. The goal is on the left side of the image, and the ball is visible to the right of the dispenser, which is positioned near the center of the field.\n\nANSWER: The soccer ball is on the right side of the water dispenser. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 77,
+      "mean_cos_sim": 0.5021139482657114
+    },
+    {
+      "id": "133",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The scooter is located  on the right side of the image, and the dog is  on the left side of the scooter. Therefore, the dog is on the left of the scooter.\n\nANSWER: The dog is on the left of the scooter, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 64,
+      "mean_cos_sim": 0.5406008064746857
+    },
+    {
+      "id": "134",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The chair is located on the right side of the image, and the trash can is positioned to the left of the chair. Therefore, the trash can is on the left side of the chair.\n\nANSWER: \\boxed{B}<|im_end|>",
+      "token_count": 50,
+      "mean_cos_sim": 0.5901856356196933
+    },
+    {
+      "id": "135",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The person with  white trousers is located to the  left of the person in  blue. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 31,
+      "mean_cos_sim": 0.553518447611067
+    },
+    {
+      "id": "136",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The dog is on the  right side of the river, as indicated by its position relative to the  boat and the  bridge in the image. The dog is  visible on the right bank of the river, which is the  right side from the perspective of the boat and bridge. \n\nANSWER: The dog is on the right side of the river. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 85,
+      "mean_cos_sim": 0.4934404128127628
+    },
+    {
+      "id": "137",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The blue bench is positioned to the left of the green door, as observed in the image. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 31,
+      "mean_cos_sim": 0.5069356891844008
+    },
+    {
+      "id": "138",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The dog is located  to the right of the bicycle in the image. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 27,
+      "mean_cos_sim": 0.497986313369539
+    },
+    {
+      "id": "139",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The blue truck is located  to the right of the white vehicle. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 26,
+      "mean_cos_sim": 0.42869166864289177
+    },
+    {
+      "id": "140",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The bucket is located to the left of the plunger. The correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 24,
+      "mean_cos_sim": 0.5062054561244117
+    },
+    {
+      "id": "141",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The green statue is located on the left side of the white statue. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 26,
+      "mean_cos_sim": 0.5456579724947611
+    },
+    {
+      "id": "142",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The man with  green shorts is located  on the  left side of the  blue boat. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 32,
+      "mean_cos_sim": 0.537335991859436
+    },
+    {
+      "id": "143",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The man with the yellow cap is located  to the left of the lamp post. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 29,
+      "mean_cos_sim": 0.6487899157736037
+    },
+    {
+      "id": "144",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The green handbag is located to the left of the blue umbrella. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 26,
+      "mean_cos_sim": 0.5585921539200677
+    },
+    {
+      "id": "145",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The shopping cart is located to the right of the dog. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 24,
+      "mean_cos_sim": 0.5051315890418159
+    },
+    {
+      "id": "146",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The switch is located on the  right side of the towel, as indicated by the image.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.5667944782310061
+    },
+    {
+      "id": "147",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The silver car is located to the left of the red car in the image. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 28,
+      "mean_cos_sim": 0.5383479959434934
+    },
+    {
+      "id": "148",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The shovel is located  on the  right side of the house. \n\nANSWER: The shovel is on the right side of the house. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 41,
+      "mean_cos_sim": 0.5313146313031515
+    },
+    {
+      "id": "149",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The motorcycle is located  to the left of the yellow trash can. Therefore, the trash can is on the right side of the motorcycle. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 40,
+      "mean_cos_sim": 0.508270220624076
+    },
+    {
+      "id": "150",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The suitcase is located on the  left side of the river.<|im_end|>",
+      "token_count": 16,
+      "mean_cos_sim": 0.5951760543717278
+    },
+    {
+      "id": "151",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The red chair is located on the right side of the road, as it is positioned on the sidewalk to the right of the road. The correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 39,
+      "mean_cos_sim": 0.6289464235305786
+    },
+    {
+      "id": "152",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The bowl is located to the right of the faucet. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 23,
+      "mean_cos_sim": 0.44884268442789715
+    },
+    {
+      "id": "153",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The white truck is positioned to the right of the red truck in the image. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 28,
+      "mean_cos_sim": 0.574123932255639
+    },
+    {
+      "id": "154",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The pillar box is located on the left side of the telephone booth. The correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 26,
+      "mean_cos_sim": 0.5452639526791043
+    },
+    {
+      "id": "155",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The motorcyclist is on the left side of the truck, as indicated by their position relative to the vehicle in the image. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 38,
+      "mean_cos_sim": 0.5537752641571893
+    },
+    {
+      "id": "156",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The baby carriage is located  to the left of the cone. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 25,
+      "mean_cos_sim": 0.5454315278265212
+    },
+    {
+      "id": "157",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The sky wheel is located  to the right of the person on the horse, as observed in the image.Therefore, the final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 36,
+      "mean_cos_sim": 0.5173931353622012
+    },
+    {
+      "id": "158",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The pillar box is located to the right of the man with the cane, as he is positioned further down the street. The pillar box is visible on the sidewalk to the right of the man walking with the cane.\n\nANSWER: The pillar box is on the right side of the man with the cane. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 73,
+      "mean_cos_sim": 0.518376135163837
+    },
+    {
+      "id": "159",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The motorcycle is on the  right side of the street, as it is visible in the distance on the right side of the image.<|im_end|>",
+      "token_count": 30,
+      "mean_cos_sim": 0.591324637333552
+    },
+    {
+      "id": "160",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The blue luggage is located on the  right side of the bus, as it is  visible  in the image. The correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 36,
+      "mean_cos_sim": 0.5164037909772661
+    },
+    {
+      "id": "161",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The small red car is positioned to the left of the baby carriage.Therefore, the final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 28,
+      "mean_cos_sim": 0.4514441457059648
+    },
+    {
+      "id": "162",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The woman with a backpack is on the left side of the person with a beanie. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 30,
+      "mean_cos_sim": 0.482122262318929
+    },
+    {
+      "id": "163",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The kid with the black shirt is located to the left of the kid with the blue shirt. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 31,
+      "mean_cos_sim": 0.5523353252145979
+    },
+    {
+      "id": "164",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The yellow car is positioned  to the right of the  pool. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 26,
+      "mean_cos_sim": 0.47395415438546074
+    },
+    {
+      "id": "165",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The green bucket is located to the left of the red tent, as indicated by the relative positions of the objects in the image.<|im_end|>",
+      "token_count": 29,
+      "mean_cos_sim": 0.4029836240741942
+    },
+    {
+      "id": "166",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The blue bottle is located to the left of the carton, as the man is  facing right and the bottle is on his left side. Therefore, the final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 43,
+      "mean_cos_sim": 0.5215212570296394
+    },
+    {
+      "id": "167",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The wheelchair is located to the left of the lamp post, as can be observed in the image.<|im_end|>",
+      "token_count": 23,
+      "mean_cos_sim": 0.5581552584966024
+    },
+    {
+      "id": "168",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The dog is located  to the right of the blue bicycle. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 25,
+      "mean_cos_sim": 0.5413518382443322
+    },
+    {
+      "id": "169",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The keyboard is positioned to the left of the guitar on the stage.<|im_end|>",
+      "token_count": 17,
+      "mean_cos_sim": 0.49343955516815186
+    },
+    {
+      "id": "170",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The dog is located on the right side of the image, as observed from the perspective of the crosswalk. The dog is positioned to the right of the group of people who are walking across the crosswalk. Therefore, the final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 56,
+      "mean_cos_sim": 0.5954340696334839
+    },
+    {
+      "id": "171",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The vehicle is located to the  left of the  blue umbrella. Therefore, the final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 28,
+      "mean_cos_sim": 0.5482697188854218
+    },
+    {
+      "id": "172",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The steel ladder is located on the right side of the wagon, as observed in the image. The correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 31,
+      "mean_cos_sim": 0.4588763548268212
+    },
+    {
+      "id": "173",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The red vehicle is positioned to the right of the sculpture, as indicated by the relative positions in the image. Therefore, the final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 36,
+      "mean_cos_sim": 0.48085197144084507
+    },
+    {
+      "id": "174",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The slide is located  to the right of the  life buoy. The correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 26,
+      "mean_cos_sim": 0.5513809588220384
+    },
+    {
+      "id": "175",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The green surfboard is located on the left side of the purple umbrella, as indicated by the visual information in the image. The surfboard is visible in the area where the umbrella is present, confirming its position relative to the umbrella.\n\nANSWER: The surfboard is on the left side of the purple umbrella, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 76,
+      "mean_cos_sim": 0.5783886611461639
+    },
+    {
+      "id": "176",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The broom is located on the right side of the folded chair. The broom is on the right, so the answer is \\boxed{A}.<|im_end|>",
+      "token_count": 34,
+      "mean_cos_sim": 0.4798636800713009
+    },
+    {
+      "id": "177",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The soccer ball is located on the  right side of the long bench. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 27,
+      "mean_cos_sim": 0.5524641474088033
+    },
+    {
+      "id": "178",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The baby carriage is located on the right side of the cyclist, as the cyclist is positioned to the left of the carriage within the image's frame.<|im_end|>",
+      "token_count": 33,
+      "mean_cos_sim": 0.4709036880069309
+    },
+    {
+      "id": "179",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The bucket is located on the right side of the cyclist, as the cyclist is positioned to the right of the bucket in the image. The correct answer is \\boxed{A}.<|im_end|>",
+      "token_count": 39,
+      "mean_cos_sim": 0.5461235476864709
+    },
+    {
+      "id": "180",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The telephone booth is located to the right of the yellow van. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 25,
+      "mean_cos_sim": 0.48217149244414437
+    },
+    {
+      "id": "181",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The red balloon is positioned  above the white balloon in the image. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 26,
+      "mean_cos_sim": 0.5279305179913839
+    },
+    {
+      "id": "182",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The black vehicle is  closer to the camera than the silver vehicle.<|im_end|>",
+      "token_count": 17,
+      "mean_cos_sim": 0.5705438819196489
+    },
+    {
+      "id": "183",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The water bottle is  located  closer to the camera compared to the vehicle.<|im_end|>",
+      "token_count": 19,
+      "mean_cos_sim": 0.6435864832666185
+    },
+    {
+      "id": "184",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The scooter is located on the  right side of the cyclist, as the cyclist is positioned on the left side of the image. The scooter is visible further down the road, to the right of the cyclist's path.\n\nANSWER: The scooter is on the right side of the cyclist. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 70,
+      "mean_cos_sim": 0.559169868628184
+    },
+    {
+      "id": "185",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The volleyball is on the  right side of the man with the white cap. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 28,
+      "mean_cos_sim": 0.5244317915704515
+    },
+    {
+      "id": "186",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The blue mask is on the left side of the black mask, so the correct answer is \\boxed{B}.<|im_end|>",
+      "token_count": 26,
+      "mean_cos_sim": 0.5615410771634843
+    },
+    {
+      "id": "187",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The street lamp is located to the left of the blue van, as the van is on the right side of the street. The lamp post is positioned on the left side of the road, relative to the van's direction of travel.\n\nANSWER: The street lamp is on the left side of the blue van. The final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 75,
+      "mean_cos_sim": 0.5605052212874094
+    },
+    {
+      "id": "188",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>The yellow umbrella is located to the right of the pink umbrella, as observed in the image. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 31,
+      "mean_cos_sim": 0.5424153341187371
+    },
+    {
+      "id": "189",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The red suitcase is located on the  left side of the red stool. The final answer is \\boxed{B}.<|im_end|>",
+      "token_count": 27,
+      "mean_cos_sim": 0.5413694381713867
+    },
+    {
+      "id": "190",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>The white chair is located on the  right side of the street, next to the  white building. Therefore, the final answer is \\boxed{A}.<|im_end|>",
+      "token_count": 35,
+      "mean_cos_sim": 0.4902721784181065
+    }
+  ]
+}

@@ -1,0 +1,1927 @@
+{
+  "summary": {
+    "tag": "vstar_monet_K10_zero",
+    "benchmark": "vstar",
+    "model_mode": "monet",
+    "quota": 10,
+    "intervention": "zero",
+    "num_evaluated": 191,
+    "correct_count": 148,
+    "accuracy": 77.4869109947644,
+    "pair_accuracy": null,
+    "elapsed_seconds": 417.1502070426941,
+    "timestamp": "2026-11-01 23:21:34"
+  },
+  "predictions": [
+    {
+      "id": "0",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.991097629070282
+    },
+    {
+      "id": "1",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9923448099030389
+    },
+    {
+      "id": "2",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A poster is visible on the church's wall, and it clearly depicts  doves.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.9885765976376004
+    },
+    {
+      "id": "3",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9947571290863885
+    },
+    {
+      "id": "4",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A. walking<|im_end|>",
+      "token_count": 6,
+      "mean_cos_sim": 0.9916928542984856
+    },
+    {
+      "id": "5",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9947911500930786
+    },
+    {
+      "id": "6",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9878511362605624
+    },
+    {
+      "id": "7",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "D",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9954166875945197
+    },
+    {
+      "id": "8",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9932893845770094
+    },
+    {
+      "id": "9",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9955050481690301
+    },
+    {
+      "id": "10",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9938176472981771
+    },
+    {
+      "id": "11",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9940255615446303
+    },
+    {
+      "id": "12",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9941680298911201
+    },
+    {
+      "id": "13",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9924890928798251
+    },
+    {
+      "id": "14",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9926957554287381
+    },
+    {
+      "id": "15",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9941608640882704
+    },
+    {
+      "id": "16",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9909770157602098
+    },
+    {
+      "id": "17",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9935533867941962
+    },
+    {
+      "id": "18",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9834961493810018
+    },
+    {
+      "id": "19",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9937659965621101
+    },
+    {
+      "id": "20",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9946985509660509
+    },
+    {
+      "id": "21",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A spider.<|im_end|>",
+      "token_count": 6,
+      "mean_cos_sim": 0.9921514855490791
+    },
+    {
+      "id": "22",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9947009947564867
+    },
+    {
+      "id": "23",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe color of the pink-haired woman's handbag is brown.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.9931503468089633
+    },
+    {
+      "id": "24",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9934687415758768
+    },
+    {
+      "id": "25",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9833184215757582
+    },
+    {
+      "id": "26",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9935389094882541
+    },
+    {
+      "id": "27",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9951823552449545
+    },
+    {
+      "id": "28",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9941616985532973
+    },
+    {
+      "id": "29",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9933074116706848
+    },
+    {
+      "id": "30",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9948592384656271
+    },
+    {
+      "id": "31",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.994517081313663
+    },
+    {
+      "id": "32",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9936432109938728
+    },
+    {
+      "id": "33",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9936225083139207
+    },
+    {
+      "id": "34",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "C",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9938884973526001
+    },
+    {
+      "id": "35",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9942248000038995
+    },
+    {
+      "id": "36",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.994711716969808
+    },
+    {
+      "id": "37",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9923588434855143
+    },
+    {
+      "id": "38",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9916026128662957
+    },
+    {
+      "id": "39",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9939309689733717
+    },
+    {
+      "id": "40",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9895880354775323
+    },
+    {
+      "id": "41",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9938913186391195
+    },
+    {
+      "id": "42",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9930586947335137
+    },
+    {
+      "id": "43",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "C",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9946581456396315
+    },
+    {
+      "id": "44",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "C",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9792434771855673
+    },
+    {
+      "id": "45",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9925107889705234
+    },
+    {
+      "id": "46",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9944949017630683
+    },
+    {
+      "id": "47",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9941185911496481
+    },
+    {
+      "id": "48",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9936572379536099
+    },
+    {
+      "id": "49",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9946385953161452
+    },
+    {
+      "id": "50",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9923450218306648
+    },
+    {
+      "id": "51",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A helmet is not visible in the image, so I cannot determine its color.<|im_end|>",
+      "token_count": 19,
+      "mean_cos_sim": 0.9880270891719394
+    },
+    {
+      "id": "52",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9940842986106873
+    },
+    {
+      "id": "53",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.960823741224077
+    },
+    {
+      "id": "54",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "C",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9938132299317254
+    },
+    {
+      "id": "55",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "C",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9924449258380466
+    },
+    {
+      "id": "56",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9936227533552382
+    },
+    {
+      "id": "57",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.991515768898858
+    },
+    {
+      "id": "58",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe flag in the image is red and yellow.<|im_end|>",
+      "token_count": 15,
+      "mean_cos_sim": 0.9934544563293457
+    },
+    {
+      "id": "59",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9951555927594503
+    },
+    {
+      "id": "60",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "UNKNOWN",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>Dgolden retriever<|im_end|>",
+      "token_count": 7,
+      "mean_cos_sim": 0.9928807616233826
+    },
+    {
+      "id": "61",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9935634533564249
+    },
+    {
+      "id": "62",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9940929147932265
+    },
+    {
+      "id": "63",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9942842986848619
+    },
+    {
+      "id": "64",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9922558267911276
+    },
+    {
+      "id": "65",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9927392072147794
+    },
+    {
+      "id": "66",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.995112313164605
+    },
+    {
+      "id": "67",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9943654868337843
+    },
+    {
+      "id": "68",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9919132259156969
+    },
+    {
+      "id": "69",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "D",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9958042171266344
+    },
+    {
+      "id": "70",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9951190021302965
+    },
+    {
+      "id": "71",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9943988919258118
+    },
+    {
+      "id": "72",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "D",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9858575926886665
+    },
+    {
+      "id": "73",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9863187538252937
+    },
+    {
+      "id": "74",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe umbrella in the image is purple, so the correct answer is (A).<|im_end|>",
+      "token_count": 21,
+      "mean_cos_sim": 0.9871951474083794
+    },
+    {
+      "id": "75",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9943229887220595
+    },
+    {
+      "id": "76",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9901111457082961
+    },
+    {
+      "id": "77",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9908751779132419
+    },
+    {
+      "id": "78",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9941696524620056
+    },
+    {
+      "id": "79",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9935168557696872
+    },
+    {
+      "id": "80",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9934769670168558
+    },
+    {
+      "id": "81",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9941271609730191
+    },
+    {
+      "id": "82",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9943877591027154
+    },
+    {
+      "id": "83",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9895411597357856
+    },
+    {
+      "id": "84",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "D",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9945244855350919
+    },
+    {
+      "id": "85",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9948864645428128
+    },
+    {
+      "id": "86",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9954754908879598
+    },
+    {
+      "id": "87",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9955732425053915
+    },
+    {
+      "id": "88",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9943927062882317
+    },
+    {
+      "id": "89",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.991005625989702
+    },
+    {
+      "id": "90",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9941844609048631
+    },
+    {
+      "id": "91",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9949876401159499
+    },
+    {
+      "id": "92",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.995032423072391
+    },
+    {
+      "id": "93",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9925767779350281
+    },
+    {
+      "id": "94",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9902628064155579
+    },
+    {
+      "id": "95",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9945616722106934
+    },
+    {
+      "id": "96",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9938892390992906
+    },
+    {
+      "id": "97",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9921196632915072
+    },
+    {
+      "id": "98",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe flag in the image is the Russian flag, which has two colors: white and red.<|im_end|>",
+      "token_count": 24,
+      "mean_cos_sim": 0.9864004320568509
+    },
+    {
+      "id": "99",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9948467347357008
+    },
+    {
+      "id": "100",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9937216573291354
+    },
+    {
+      "id": "101",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9954717093043857
+    },
+    {
+      "id": "102",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9942496286498176
+    },
+    {
+      "id": "103",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9930995040469699
+    },
+    {
+      "id": "104",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9950986438327365
+    },
+    {
+      "id": "105",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9949712091022067
+    },
+    {
+      "id": "106",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.993946737713284
+    },
+    {
+      "id": "107",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9944841861724854
+    },
+    {
+      "id": "108",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9936894310845269
+    },
+    {
+      "id": "109",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "C",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9922674298286438
+    },
+    {
+      "id": "110",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9912092751926846
+    },
+    {
+      "id": "111",
+      "category": "direct_attributes",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9761858648724027
+    },
+    {
+      "id": "112",
+      "category": "direct_attributes",
+      "ground_truth": "D",
+      "parsed_option": "D",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>D<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.991457912656996
+    },
+    {
+      "id": "113",
+      "category": "direct_attributes",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe color of the plastic bucket is green.<|im_end|>",
+      "token_count": 14,
+      "mean_cos_sim": 0.995243059264289
+    },
+    {
+      "id": "114",
+      "category": "direct_attributes",
+      "ground_truth": "C",
+      "parsed_option": "C",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>C<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9943293200598823
+    },
+    {
+      "id": "115",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe telephone is located to the right of the hand lamp, as depicted in the image.<|im_end|>",
+      "token_count": 23,
+      "mean_cos_sim": 0.992073310746087
+    },
+    {
+      "id": "116",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9913915130827162
+    },
+    {
+      "id": "117",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9606693850623237
+    },
+    {
+      "id": "118",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe motorcycle is located to the left of the dog.<|im_end|>",
+      "token_count": 16,
+      "mean_cos_sim": 0.994261708524492
+    },
+    {
+      "id": "119",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9904986090130277
+    },
+    {
+      "id": "120",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9920477800899081
+    },
+    {
+      "id": "121",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9952006803618537
+    },
+    {
+      "id": "122",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe bell is located  above the clock on the tower.<|im_end|>",
+      "token_count": 17,
+      "mean_cos_sim": 0.9923452668719821
+    },
+    {
+      "id": "123",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9872405330340067
+    },
+    {
+      "id": "124",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe dog is located on the left side of the golden tower.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.9470845262209574
+    },
+    {
+      "id": "125",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe image shows the  shark doll positioned  above the banana doll.<|im_end|>",
+      "token_count": 19,
+      "mean_cos_sim": 0.9953057169914246
+    },
+    {
+      "id": "126",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe trash can is located to the left of the baby carriage.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.9953331616189744
+    },
+    {
+      "id": "127",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A seesaw is visible on the right side of the image. The red vehicle is also on the right side of the image. Therefore, the seesaw is on the right side of the red vehicle.<|im_end|>",
+      "token_count": 44,
+      "mean_cos_sim": 0.9942495889133878
+    },
+    {
+      "id": "128",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9684575862354703
+    },
+    {
+      "id": "129",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9924956692589654
+    },
+    {
+      "id": "130",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nletter\nThe wristband is on the left side of the dog.<|im_end|>",
+      "token_count": 19,
+      "mean_cos_sim": 0.9949576987160577
+    },
+    {
+      "id": "131",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9940448337131076
+    },
+    {
+      "id": "132",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A soccer ball is visible on the field, and a water dispenser is also present. The soccer ball is to the left of the water dispenser.<|im_end|>",
+      "token_count": 32,
+      "mean_cos_sim": 0.9951034916771783
+    },
+    {
+      "id": "133",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9889041384061178
+    },
+    {
+      "id": "134",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9954786764250861
+    },
+    {
+      "id": "135",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB\nB",
+      "token_count": 131,
+      "mean_cos_sim": 0.9949130283461677
+    },
+    {
+      "id": "136",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9941645993126763
+    },
+    {
+      "id": "137",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe blue bench is located to the left of the green door.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.9942352639304267
+    },
+    {
+      "id": "138",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9931961231761508
+    },
+    {
+      "id": "139",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A blue truck is visible to the right of the white vehicle in the image.<|im_end|>",
+      "token_count": 19,
+      "mean_cos_sim": 0.9916640785005357
+    },
+    {
+      "id": "140",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9940727684232924
+    },
+    {
+      "id": "141",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9902960790528191
+    },
+    {
+      "id": "142",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9953254659970602
+    },
+    {
+      "id": "143",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9925647245513068
+    },
+    {
+      "id": "144",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9930723309516907
+    },
+    {
+      "id": "145",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A dog is on the right side of the shopping cart.<|im_end|>",
+      "token_count": 15,
+      "mean_cos_sim": 0.9938107066684299
+    },
+    {
+      "id": "146",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9945261147287157
+    },
+    {
+      "id": "147",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9949666460355123
+    },
+    {
+      "id": "148",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9954289396603903
+    },
+    {
+      "id": "149",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe yellow trash can is located to the right of the motorcycle.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.986513442463345
+    },
+    {
+      "id": "150",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9942422244283888
+    },
+    {
+      "id": "151",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe red chair is located on the left side of the road, as it is positioned within the area designated for pedestrians on the sidewalk.<|im_end|>",
+      "token_count": 32,
+      "mean_cos_sim": 0.9900355074140761
+    },
+    {
+      "id": "152",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9905820753839281
+    },
+    {
+      "id": "153",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.990250289440155
+    },
+    {
+      "id": "154",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe pillar box is located to the left of the telephone booth.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.9955622024006314
+    },
+    {
+      "id": "155",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9946306016710069
+    },
+    {
+      "id": "156",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9937486383650038
+    },
+    {
+      "id": "157",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9946851995256212
+    },
+    {
+      "id": "158",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9945882691277398
+    },
+    {
+      "id": "159",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "B",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9936509860886468
+    },
+    {
+      "id": "160",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9885017342037625
+    },
+    {
+      "id": "161",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe small red car is positioned to the left of the baby carriage in the image.<|im_end|>",
+      "token_count": 22,
+      "mean_cos_sim": 0.9941153791215684
+    },
+    {
+      "id": "162",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9949163330925835
+    },
+    {
+      "id": "163",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9962028728591071
+    },
+    {
+      "id": "164",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe yellow car is located on the left side of the pool.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.993729207250807
+    },
+    {
+      "id": "165",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9919481211238437
+    },
+    {
+      "id": "166",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9913225041495429
+    },
+    {
+      "id": "167",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9885405831866794
+    },
+    {
+      "id": "168",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A dog is on the left side of the blue bicycle.<|im_end|>",
+      "token_count": 15,
+      "mean_cos_sim": 0.9914204743173387
+    },
+    {
+      "id": "169",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9941252205106947
+    },
+    {
+      "id": "170",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe dog is located on the right side of the crosswalk, as observed in the image.<|im_end|>",
+      "token_count": 24,
+      "mean_cos_sim": 0.9819826483726501
+    },
+    {
+      "id": "171",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9880544278356764
+    },
+    {
+      "id": "172",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9946085943116082
+    },
+    {
+      "id": "173",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9937460356288486
+    },
+    {
+      "id": "174",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe slide is located to the left of the life buoy.<|im_end|>",
+      "token_count": 17,
+      "mean_cos_sim": 0.9919770095083449
+    },
+    {
+      "id": "175",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe green surfboard is located to the left of the purple umbrella.<|im_end|>",
+      "token_count": 19,
+      "mean_cos_sim": 0.9903417825698853
+    },
+    {
+      "id": "176",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A broom is leaning against the folded chair on the left side.<|im_end|>",
+      "token_count": 17,
+      "mean_cos_sim": 0.9915947516759237
+    },
+    {
+      "id": "177",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe soccer ball is located on the left side of the long bench.<|im_end|>",
+      "token_count": 19,
+      "mean_cos_sim": 0.9949040611584982
+    },
+    {
+      "id": "178",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "A",
+      "is_correct": false,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe baby carriage is located to the left of the cyclist.<|im_end|>",
+      "token_count": 17,
+      "mean_cos_sim": 0.9957884285185072
+    },
+    {
+      "id": "179",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.993254284063975
+    },
+    {
+      "id": "180",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe telephone booth is located to the left of the yellow van in the image.<|im_end|>",
+      "token_count": 21,
+      "mean_cos_sim": 0.9945959779951308
+    },
+    {
+      "id": "181",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe red balloon is positioned above the white balloon in the image.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.9894206192758348
+    },
+    {
+      "id": "182",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe black vehicle is  closer to the camera.<|im_end|>",
+      "token_count": 15,
+      "mean_cos_sim": 0.9948185682296753
+    },
+    {
+      "id": "183",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.995256781578064
+    },
+    {
+      "id": "184",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A scooter is visible on the right side of the image, positioned behind the cyclist. The scooter is not on the left side of the cyclist.<|im_end|>",
+      "token_count": 32,
+      "mean_cos_sim": 0.9955859978993734
+    },
+    {
+      "id": "185",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9949923290146722
+    },
+    {
+      "id": "186",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9953397578663297
+    },
+    {
+      "id": "187",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe street lamp is located to the left of the blue van.<|im_end|>",
+      "token_count": 18,
+      "mean_cos_sim": 0.9950478871663412
+    },
+    {
+      "id": "188",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe yellow umbrella is located to the left of the pink umbrella in the image.<|im_end|>",
+      "token_count": 21,
+      "mean_cos_sim": 0.9923516511917114
+    },
+    {
+      "id": "189",
+      "category": "relative_position",
+      "ground_truth": "B",
+      "parsed_option": "B",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>B<|im_end|>",
+      "token_count": 4,
+      "mean_cos_sim": 0.9943251940939162
+    },
+    {
+      "id": "190",
+      "category": "relative_position",
+      "ground_truth": "A",
+      "parsed_option": "A",
+      "is_correct": true,
+      "raw_text": "<abs_vis_token></abs_vis_token>A\nThe white chair is located on the right side of the street, as indicated by the visual information in the image.<|im_end|>",
+      "token_count": 28,
+      "mean_cos_sim": 0.9939837720659044
+    }
+  ]
+}
