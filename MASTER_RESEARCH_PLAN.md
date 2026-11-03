@@ -14,7 +14,7 @@ In 2025–2026, leading AI research labs claimed that Multimodal Large Language 
 Across all 4 flagship frameworks, the claimed continuous visual reasoning mechanisms exhibit major discrepancies between theoretical claims and implementation:
 1. **Mull-Tokens** (*CVPR 2026*): Does not perform visual thinking; it acts as a **syntactic format lock** (`<think></think>\n` stop-gate) that suppresses degenerative verbal CoT and exploits a +10% multiple-choice option `B` calibration shift.
 2. **LVR** (*ICLR 2026*): Supervises latent hidden states via MSE against raw ViT patch tokens (an untested interpretation of ROI copying; see E-L1/E-L3). Furthermore, LVR's GRPO replays latent states without gradient through their generation (disclosed in the paper, 3_lvr.tex L97–106), and the replay in the loss forward does not reproduce the rollout context (N1).
-3. **Monet** (*CVPR 2026*): Claims continuous policy gradients (VLPO), but avoids backpropagating through time by computing first-order gradients, detaching them (`safe_grads.append(g.detach())`), and updating latents via an offline static proxy loss. *(Not independently verified)*
+3. **Monet** (*CVPR 2026*): VLPO's latent log-prob uses the next latent's producer as the Gaussian mean (M1); VLPO is disabled in the released code (M2); latent positions differ between SFT and inference/RL (M3). The previously claimed 'detached proxy loss' is SFT Stage-2 latent-only backprop and is correct.
 4. **Mirage** (*CVPR 2026*): Experiences representational shift because Stage 2 drops visual loss (`loss = ce_loss`), unmooring the tokens into prompt embeddings. *(Not independently verified)*
 
 ---
@@ -46,7 +46,9 @@ MTok/
 │   │   └── hf_metadata/LVR-7B/                  # Config, tokenizers, args, index from HuggingFace
 │   │
 │   ├── monet/                                   # Paper 2: Monet (Reasoning in Latent Visual Space, arXiv:2511.21395)
-│   │   ├── Gaps_Monet.md                        # Forensic analysis of detached proxy loss (src/trainer.py L39)
+│   │   ├── Gaps_Monet.md                        # Technical review & verified gap analysis (M1–M10)
+│   │   ├── VERIFICATION_REPORT.md               # Independent verification report (M1–M10)
+│   │   ├── verification/                        # CPU verification suite (proxy identity, VLPO harness, mask check, table checks)
 │   │   └── paper_src/                           # Extracted arXiv LaTeX source
 │   │
 │   └── mirage/                                  # Paper 3: Mirage (Machine Mental Imagery, arXiv:2506.17218)
