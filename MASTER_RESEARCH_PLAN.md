@@ -1,6 +1,6 @@
 # Master Multi-Model Forensic Research Plan & Autonomous Agent Guide
 
-> **Target Audience**: Autonomous AI Coding Agents (Antigravity, Devin, Claude Code, Cursor, SWE-bench) and Human Co-Investigators.  
+> **Target Audience**: Autonomous AI Coding Agents and Human Co-Investigators.  
 > **Repository**: [https://github.com/Vnshiee/MTok](https://github.com/Vnshiee/MTok)  
 > **Mission**: Conduct publication-grade, line-by-line forensic audits, code-vs-paper discrepancy analyses, and mechanistic falsification experiments across the top 2026 Multimodal Latent Reasoning architectures (`Qwen2.5-VL-7B` backbone).
 
@@ -11,11 +11,11 @@
 In 2025–2026, leading AI research labs claimed that Multimodal Large Language Models (MLLMs) can achieve human-like "visual thinking" by predicting continuous latent vectors (e.g., Mull-Tokens, LVR, Monet, Mirage) instead of verbose text Chain-of-Thought (CoT).
 
 **Our Central Empirical Finding**:  
-Across all 4 flagship frameworks, **the claimed "continuous visual reasoning" is an architectural illusion**:
+Across all 4 flagship frameworks, the claimed continuous visual reasoning mechanisms exhibit major discrepancies between theoretical claims and implementation:
 1. **Mull-Tokens** (*CVPR 2026*): Does not perform visual thinking; it acts as a **syntactic format lock** (`<think></think>\n` stop-gate) that suppresses degenerative verbal CoT and exploits a +10% multiple-choice option `B` calibration shift.
-2. **LVR** (*ICLR 2026*): Suffers from the **ROI Feature Copying Paradox**—supervising latent hidden states via MSE against raw ViT patch tokens simply trains an auto-associative identity copy across self-attention of visual tokens already sitting in the prompt prefix. Furthermore, RL policy gradients into latent reasoning are literally zero (`final_mask = 0`, `@torch.no_grad()`).
-3. **Monet** (*CVPR 2026*): Claims continuous policy gradients (VLPO), but actually avoids backpropagating through time by computing first-order gradients, detaching them (`safe_grads.append(g.detach())`), and updating latents via an offline static proxy loss.
-4. **Mirage** (*CVPR 2026*): Suffers from **Catastrophic Representational Drift** because Stage 2 completely drops visual loss (`loss = ce_loss`), unmooring the "mental imagery" tokens into generic prompt embeddings.
+2. **LVR** (*ICLR 2026*): Supervises latent hidden states via MSE against raw ViT patch tokens (an untested interpretation of ROI copying; see E-L1/E-L3). Furthermore, LVR's GRPO replays latent states without gradient through their generation (disclosed in the paper, 3_lvr.tex L97–106), and the replay in the loss forward does not reproduce the rollout context (N1).
+3. **Monet** (*CVPR 2026*): Claims continuous policy gradients (VLPO), but avoids backpropagating through time by computing first-order gradients, detaching them (`safe_grads.append(g.detach())`), and updating latents via an offline static proxy loss. *(Not independently verified)*
+4. **Mirage** (*CVPR 2026*): Experiences representational shift because Stage 2 drops visual loss (`loss = ce_loss`), unmooring the tokens into prompt embeddings. *(Not independently verified)*
 
 ---
 
@@ -38,7 +38,7 @@ MTok/
 │   ├── lvr/                                     # Paper 1: LVR (Latent Visual Reasoning, arXiv:2509.24251)
 │   │   ├── STEP1_INGESTION_MANIFEST.md          # 100% verified line-by-line inventory of 25 LaTeX files & 50 repo files
 │   │   ├── CODE_VS_PAPER_TRACE.md               # Mathematical & tensor execution trace (Forward, M-RoPE, GRPO, Collator)
-│   │   ├── Gaps_LVR.md                          # Comprehensive gap analysis (ROI copying paradox, step collapse)
+│   │   ├── Gaps_LVR.md                          # Comprehensive gap analysis (ROI supervision, step collapse)
 │   │   ├── PREREGISTRATION_LVR.md               # Pre-registered hypotheses & mechanistic test protocols
 │   │   ├── SYNTHESIS_LVR.md                     # Executive summary of findings for LVR
 │   │   ├── diagnostics/                         # CPU-executable verification scripts (test_roi_copying, test_grpo_zero_grad)
@@ -92,7 +92,7 @@ To ensure scientific rigor, avoid hallucinations, and eliminate superficial benc
 
 ## 4. How to Resume or Run Tasks via Autonomous Agents
 
-If you clone this repository to an autonomous agent (Antigravity, Devin, Claude Code), instruct the agent:
+If you clone this repository to an autonomous agent, instruct the agent:
 
 ```bash
 # 1. Read the state of the project
