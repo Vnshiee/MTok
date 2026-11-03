@@ -29,17 +29,17 @@ g = g.replace("`finetune_lvr_stage2_7b.sh`", "[`scripts/finetune_lvr_stage2_7b.s
 # Fix credentials block
 cred_block = '''Bash environment variables in [`scripts/vanilla_sft_7b.sh` lines 8–12](file:///home/devraj/MTok/external_models/lvr/repo/scripts/vanilla_sft_7b.sh#L8-L12):
 ```bash
-export ACCESS_KEY_ID="cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
-export SECRET_ACCESS_KEY="bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
-export ENDPOINT_URL="https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+export ACCESS_KEY_ID="<REDACTED_ACCESS_KEY_ID>"
+export SECRET_ACCESS_KEY="<REDACTED_SECRET_ACCESS_KEY>"
+export ENDPOINT_URL="https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
 export BUCKET_NAME="bangzhengli"
 export REGION_NAME="us-ashburn-1"
 ```
 Python variable assignments in [`evaluation/evaluation.py` lines 17–21](file:///home/devraj/MTok/external_models/lvr/repo/evaluation/evaluation.py#L17-L21):
 ```python
-access_key_id = "cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
-secret_access_key = "bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
-endpoint_url = "https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+access_key_id = "<REDACTED_ACCESS_KEY_ID>"
+secret_access_key = "<REDACTED_SECRET_ACCESS_KEY>"
+endpoint_url = "https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
 bucket_name = "bangzhengli"
 region_name = "us-ashburn-1"
 ```'''

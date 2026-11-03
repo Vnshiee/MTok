@@ -394,9 +394,9 @@ sections.append("""
   - [`evaluation/evaluation.py` lines 17–21](file:///home/devraj/MTok/external_models/lvr/repo/evaluation/evaluation.py#L17-L21)
   The author's active Oracle Cloud Infrastructure (OCI) credentials are hardcoded in plaintext:
   ```bash
-  export ACCESS_KEY_ID="cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
-  export SECRET_ACCESS_KEY="bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
-  export ENDPOINT_URL="https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+  export ACCESS_KEY_ID="<REDACTED_ACCESS_KEY_ID>"
+  export SECRET_ACCESS_KEY="<REDACTED_SECRET_ACCESS_KEY>"
+  export ENDPOINT_URL="https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
   export BUCKET_NAME="bangzhengli"
   export REGION_NAME="us-ashburn-1"
   ```

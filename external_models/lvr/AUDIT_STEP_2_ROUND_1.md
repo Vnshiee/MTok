@@ -284,18 +284,18 @@ However, an adversarial, line-by-line inspection comparing both deliverables aga
 - **Deliverable Claim**:
   Quotes bash `export` syntax and claims it exists in both `scripts/vanilla_sft_7b.sh` and `evaluation/evaluation.py`:
   ```bash
-  export ACCESS_KEY_ID="cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
-  export SECRET_ACCESS_KEY="bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
-  export ENDPOINT_URL="https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+  export ACCESS_KEY_ID="<REDACTED_ACCESS_KEY_ID>"
+  export SECRET_ACCESS_KEY="<REDACTED_SECRET_ACCESS_KEY>"
+  export ENDPOINT_URL="https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
   export BUCKET_NAME="bangzhengli"
   export REGION_NAME="us-ashburn-1"
   ```
 - **Actual File Reality ([`evaluation/evaluation.py` lines 17–21](file:///home/devraj/MTok/external_models/lvr/repo/evaluation/evaluation.py#L17-L21))**:
   `evaluation.py` is a Python script and defines variables in Python:
   ```python
-  17: access_key_id = "cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
-  18: secret_access_key = "bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
-  19: endpoint_url = "https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+  17: access_key_id = "<REDACTED_ACCESS_KEY_ID>"
+  18: secret_access_key = "<REDACTED_SECRET_ACCESS_KEY>"
+  19: endpoint_url = "https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
   20: bucket_name = "bangzhengli"
   21: region_name = "us-ashburn-1"
   ```
