@@ -1,5 +1,9 @@
 # LVR (`arXiv:2509.24251`) — Step 1 Forensic Ingestion Manifest
 
+> [!WARNING]
+> **Verification status (2026-11-03):** all 87 checksums/byte/line counts verified exact. **Errors:** rows 6–7 misstate the stage-1 script parameters (actual: `MAX_PACKED_TOKENS`=16384, `MAX_INSTANCE_PER_BATCH`=4, `GRAD_ACCUM_STEPS`=8); the `compute_loss` block at L292–301 is not the real code (different gating logic). See [`VERIFICATION_REPORT.md`](VERIFICATION_REPORT.md) §1, §4.
+
+
 **Audit Target**: Paper 1 — *Latent Visual Reasoning* (`arXiv:2509.24251`)  
 **Workspace Directory**: `/home/devraj/MTok/external_models/lvr/`  
 **Manifest Scope**: Step 1 Only (Complete Paper PDF, Official LaTeX Source, GitHub Codebase & HuggingFace Checkpoint Metadata Ingestion)
@@ -190,8 +194,8 @@
 | 3 | [`environment.yaml`](file:///home/devraj/MTok/external_models/lvr/repo/environment.yaml#L1-L147) | 147 | 147 | 4,145 | `eaf5ec42b277b632beaa7c0d697f319b8b5fcdfbf206c446de4c546cf88d650d` | Conda environment specification (`name: lvr`, `python=3.11.11`, `pytorch=2.5.1+cu124`, `transformers==4.54.0`, `trl==0.17.0`, `deepspeed==0.16.4`, `flash-attn==2.7.4.post1`, `peft==0.14.0`, `accelerate==1.3.0`). |
 | `evaluation/evaluation.py` | 460 | 460 | 18,921 | `b9b4e60bb277e0c27aa90ea87551d48171e697b8b678a7754cd4f2139a88a932` | CLI entry point for benchmarks (V*, MMVP, BLINK). Sets `STEP_LIST = [4,8,16]` (L27), `CHKPT_PATHS = ""` (L31), and `DECODING_STRATEGY = "steps"` in `main()` (L448). |
 | 5 | [`requirements.txt`](file:///home/devraj/MTok/external_models/lvr/repo/requirements.txt#L1-L113) | 113 | 113 | 1,964 | `7383d9a3bb1095fa567c63bf7ec4b839a925e053ada20a3bf9533f553ebed37a` | Pip package requirements list mirroring `environment.yaml` (`transformers==4.54.0`, `trl==0.17.0`, `deepspeed==0.16.4`, `qwen-vl-utils==0.0.10`, `math-verify==0.7.0`, `liger-kernel==0.5.3`). |
-| 6 | [`scripts/finetune_lvr_stage1_3b.sh`](file:///home/devraj/MTok/external_models/lvr/repo/scripts/finetune_lvr_stage1_3b.sh#L1-L89) | 88 | 89 | 2,523 | `60fa29656fbef78283c1cd50abeab3fdfb598abb227b6717a4f36b762e0bf740` | Stage 1 SFT launch script for `Qwen/Qwen2.5-VL-3B-Instruct`: runs `deepspeed src/train/train_lvr.py` with `zero2.json`, `MAX_PACKED_TOKENS=8192`, `LONG_SEQ_THRESHOLD=4096`, `MAX_INSTANCE_PER_BATCH=8`, `GRAD_ACCUM_STEPS=4`, `LR=1e-5`, `LOSS_LVR_FCT="mse"`, `LOSS_LVR_LAMBDA=0.1`, `LVR_HEAD=False`, `LATENT_END_TOKEN=False`, `freeze_vision_tower=True`, `freeze_merger=True`, `freeze_llm=False`, `max_steps=2500`. |
-| 7 | [`scripts/finetune_lvr_stage1_7b.sh`](file:///home/devraj/MTok/external_models/lvr/repo/scripts/finetune_lvr_stage1_7b.sh#L1-L90) | 89 | 90 | 2,536 | `c0f4a91103f954578c671c551e6ba0a6267d3641b8a916e0ef106727aec9efee` | Stage 1 SFT launch script for `Qwen/Qwen2.5-VL-7B-Instruct`: runs `deepspeed src/train/train_lvr.py` with `zero3_offload.json`, `MAX_PACKED_TOKENS=8192`, `LONG_SEQ_THRESHOLD=4096`, `MAX_INSTANCE_PER_BATCH=8`, `GRAD_ACCUM_STEPS=4`, `LR=1e-5`, `LOSS_LVR_FCT="mse"`, `LOSS_LVR_LAMBDA=0.1`, `LVR_HEAD=False`, `LATENT_END_TOKEN=False`, `freeze_vision_tower=True`, `freeze_merger=True`, `freeze_llm=False`, `max_steps=2500`. |
+| 6 | [`scripts/finetune_lvr_stage1_3b.sh`](file:///home/devraj/MTok/external_models/lvr/repo/scripts/finetune_lvr_stage1_3b.sh#L1-L89) | 88 | 89 | 2,523 | `60fa29656fbef78283c1cd50abeab3fdfb598abb227b6717a4f36b762e0bf740` | Stage 1 SFT launch script for `Qwen/Qwen2.5-VL-3B-Instruct`: runs `deepspeed src/train/train_lvr.py` with `zero2.json`, `MAX_PACKED_TOKENS=16384` (`$((MAX_INSTANCE_PER_BATCH * LST))`), `LST=4096`, `MAX_INSTANCE_PER_BATCH=4`, `GRAD_ACCUM_STEPS=8`, `LR=1e-5`, `LOSS_LVR_FCT="mse"`, `LOSS_LVR_LAMBDA=0.1`, `LVR_HEAD=False`, `LATENT_END_TOKEN=False`, `freeze_vision_tower=True`, `freeze_merger=True`, `freeze_llm=False`, `max_steps=2500`. |
+| 7 | [`scripts/finetune_lvr_stage1_7b.sh`](file:///home/devraj/MTok/external_models/lvr/repo/scripts/finetune_lvr_stage1_7b.sh#L1-L90) | 89 | 90 | 2,536 | `c0f4a91103f954578c671c551e6ba0a6267d3641b8a916e0ef106727aec9efee` | Stage 1 SFT launch script for `Qwen/Qwen2.5-VL-7B-Instruct`: runs `deepspeed src/train/train_lvr.py` with `zero3_offload.json`, `MAX_PACKED_TOKENS=16384` (`$((MAX_INSTANCE_PER_BATCH * LST))`), `LST=4096`, `MAX_INSTANCE_PER_BATCH=4`, `GRAD_ACCUM_STEPS=8`, `LR=1e-5`, `LOSS_LVR_FCT="mse"`, `LOSS_LVR_LAMBDA=0.1`, `LVR_HEAD=False`, `LATENT_END_TOKEN=False`, `freeze_vision_tower=True`, `freeze_merger=True`, `freeze_llm=False`, `max_steps=2500`. |
 | 8 | [`scripts/finetune_lvr_stage2_3b.sh`](file:///home/devraj/MTok/external_models/lvr/repo/scripts/finetune_lvr_stage2_3b.sh#L1-L67) | 66 | 67 | 2,035 | `536fed3deee5290a901fd410a30d489f4534eb6b9cf5de14d2786654956a3241` | Stage 2 RL (GRPO) launch script for 3B model: runs `deepspeed src/train/train_grpo.py` with `zero2.json`, `num_generations=8`, `per_device_train_batch_size=8`, `gradient_accumulation_steps=2`, `max_completion_length=512`, `max_lvr_steps=16`, `temperature=0.9`, `learning_rate=1e-6`, `beta=0.04`, `freeze_vision_tower=True`, `freeze_merger=True`, `freeze_llm=False`. |
 | 9 | [`scripts/finetune_lvr_stage2_7b.sh`](file:///home/devraj/MTok/external_models/lvr/repo/scripts/finetune_lvr_stage2_7b.sh#L1-L67) | 66 | 67 | 2,035 | `b29b5d788b3d74f0edb7d02aeb2435f82b2ad35935a64e6b286cb5f7e09c6c12` | Stage 2 RL (GRPO) launch script template (`MODEL_NAME` uses 3B checkpoint placeholder): identical structure to `finetune_lvr_stage2_3b.sh` except `per_device_train_batch_size=4`. |
 | 10 | [`scripts/vanilla_sft_3b.sh`](file:///home/devraj/MTok/external_models/lvr/repo/scripts/vanilla_sft_3b.sh#L1-L66) | 65 | 66 | 2,045 | `e1a8357e990f8207c702d5a4dd2f6799e9f17ccd88b6d150093ebc5be232ea40` | Baseline vanilla SFT script for `Qwen/Qwen2.5-VL-3B-Instruct`: runs `deepspeed src/train/train_sft.py` with `zero2.json`, `BATCH_PER_DEVICE=4`, `GRAD_ACCUM_STEPS=4`, `learning_rate=1e-5`, `max_steps=2500`. |
@@ -292,12 +296,15 @@
      - Calls `outputs = model(**inputs)` ([L229](file:///home/devraj/MTok/external_models/lvr/repo/src/trainer/lvr_trainer.py#L229)).
      - Combines the losses ([L235-L242](file:///home/devraj/MTok/external_models/lvr/repo/src/trainer/lvr_trainer.py#L235-L242)):
        ```python
-       loss_ce = outputs["loss_ce"]
-       loss_lvr = outputs["loss_lvr"]
-       loss_mode_switch = outputs["loss_mode_switch"]
-       loss = loss_ce + self.args.loss_lvr_lambda * loss_lvr if loss_lvr is not None else loss_ce
-       if loss_mode_switch is not None:
-           loss = loss + self.args.loss_mode_switch_lambda * loss_mode_switch
+       # loss = outputs.loss  # total loss
+       loss_ce = outputs.loss_ce
+       loss_lvr = outputs.loss_lvr
+       loss_mode_switch = outputs.loss_mode_switch
+
+       if self.args.mode_switch_loss:
+           loss = loss_ce + self.args.loss_lvr_lambda * loss_lvr + self.args.loss_mode_switch_lambda * loss_mode_switch
+       else:
+           loss = loss_ce + self.args.loss_lvr_lambda * loss_lvr if self.args.loss_lvr_lambda > 0 else loss_ce
        ```
 
 ---

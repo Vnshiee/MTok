@@ -1,5 +1,9 @@
 # LVR (`arXiv:2509.24251`) — Forensic Code-vs-Paper Mathematical & Tensor Trace
 
+> [!WARNING]
+> **Verification status (2026-11-03):** several code blocks are reformatted or reconstructed rather than verbatim (`verification/verify_snippets.py`: 7 lines not verbatim, 1 mis-cited). See [`VERIFICATION_REPORT.md`](VERIFICATION_REPORT.md) §4.
+
+
 **Document Type**: Forensic Mathematical and Tensor-Level Execution Trace  
 **Subject Model**: Latent Visual Reasoning (LVR)  
 **Primary Paper**: *Latent Visual Reasoning*, arXiv:2509.24251 (`v2` revised 2025-10-07)  
@@ -595,23 +599,36 @@ The Latent GRPO training pipeline is implemented in [`src/trainer/grpo_trainer.p
   - Marked deprecated in [`src/dataset/lvr_sft_dataset.py` line 58](file:///home/devraj/MTok/external_models/lvr/repo/src/dataset/lvr_sft_dataset.py#L58): `'''Deprecated as image masking works better'''`.
 - **Active Grid-Based Mapper**: `bbox_to_token_idxs` in [`src/dataset/lvr_sft_dataset_packed.py` lines 171–208](file:///home/devraj/MTok/external_models/lvr/repo/src/dataset/lvr_sft_dataset_packed.py#L171-L208)
   ```python
-  def bbox_to_token_idxs(self, bboxes, image_grid_thw):
-      _, h, w = image_grid_thw[0].tolist()
-      token_idxs = []
-      for bbox in bboxes:
-          x0, y0, x1, y1 = bbox
-          # Scale to 14x14 grid
-          x0_grid = max(0, min(int(np.floor(x0 * w)), w - 1))
-          x1_grid = max(0, min(int(np.ceil(x1 * w)), w))
-          y0_grid = max(0, min(int(np.floor(y0 * h)), h - 1))
-          y1_grid = max(0, min(int(np.ceil(y1 * h)), h))
-          # Map to 28x28 merged token grid (spatial merge factor 2)
-          x0_token, x1_token = x0_grid // 2, (x1_grid + 1) // 2
-          y0_token, y1_token = y0_grid // 2, (y1_grid + 1) // 2
-          H2, W2 = h // 2, w // 2
-          idxs = [int(yy * W2 + xx) for yy in range(y0_token, y1_token) for xx in range(x0_token, x1_token)]
-          token_idxs.append(idxs)
-      return token_idxs
+    def bbox_to_token_idxs(self, bboxes, image_grid_thw):
+        _, h, w = image_grid_thw[0].tolist()
+        token_idxs = []
+        for bbox in bboxes: 
+            x0, y0, x1, y1 = bbox
+
+            # Scale to 14by14 grid
+            x0_grid = max(0, min(int(np.floor(x0 * w)), w-1))
+            x1_grid = max(0, min(int(np.ceil (x1 * w)), w))
+            y0_grid = max(0, min(int(np.floor(y0 * h)), h-1))
+            y1_grid = max(0, min(int(np.ceil (y1 * h)), h))
+
+
+            # Map to 28by28 grid
+            x0_token = x0_grid // 2
+            x1_token = (x1_grid + 1) // 2
+            y0_token = y0_grid // 2
+            y1_token = (y1_grid + 1) // 2
+
+            H2, W2 = h // 2, w // 2
+
+            idxs = [
+                int(yy * W2 + xx)
+                for yy in range(y0_token, y1_token)
+                for xx in range(x0_token, x1_token)
+            ]
+
+            token_idxs.append(idxs)
+
+        return token_idxs
   ```
 
 ### 6.2 Prompt Token Expansion
@@ -637,25 +654,69 @@ The Latent GRPO training pipeline is implemented in [`src/trainer/grpo_trainer.p
 ### 6.3 The Adaptive Data Packing & Unpacking Mechanism
 - **Buffer Packing**: [`src/dataset/lvr_sft_dataset_packed.py` lines 554–583](file:///home/devraj/MTok/external_models/lvr/repo/src/dataset/lvr_sft_dataset_packed.py#L554-L583)
   - Accumulates instances into a 1D sequence buffer up to `max_packed_tokens = 16384` or `max_instance_per_batch = 4`.
-- **Collator Unpacking & Re-Padding**: [`src/dataset/lvr_sft_dataset_packed.py` lines 862–917](file:///home/devraj/MTok/external_models/lvr/repo/src/dataset/lvr_sft_dataset_packed.py#L862-L917)
+- **Collator Unpacking & Re-Padding**: [`src/dataset/lvr_sft_dataset_packed.py` lines 857–917](file:///home/devraj/MTok/external_models/lvr/repo/src/dataset/lvr_sft_dataset_packed.py#L857-L917)
   ```python
-  class PackedDataCollatorForSupervisedDatasetLVR(object):
-      def __call__(self, features):
-          ...
-          for feature in features:
-              all_input_ids.extend(torch.split(feature["input_ids"], feature["input_lengths"].tolist()))
-              all_attention_masks.extend(torch.split(feature["attention_mask"], feature["input_lengths"].tolist()))
-              all_labels.extend(torch.split(feature["labels"], feature["input_lengths"].tolist()))
-          ...
-          max_len = max(len(seq) for seq in all_input_ids)
-          padded_input_ids = [torch.nn.functional.pad(seq, (0, max_len - len(seq)), value=self.pad_token_id) for seq in all_input_ids]
-          ...
-          return {
-              "input_ids": torch.stack(padded_input_ids),
-              "attention_mask": torch.stack(padded_attention_masks),
-              "labels": torch.stack(padded_labels),
-              ...
-          }
+class PackedDataCollatorForSupervisedDatasetLVR(object):
+
+    def __init__(self,pad_token_id):
+        self.pad_token_id = pad_token_id 
+    
+    def __call__(self, features):
+        # features is supposed to be a list of packed items
+        # We will set batch_per_device to 1
+
+        if not isinstance(features, list):
+            features = [features]
+
+        #  Unpack all sequences
+        all_input_ids = []
+        all_attention_masks = []
+        all_labels = []
+
+        all_lvr_tokens = []
+        all_pixel_values = []
+        all_image_grid_thw = []
+
+        for feature in features:
+            # each feature is a packed mini-batch
+            all_input_ids.extend(torch.split(feature["input_ids"], feature["input_lengths"].tolist()))
+            all_attention_masks.extend(torch.split(feature["attention_mask"], feature["input_lengths"].tolist()))
+            all_labels.extend(torch.split(feature["labels"], feature["input_lengths"].tolist()))
+
+            all_lvr_tokens.extend(feature['lvr_tokens'])
+            all_pixel_values.append(feature['pixel_values'])
+            all_image_grid_thw.append(feature['image_grid_thw'])
+        
+        # pad all sequences
+        max_len = max(len(seq) for seq in all_input_ids)
+        padded_input_ids = []
+        padded_attention_masks = []
+        padded_labels = []
+        for i in range(len(all_input_ids)):
+            seq_len = len(all_input_ids[i])
+            padding_needed = max_len - seq_len
+
+            # Pad on the right side.
+            padded_input_ids.append(torch.nn.functional.pad(
+                all_input_ids[i], (0, padding_needed), value=self.pad_token_id))
+            
+            padded_attention_masks.append(torch.nn.functional.pad(
+                all_attention_masks[i], (0, padding_needed), value=0))
+            
+            padded_labels.append(torch.nn.functional.pad(
+                all_labels[i], (0, padding_needed), value=IGNORE_INDEX))
+
+        data_dict = {
+            "input_ids": torch.stack(padded_input_ids),
+            "attention_mask": torch.stack(padded_attention_masks),
+            "labels": torch.stack(padded_labels),
+
+            "lvr_tokens": all_lvr_tokens,
+            "pixel_values": torch.cat(all_pixel_values),
+            "image_grid_thw": torch.cat(all_image_grid_thw),
+            }
+        
+        return data_dict
   ```
 - **Forensic Finding**:
   - The paper claims to use the adaptive data packing from InternVL 2.5 to avoid sequence padding overhead.
