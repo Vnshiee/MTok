@@ -1,5 +1,7 @@
 # Critical Review and Forensic Gap Analysis: Mirage (Machine Mental Imagery)
 
+> **Not independently verified. The Mull/LVR/Monet audits in this repo contained substantive errors; treat this document as unverified.**
+
 **Target Paper**: *Mirage: Machine Mental Imagery* (`arXiv:2506.17218`, CVPR 2026 Submission)  
 **Target Repository**: `/home/devraj/MTok/external_models/mirage/repo/`  
 **LaTeX Source**: `/home/devraj/MTok/external_models/mirage/paper_src/`  
