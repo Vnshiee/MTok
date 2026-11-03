@@ -1,0 +1,13 @@
+{
+  "benchmark": "mmvp",
+  "condition": "A1A-BASE",
+  "lvr_steps": 8,
+  "prompt_mode": "circular_eval",
+  "n_total": 300,
+  "acc_official_micro_pct": 62.67,
+  "acc_robust_micro_pct": 62.67,
+  "acc_official_macro_pct": 62.67,
+  "acc_robust_macro_pct": 62.67,
+  "by_category": {},
+  "telemetry_means": {}
+}

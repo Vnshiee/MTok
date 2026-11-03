@@ -1,0 +1,41 @@
+{
+  "benchmark": "vstar",
+  "condition": "A1A-ORACLE-ROI",
+  "lvr_steps": 8,
+  "prompt_mode": "official",
+  "n_total": 191,
+  "acc_official_micro_pct": 82.2,
+  "acc_robust_micro_pct": 82.2,
+  "acc_official_macro_pct": 82.2,
+  "acc_robust_macro_pct": 82.2,
+  "by_category": {
+    "direct_attributes": {
+      "n": 115,
+      "acc_official_pct": 86.09,
+      "acc_robust_pct": 86.09
+    },
+    "relative_position": {
+      "n": 76,
+      "acc_official_pct": 76.32,
+      "acc_robust_pct": 76.32
+    }
+  },
+  "telemetry_means": {
+    "actual_latent_steps": 8.0,
+    "cs_max_mean": 0.6097,
+    "cs_roi_mean": 0.5895,
+    "cs_bkg_mean": 0.5989,
+    "roi_recall_at_1_mean": 0.4503,
+    "roi_recall_at_5_mean": 0.6976,
+    "latent_norm_mean": 44.0721,
+    "effective_rank": 4.9612,
+    "adj_cosine_mean": 0.8904,
+    "latent_attn_to_vis_mean": 0.103,
+    "latent_attn_to_roi_mean": 0.0237,
+    "latent_attn_to_bkg_mean": 0.0793,
+    "ans_attn_to_lvr_mean": 0.0147,
+    "ans_attn_to_vis_mean": 0.0462,
+    "rollout_l2_drift_mean": 18.8332,
+    "rollout_cos_mean": 0.8914
+  }
+}

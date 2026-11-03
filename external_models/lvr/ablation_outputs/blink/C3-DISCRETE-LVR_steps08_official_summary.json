@@ -1,0 +1,45 @@
+{
+  "benchmark": "blink",
+  "condition": "C3-DISCRETE-LVR",
+  "lvr_steps": 8,
+  "prompt_mode": "official",
+  "n_total": 697,
+  "acc_official_micro_pct": 55.24,
+  "acc_robust_micro_pct": 55.24,
+  "acc_official_macro_pct": 55.78,
+  "acc_robust_macro_pct": 55.78,
+  "by_category": {
+    "Counting": {
+      "n": 120,
+      "acc_official_pct": 70.83,
+      "acc_robust_pct": 70.83
+    },
+    "IQ_Test": {
+      "n": 150,
+      "acc_official_pct": 32.0,
+      "acc_robust_pct": 32.0
+    },
+    "Jigsaw": {
+      "n": 150,
+      "acc_official_pct": 51.33,
+      "acc_robust_pct": 51.33
+    },
+    "Relative_Reflectance": {
+      "n": 134,
+      "acc_official_pct": 37.31,
+      "acc_robust_pct": 37.31
+    },
+    "Spatial_Relation": {
+      "n": 143,
+      "acc_official_pct": 87.41,
+      "acc_robust_pct": 87.41
+    }
+  },
+  "telemetry_means": {
+    "actual_latent_steps": 8.0,
+    "cs_max_mean": 0.1032,
+    "latent_norm_mean": 223.3515,
+    "effective_rank": 4.0767,
+    "adj_cosine_mean": 0.8048
+  }
+}

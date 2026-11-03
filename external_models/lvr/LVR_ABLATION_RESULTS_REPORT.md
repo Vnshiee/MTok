@@ -15,6 +15,7 @@
 | `A1A-MASK-ANS-TO-IMG` | `8` | `official` | **81.15%** | **81.15%** | `+0.00%` | `1.0000` | `0.5759` | `0.5017` | `0.1106` | `3.2433` | `0.0192` | `0.0` |
 | `A1A-MASK-ANS-TO-LVR` | `8` | `official` | **82.20%** | **82.20%** | `+1.05%` | `0.7539` | `0.5759` | `0.5017` | `0.1106` | `3.2433` | `0.0` | `0.0461` |
 | `A1A-ORACLE-BKG` | `8` | `official` | **80.63%** | **80.63%** | `-0.52%` | `1.0000` | `0.5422` | `0.4233` | `0.0039` | `5.4624` | `0.0179` | `0.0466` |
+| `A1A-ORACLE-ROI-FULL` | `8` | `official` | **81.15%** | **81.15%** | `+0.00%` | `1.0000` | `0.6144` | `0.5888` | `0.4552` | `7.9959` | `0.016` | `0.0458` |
 | `A1A-ORACLE-ROI` | `8` | `official` | **82.20%** | **82.20%** | `+1.05%` | `0.7539` | `0.6097` | `0.5895` | `0.4503` | `4.9612` | `0.0147` | `0.0462` |
 | `A3A-STEPS-0` | `0` | `official` | **78.53%** | **78.53%** | `-2.62%` | `0.2668` | `—` | `—` | `—` | `0.0` | `—` | `—` |
 | `A3A-STEPS-16` | `16` | `official` | **81.15%** | **81.15%** | `+0.00%` | `1.0000` | `0.5493` | `0.4732` | `0.0834` | `5.012` | `—` | `—` |
@@ -136,3 +137,22 @@
 | `A2-STRICT-MASK-END` | `3` | `False` | `11.511697` | `0.031362` | **`0.0`** |
 | `A2-DIFF-REPLAY` | `4` | `True` | `11.876366` | `0.315795` | **`5.737087`** |
 | `A2-UNMASK-LOGP` | `9` | `True` | `11.477979` | `0.177146` | **`0.0`** |
+
+---
+
+## 4. Stage 2 RL Replay Context Mismatch Audit (Experiment E-L6 / N1 & N2)
+
+Audited on `vincentleebang/LVR-7B` across **200** full test rollouts ($K=8$).
+
+| Evaluation Path | Mean $|\Delta \log p|$ (nats) | Max $|\Delta \log p|$ (nats) | % Rollouts with $|\Delta| > 0.01$ | `<\|lvr_start\|>` Masked in Policy Loss | State Cosine Similarity at Step 0 |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Upstream Repo Loss Path** | `0.2080` | `0.2746` | **100.0%** | **100.0%** (Always Masked) | `0.8033` |
+| **Corrected Replay Path** | **`4.77e-07`** | **`4.77e-07`** | **0.0%** | — | `1.0000` |
+
+### Latent State Cosine Similarity Trajectory under Repo Shift ($h_{\mathrm{repo}}(k)$ vs. $h_{\mathrm{rollout}}(k)$):
+
+| Latent Step $k$ | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Mean Cosine Similarity | `0.8033` | `0.8456` | `0.9545` | `0.9932` | `0.9974` | `0.9984` | `0.9988` | `0.9988` |
+
+> **Key Finding (E-L6)**: Confirmed: The repo loss forward path exhibits a severe 0.20-0.30 nat per-token context distortion on the real 7B model due to an off-by-one latent state index misalignment. The corrected replay alignment resolves the discrepancy within numerical precision.

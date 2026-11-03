@@ -310,6 +310,10 @@ def run_lvr_intervention_single(
         roi_set = set(roi_idxs)
         bkg_idxs = [i for i in range(n_vis) if i not in roi_set]
 
+    # Handle E-L4: Full ROI patch sequence length T_v
+    if condition == "A1A-ORACLE-ROI-FULL":
+        effective_lvr_steps = len(roi_idxs) if len(roi_idxs) > 0 else lvr_steps
+
     # 3. Compute prefill 3D M-RoPE position_ids so we know exact (t, y, x) of every visual patch
     prefill_pos_ids, rope_deltas = model.model.get_rope_index(
         input_ids=input_ids,
@@ -434,7 +438,7 @@ def run_lvr_intervention_single(
                     x_coord = vis_pos_ids_3d[2, nearest_vis_idx].view(1, 1)
                     step_position_ids = torch.stack([t_coord, y_coord, x_coord], dim=0)  # [3, 1, 1]
 
-            elif condition == "A1A-ORACLE-ROI":
+            elif condition in ("A1A-ORACLE-ROI", "A1A-ORACLE-ROI-FULL"):
                 if v_t is not None and len(roi_idxs) > 0:
                     pick_idx = roi_idxs[latent_step_idx % len(roi_idxs)]
                     injected_vec = v_t[pick_idx : pick_idx + 1].to(dtype=dtype)

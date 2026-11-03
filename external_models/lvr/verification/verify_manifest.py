@@ -14,7 +14,10 @@ for disp,path,wc,nl,by,sha in rows:
     b=by.strip().replace(',','')
     if b.isdigit() and int(b)!=len(data): errs.append(f'bytes {b}!={len(data)}')
     w=wc.strip().replace(',','')
-    if w.isdigit() and int(w)!=data.count(b'\n'): errs.append(f'wc {w}!={data.count(b"\n")}')
+    if w.isdigit():
+        newlines = data.count(b'\n')
+        if int(w) != newlines:
+            errs.append(f'wc {w}!={newlines}')
     n=nl.strip().replace(',','')
     if n.isdigit():
         real=data.count(b'\n')+(0 if data.endswith(b'\n') or not data else 1)

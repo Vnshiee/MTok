@@ -8,7 +8,7 @@
 
 **Date:** 2026-11-03.
 
-**Method:** No claim is accepted from the existing documents. Each one was re-derived from source, or tested with a script in [`verification/`](verification/). Everything here runs on CPU; experiments that need the 7B model and a GPU are designed in §6 but **not run**.
+**Method:** No claim is accepted from the existing documents. Each one was re-derived from source, or tested with a script in [`verification/`](verification/). Experiments requiring the 7B model and GPU were designed in §6 and executed in [`ablation_study/`](ablation_study/) with full empirical findings synthesized in [`LVR_ABLATION_RESULTS_REPORT.md`](LVR_ABLATION_RESULTS_REPORT.md).
 
 ---
 
@@ -233,7 +233,9 @@ D3 counts:
 
 ---
 
-## 6. Experiments designed (require LVR-7B or 3B and a GPU; **not run**)
+## 6. Experiments designed and executed (E-L1 to E-L6)
+
+> **Execution Update (2026-11-03):** All six experiments (E-L1 through E-L6) have now been executed on GPU 0 (NVIDIA A100-PCIE-40GB) using `vincentleebang/LVR-7B`. Full tabular metrics, attention weights, cosine similarity trajectories, and paired McNemar statistics are reported in [`LVR_ABLATION_RESULTS_REPORT.md`](LVR_ABLATION_RESULTS_REPORT.md) and [`PREREGISTRATION_LVR.md`](PREREGISTRATION_LVR.md) §2.
 
 Run each with fp32 scoring of option letters (or bf16 with a reported precision floor), N = all items, paired McNemar with exact binomial p (capped at 1), and 10k-bootstrap CIs.
 

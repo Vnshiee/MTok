@@ -1,0 +1,39 @@
+{
+  "benchmark": "blink",
+  "condition": "BASE-QWEN25-VL-7B",
+  "lvr_steps": 0,
+  "prompt_mode": "official",
+  "n_total": 697,
+  "acc_official_micro_pct": 55.09,
+  "acc_robust_micro_pct": 55.09,
+  "acc_official_macro_pct": 55.54,
+  "acc_robust_macro_pct": 55.54,
+  "by_category": {
+    "Counting": {
+      "n": 120,
+      "acc_official_pct": 66.67,
+      "acc_robust_pct": 66.67
+    },
+    "IQ_Test": {
+      "n": 150,
+      "acc_official_pct": 29.33,
+      "acc_robust_pct": 29.33
+    },
+    "Jigsaw": {
+      "n": 150,
+      "acc_official_pct": 54.0,
+      "acc_robust_pct": 54.0
+    },
+    "Relative_Reflectance": {
+      "n": 134,
+      "acc_official_pct": 40.3,
+      "acc_robust_pct": 40.3
+    },
+    "Spatial_Relation": {
+      "n": 143,
+      "acc_official_pct": 87.41,
+      "acc_robust_pct": 87.41
+    }
+  },
+  "telemetry_means": {}
+}

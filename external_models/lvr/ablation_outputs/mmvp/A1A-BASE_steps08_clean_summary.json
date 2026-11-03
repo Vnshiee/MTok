@@ -1,0 +1,19 @@
+{
+  "benchmark": "mmvp",
+  "condition": "A1A-BASE",
+  "lvr_steps": 8,
+  "prompt_mode": "clean",
+  "n_total": 300,
+  "acc_official_micro_pct": 13.67,
+  "acc_robust_micro_pct": 74.33,
+  "acc_official_macro_pct": 13.67,
+  "acc_robust_macro_pct": 74.33,
+  "by_category": {},
+  "telemetry_means": {
+    "actual_latent_steps": 8.0,
+    "cs_max_mean": 0.4555,
+    "latent_norm_mean": 38.1911,
+    "effective_rank": 3.256,
+    "adj_cosine_mean": 0.971
+  }
+}

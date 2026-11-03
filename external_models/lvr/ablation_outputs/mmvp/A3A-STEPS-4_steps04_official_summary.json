@@ -1,0 +1,19 @@
+{
+  "benchmark": "mmvp",
+  "condition": "A3A-STEPS-4",
+  "lvr_steps": 4,
+  "prompt_mode": "official",
+  "n_total": 300,
+  "acc_official_micro_pct": 71.67,
+  "acc_robust_micro_pct": 71.67,
+  "acc_official_macro_pct": 71.67,
+  "acc_robust_macro_pct": 71.67,
+  "by_category": {},
+  "telemetry_means": {
+    "actual_latent_steps": 4.0,
+    "cs_max_mean": 0.4827,
+    "latent_norm_mean": 34.4592,
+    "effective_rank": 2.0677,
+    "adj_cosine_mean": 0.9361
+  }
+}

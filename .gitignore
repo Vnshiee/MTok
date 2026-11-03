@@ -33,6 +33,9 @@ eval_outputs/examples_MMLatentDiscrete*.jsonl
 .cache/
 *.safetensors
 *.ckpt
+external_models/*/.locks/
+external_models/*/datasets--*/
+external_models/*/ablation_outputs/**/*.jsonl
 
 # Submodules and large binary dumps from external audited models
 external_models/*/repo/

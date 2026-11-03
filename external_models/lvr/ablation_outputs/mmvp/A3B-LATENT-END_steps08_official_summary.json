@@ -1,0 +1,19 @@
+{
+  "benchmark": "mmvp",
+  "condition": "A3B-LATENT-END",
+  "lvr_steps": 8,
+  "prompt_mode": "official",
+  "n_total": 300,
+  "acc_official_micro_pct": 0.0,
+  "acc_robust_micro_pct": 0.0,
+  "acc_official_macro_pct": 0.0,
+  "acc_robust_macro_pct": 0.0,
+  "by_category": {},
+  "telemetry_means": {
+    "actual_latent_steps": 126.0,
+    "cs_max_mean": 0.3661,
+    "latent_norm_mean": 43.7591,
+    "effective_rank": 28.1543,
+    "adj_cosine_mean": 0.9982
+  }
+}

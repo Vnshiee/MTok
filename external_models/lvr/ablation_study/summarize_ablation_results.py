@@ -156,9 +156,17 @@ def generate_ablation_report(out_dir: str, report_md_path: str) -> Dict[str, Any
                     "vs_base_robust": comp_rob,
                 }
 
+    # Load E-L6 audit if present
+    e_l6_path = os.path.join(out_dir, "e_l6_rl_replay_audit_results.json")
+    e_l6_audit = None
+    if os.path.exists(e_l6_path):
+        with open(e_l6_path, "r", encoding="utf-8") as f:
+            e_l6_audit = json.load(f)
+
     full_metrics = {
         "axis1b_sft_verification": sft_audit,
         "axis2_grpo_verification": rl_audit,
+        "axis_e_l6_rl_replay_audit": e_l6_audit,
         "benchmark_summaries": summaries_by_bench,
         "paired_comparisons_vs_base": paired_comparisons,
         "best_of_k_oracle_audits": best_of_k_audits,
@@ -237,6 +245,29 @@ def generate_ablation_report(out_dir: str, report_md_path: str) -> Dict[str, Any
         lines.append(
             f"| `{var}` | `{v['unmasked_token_count']}` | `{v['lvr_end_token_unmasked']}` | `{v['loss_grpo']}` | `{v['grad_norm_wrt_H_LVR']}` | **`{v['param_grad_norm_via_H_LVR']}`** |"
         )
+
+    if e_l6_audit:
+        lines.extend([
+            "",
+            "---",
+            "",
+            "## 4. Stage 2 RL Replay Context Mismatch Audit (Experiment E-L6 / N1 & N2)",
+            "",
+            f"Audited on `{e_l6_audit.get('model', 'LVR-7B')}` across **{e_l6_audit.get('num_rollouts_audited', 0)}** full test rollouts ($K=8$).",
+            "",
+            "| Evaluation Path | Mean $|\\Delta \\log p|$ (nats) | Max $|\\Delta \\log p|$ (nats) | % Rollouts with $|\\Delta| > 0.01$ | `<\\|lvr_start\\|>` Masked in Policy Loss | State Cosine Similarity at Step 0 |",
+            "| :--- | :---: | :---: | :---: | :---: | :---: |",
+            f"| **Upstream Repo Loss Path** | `{e_l6_audit['repo_loss_path']['mean_delta_logp_nats']:.4f}` | `{e_l6_audit['repo_loss_path']['max_delta_logp_nats']:.4f}` | **{e_l6_audit['repo_loss_path']['pct_rollouts_with_delta_gt_0_01']:.1f}%** | **{e_l6_audit['lvr_start_policy_loss_masked_rate']*100:.1f}%** (Always Masked) | `{e_l6_audit['mean_cosine_similarity_trajectory'][0]:.4f}` |",
+            f"| **Corrected Replay Path** | **`{e_l6_audit['corrected_replay_path']['mean_delta_logp_nats']:.2e}`** | **`{e_l6_audit['corrected_replay_path']['max_delta_logp_nats']:.2e}`** | **{e_l6_audit['corrected_replay_path']['pct_rollouts_with_delta_gt_0_01']:.1f}%** | — | `1.0000` |",
+            "",
+            "### Latent State Cosine Similarity Trajectory under Repo Shift ($h_{\\mathrm{repo}}(k)$ vs. $h_{\\mathrm{rollout}}(k)$):",
+            "",
+            "| Latent Step $k$ | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |",
+            "| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |",
+            f"| Mean Cosine Similarity | " + " | ".join([f"`{c:.4f}`" for c in e_l6_audit['mean_cosine_similarity_trajectory']]) + " |",
+            "",
+            f"> **Key Finding (E-L6)**: {e_l6_audit['verdict']}",
+        ])
 
     with open(report_md_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")

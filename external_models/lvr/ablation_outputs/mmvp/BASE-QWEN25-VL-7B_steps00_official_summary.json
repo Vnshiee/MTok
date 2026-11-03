@@ -1,0 +1,13 @@
+{
+  "benchmark": "mmvp",
+  "condition": "BASE-QWEN25-VL-7B",
+  "lvr_steps": 0,
+  "prompt_mode": "official",
+  "n_total": 300,
+  "acc_official_micro_pct": 66.33,
+  "acc_robust_micro_pct": 66.33,
+  "acc_official_macro_pct": 66.33,
+  "acc_robust_macro_pct": 66.33,
+  "by_category": {},
+  "telemetry_means": {}
+}

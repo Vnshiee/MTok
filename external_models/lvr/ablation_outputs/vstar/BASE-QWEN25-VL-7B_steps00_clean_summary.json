@@ -1,0 +1,24 @@
+{
+  "benchmark": "vstar",
+  "condition": "BASE-QWEN25-VL-7B",
+  "lvr_steps": 0,
+  "prompt_mode": "clean",
+  "n_total": 191,
+  "acc_official_micro_pct": 79.58,
+  "acc_robust_micro_pct": 79.58,
+  "acc_official_macro_pct": 79.58,
+  "acc_robust_macro_pct": 79.58,
+  "by_category": {
+    "direct_attributes": {
+      "n": 115,
+      "acc_official_pct": 81.74,
+      "acc_robust_pct": 81.74
+    },
+    "relative_position": {
+      "n": 76,
+      "acc_official_pct": 76.32,
+      "acc_robust_pct": 76.32
+    }
+  },
+  "telemetry_means": {}
+}

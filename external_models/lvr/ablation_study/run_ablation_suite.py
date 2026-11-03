@@ -528,10 +528,11 @@ def main():
                     "A1A-MASK-ANS-TO-LVR",
                     "A1A-MASK-ANS-TO-IMG",
                     "A1A-ORACLE-ROI",
+                    "A1A-ORACLE-ROI-FULL",
                     "A1A-ORACLE-BKG",
                     "A1A-2D-MROPE",
                 ]:
-                    if cond in ("A1A-ORACLE-ROI", "A1A-ORACLE-BKG") and b_name != "vstar":
+                    if cond in ("A1A-ORACLE-ROI", "A1A-ORACLE-ROI-FULL", "A1A-ORACLE-BKG") and b_name != "vstar":
                         continue
                     evaluate_condition_on_dataset(
                         model=model,

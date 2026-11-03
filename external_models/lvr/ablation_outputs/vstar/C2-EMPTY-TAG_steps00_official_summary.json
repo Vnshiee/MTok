@@ -1,0 +1,27 @@
+{
+  "benchmark": "vstar",
+  "condition": "C2-EMPTY-TAG",
+  "lvr_steps": 0,
+  "prompt_mode": "official",
+  "n_total": 191,
+  "acc_official_micro_pct": 81.68,
+  "acc_robust_micro_pct": 81.68,
+  "acc_official_macro_pct": 81.68,
+  "acc_robust_macro_pct": 81.68,
+  "by_category": {
+    "direct_attributes": {
+      "n": 115,
+      "acc_official_pct": 85.22,
+      "acc_robust_pct": 85.22
+    },
+    "relative_position": {
+      "n": 76,
+      "acc_official_pct": 76.32,
+      "acc_robust_pct": 76.32
+    }
+  },
+  "telemetry_means": {
+    "actual_latent_steps": 0.0,
+    "effective_rank": 0.0
+  }
+}

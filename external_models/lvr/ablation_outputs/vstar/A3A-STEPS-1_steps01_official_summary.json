@@ -1,0 +1,33 @@
+{
+  "benchmark": "vstar",
+  "condition": "A3A-STEPS-1",
+  "lvr_steps": 1,
+  "prompt_mode": "official",
+  "n_total": 191,
+  "acc_official_micro_pct": 81.15,
+  "acc_robust_micro_pct": 81.15,
+  "acc_official_macro_pct": 81.15,
+  "acc_robust_macro_pct": 81.15,
+  "by_category": {
+    "direct_attributes": {
+      "n": 115,
+      "acc_official_pct": 84.35,
+      "acc_robust_pct": 84.35
+    },
+    "relative_position": {
+      "n": 76,
+      "acc_official_pct": 76.32,
+      "acc_robust_pct": 76.32
+    }
+  },
+  "telemetry_means": {
+    "actual_latent_steps": 1.0,
+    "cs_max_mean": 0.6288,
+    "cs_roi_mean": 0.5483,
+    "cs_bkg_mean": 0.6284,
+    "roi_recall_at_1_mean": 0.0262,
+    "roi_recall_at_5_mean": 0.1309,
+    "latent_norm_mean": 25.4472,
+    "effective_rank": 1.0
+  }
+}
