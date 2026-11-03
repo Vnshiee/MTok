@@ -1,5 +1,9 @@
 # Critical Review and Forensic Gap Analysis: Monet (Reasoning in Latent Visual Space)
 
+> [!WARNING]
+> **Verification status (2026-11-03):** superseded by [`VERIFICATION_REPORT.md`](VERIFICATION_REPORT.md). §1.1 is **false**: the cited `g.detach()` proxy is SFT Stage 2 code, not VLPO/RL, and it passes the latent-path gradient exactly. §1.1.1, §2.2 and §3.1 are also false, and §2.1 is unsupported. The real VLPO problems (M1–M10) are in the report.
+
+
 **Target Paper**: *Monet: Reasoning in Latent Visual Space* (`arXiv:2511.21395`, CVPR 2026 Submission)  
 **Target Repository**: `/home/devraj/MTok/external_models/monet/repo/`  
 **LaTeX Source**: `/home/devraj/MTok/external_models/monet/paper_src/`  

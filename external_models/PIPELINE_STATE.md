@@ -1,7 +1,7 @@
 # Multi-Model Forensic Audit Pipeline State (`PIPELINE_STATE.md`)
 
 > [!WARNING]
-> **Verification status (2026-11-03):** the LVR "Certified PASS (0 MISTAKES)" verdicts reflect formatting audits only; an independent factual verification found substantive errors. See [`lvr/VERIFICATION_REPORT.md`](lvr/VERIFICATION_REPORT.md).
+> **Verification status (2026-11-03):** the LVR "Certified PASS (0 MISTAKES)" verdicts reflect formatting audits only; an independent factual verification found substantive errors. See [`lvr/VERIFICATION_REPORT.md`](lvr/VERIFICATION_REPORT.md). The Monet "Certified PASS" is likewise not supported; see [`monet/VERIFICATION_REPORT.md`](monet/VERIFICATION_REPORT.md).
 
 
 **Started:** 2026-10-30 02:58 IST
