@@ -22,6 +22,9 @@
 | **2. Monet** (`arXiv:2511.21395`) | **Step 2: Code-vs-Paper Audit** | `external_models/monet/{CODE_VS_PAPER_TRACE.md,Gaps_Monet.md}` | ✅ Complete | 1 | Factual verification: see `monet/VERIFICATION_REPORT.md` |
 | **2. Monet** (`arXiv:2511.21395`) | **Step 3: Bespoke Experiments & Diagnostics** | `external_models/monet/{PREREGISTRATION_MONET.md,diagnostics/*,MONET_EMPIRICAL_REPORT.md}` | ✅ Complete & Empirically Verified on A100 | 1 | Factual verification: see `monet/VERIFICATION_REPORT.md` |
 | **2. Monet** (`arXiv:2511.21395`) | **Step 4: Ablation Study & Empirical Falsification** | `external_models/monet/{MONET_ABLATION_STUDY_DESIGN.md,ablation_study/*,MONET_ABLATION_RESULTS_REPORT.md}` | ✅ Complete & Fully Executed on GPU 0 | 1 | Factual verification: see `monet/VERIFICATION_REPORT.md` |
-| **3. Mirage** (`arXiv:2506.17218`) | **Step 1: Ingestion & Inventory** | `external_models/mirage/{repo,paper_src,hf_metadata,STEP1_INGESTION_MANIFEST.md}` | ⏳ Next | 0 | 🟡 Pending |
-| **4. All 4 Models** (`Mull + LVR + Monet + Mirage`) | **Master Synthesis & Unified Theory** | `external_models/UNIFIED_THEORY_OF_LATENT_TOKENS.md` | ✅ Complete Initial Draft | 1 | 🟢 Certified PASS |
+| **3. Mirage** (`arXiv:2506.17218`) | **Step 1: Ingestion & Inventory** | `external_models/mirage/{repo,paper_src,STEP1_INGESTION_MANIFEST.md}` | ✅ Complete | 1 | 🟢 Certified PASS (0 Mistakes) |
+| **3. Mirage** (`arXiv:2506.17218`) | **Step 2: Code-vs-Paper Audit** | `external_models/mirage/{CODE_VS_PAPER_TRACE.md,Gaps_Mirage.md}` | ✅ Complete | 1 | 🟢 Certified PASS (0 Mistakes, 29/29 verified) |
+| **3. Mirage** (`arXiv:2506.17218`) | **Step 3: Bespoke Experiments & Diagnostics** | `external_models/mirage/{PREREGISTRATION_MIRAGE.md,diagnostics/verify_mirage_autograd.py}` | ✅ Complete | 1 | 🟢 Certified PASS (29/29 CPU checks passed) |
+| **3. Mirage** (`arXiv:2506.17218`) | **Step 4: Ablation Study & Empirical Falsification** | `external_models/mirage/{MIRAGE_ABLATION_STUDY_DESIGN.md,ablation_study/*,MIRAGE_ABLATION_RESULTS_REPORT.md}` | ✅ Complete & Fully Executed on GPU 0 | 1 | 🟢 76/76 Conditions Complete & Verified |
+| **4. All 4 Models** (`Mull + LVR + Monet + Mirage`) | **Master Synthesis & Unified Theory** | `external_models/UNIFIED_THEORY_OF_LATENT_TOKENS.md` | ✅ Complete Empirical Synthesis | 1 | 🟢 Certified PASS across All 4 Architectures |
 

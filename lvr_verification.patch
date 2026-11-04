@@ -1,0 +1,1233 @@
+From 1e32494bdb8b42fffd8b19875dfcf4ca92449295 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 3 Nov 2026 10:32:40 +0000
+Subject: [PATCH] lvr: independent verification of the LVR audit, with
+ reproducible checks
+
+Re-verified every artifact and claim in external_models/lvr against the
+official repo (VincentLeebang/lvr @ 637a9f7), arXiv v2 source, the LVR-7B
+checkpoint metadata, Visual-CoT and BLINK.
+
+- Add VERIFICATION_REPORT.md: per-claim verdicts for Gaps_LVR.md, nine new
+  findings (incl. GRPO_latent replay not reproducing the rollout context,
+  <|lvr_start|> excluded from the policy loss, train/test latent-length
+  mismatch), errors in the MTok documents, and GPU experiment designs.
+- Add verification/ scripts: manifest checksum verifier, snippet-fidelity
+  checker, safe training_args reader, draft-vs-final table diff, ROI-length
+  analysis, BLINK/VSR overlap check, and an RL replay harness that runs the
+  repo's own generation/replay/loss code and validates a two-line fix.
+- Add verification-status banners to the corrected documents and a note
+  on the tautological diagnostics.
+- Redact third-party cloud credentials that had been copied into seven
+  files (they remain in history at 60f9d67).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01WBmGjiVPeUREhQ4qAVnp2Q
+---
+ external_models/PIPELINE_STATE.md             |   4 +
+ external_models/lvr/AUDIT_STEP_2_ROUND_1.md   |  12 +-
+ external_models/lvr/AUDIT_STEP_2_ROUND_2.md   |  24 +-
+ external_models/lvr/CODE_VS_PAPER_TRACE.md    |   4 +
+ external_models/lvr/Gaps_LVR.md               |  10 +-
+ external_models/lvr/PREREGISTRATION_LVR.md    |   4 +
+ .../lvr/STEP1_INGESTION_MANIFEST.md           |   4 +
+ external_models/lvr/SYNTHESIS_LVR.md          |   4 +
+ external_models/lvr/VERIFICATION_REPORT.md    | 256 ++++++++++++++++++
+ external_models/lvr/apply_r2_fixes.py         |  12 +-
+ external_models/lvr/diagnostics/README.md     |  11 +
+ external_models/lvr/fix_all_r3.py             |  12 +-
+ external_models/lvr/generate_round2_audit.py  |  24 +-
+ external_models/lvr/make_gaps_lvr.py          |   6 +-
+ external_models/lvr/verification/README.md    |  43 +++
+ .../lvr/verification/blink_vsr_overlap.py     |  67 +++++
+ .../lvr/verification/lvr_rl_replay_harness.py | 237 ++++++++++++++++
+ .../lvr/verification/roi_lengths.py           |  33 +++
+ external_models/lvr/verification/safe_args.py |  22 ++
+ .../lvr/verification/table_draft_vs_final.py  |  67 +++++
+ .../lvr/verification/verify_manifest.py       |  24 ++
+ .../lvr/verification/verify_snippets.py       |  44 +++
+ 22 files changed, 876 insertions(+), 48 deletions(-)
+ create mode 100644 external_models/lvr/VERIFICATION_REPORT.md
+ create mode 100644 external_models/lvr/diagnostics/README.md
+ create mode 100644 external_models/lvr/verification/README.md
+ create mode 100644 external_models/lvr/verification/blink_vsr_overlap.py
+ create mode 100644 external_models/lvr/verification/lvr_rl_replay_harness.py
+ create mode 100644 external_models/lvr/verification/roi_lengths.py
+ create mode 100644 external_models/lvr/verification/safe_args.py
+ create mode 100644 external_models/lvr/verification/table_draft_vs_final.py
+ create mode 100644 external_models/lvr/verification/verify_manifest.py
+ create mode 100644 external_models/lvr/verification/verify_snippets.py
+
+diff --git a/external_models/PIPELINE_STATE.md b/external_models/PIPELINE_STATE.md
+index 2951f8c..27cd183 100644
+--- a/external_models/PIPELINE_STATE.md
++++ b/external_models/PIPELINE_STATE.md
+@@ -1,5 +1,9 @@
+ # Multi-Model Forensic Audit Pipeline State (`PIPELINE_STATE.md`)
+ 
++> [!WARNING]
++> **Verification status (2026-11-03):** the LVR "Certified PASS (0 MISTAKES)" verdicts reflect formatting audits only; an independent factual verification found substantive errors. See [`lvr/VERIFICATION_REPORT.md`](lvr/VERIFICATION_REPORT.md).
++
++
+ **Started:** 2026-10-30 02:58 IST
+ **Protocol:** Sequential Paper-by-Paper, Step-by-Step Execution with Mandatory Adversarial Line-by-Line Audit & Iterative Correction Loop until `0 MISTAKES` before advancing to the next step.
+ **Active GPU Safeguard:** Do NOT disturb PID `2594764` (`wsdm_experiments/run_w2_w4_mechanistic.py`) running on GPU 0. All Step 1–4 code audits, AST/tensor traces, and unit verification scripts run on CPU.
+diff --git a/external_models/lvr/AUDIT_STEP_2_ROUND_1.md b/external_models/lvr/AUDIT_STEP_2_ROUND_1.md
+index 05f0028..126efa1 100644
+--- a/external_models/lvr/AUDIT_STEP_2_ROUND_1.md
++++ b/external_models/lvr/AUDIT_STEP_2_ROUND_1.md
+@@ -284,18 +284,18 @@ However, an adversarial, line-by-line inspection comparing both deliverables aga
+ - **Deliverable Claim**:
+   Quotes bash `export` syntax and claims it exists in both `scripts/vanilla_sft_7b.sh` and `evaluation/evaluation.py`:
+   ```bash
+-  export ACCESS_KEY_ID="cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-  export SECRET_ACCESS_KEY="bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-  export ENDPOINT_URL="https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++  export ACCESS_KEY_ID="<REDACTED_ACCESS_KEY_ID>"
++  export SECRET_ACCESS_KEY="<REDACTED_SECRET_ACCESS_KEY>"
++  export ENDPOINT_URL="https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+   export BUCKET_NAME="bangzhengli"
+   export REGION_NAME="us-ashburn-1"
+   ```
+ - **Actual File Reality ([`evaluation/evaluation.py` lines 17–21](file:///home/devraj/MTok/external_models/lvr/repo/evaluation/evaluation.py#L17-L21))**:
+   `evaluation.py` is a Python script and defines variables in Python:
+   ```python
+-  17: access_key_id = "cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-  18: secret_access_key = "bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-  19: endpoint_url = "https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++  17: access_key_id = "<REDACTED_ACCESS_KEY_ID>"
++  18: secret_access_key = "<REDACTED_SECRET_ACCESS_KEY>"
++  19: endpoint_url = "https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+   20: bucket_name = "bangzhengli"
+   21: region_name = "us-ashburn-1"
+   ```
+diff --git a/external_models/lvr/AUDIT_STEP_2_ROUND_2.md b/external_models/lvr/AUDIT_STEP_2_ROUND_2.md
+index c41c670..224f87d 100644
+--- a/external_models/lvr/AUDIT_STEP_2_ROUND_2.md
++++ b/external_models/lvr/AUDIT_STEP_2_ROUND_2.md
+@@ -248,18 +248,18 @@ In Round 2 of the adversarial re-audit, `forensic-builder` attempted remediation
+   - [`evaluation/evaluation.py` lines 17–21](file:///home/devraj/MTok/external_models/lvr/repo/evaluation/evaluation.py#L17-L21)
+   The author's active Oracle Cloud Infrastructure (OCI) credentials are hardcoded in plaintext:
+   ```bash
+-  export ACCESS_KEY_ID="cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-  export SECRET_ACCESS_KEY="bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-  export ENDPOINT_URL="https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++  export ACCESS_KEY_ID="<REDACTED_ACCESS_KEY_ID>"
++  export SECRET_ACCESS_KEY="<REDACTED_SECRET_ACCESS_KEY>"
++  export ENDPOINT_URL="https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+   export BUCKET_NAME="bangzhengli"
+   export REGION_NAME="us-ashburn-1"
+   ```
+   ```
+   `evaluation/evaluation.py` lines 17–21 is a Python script and does NOT contain bash `export` statements or capitalized variable names. It contains lowercase Python variable definitions:
+   ```python
+-  access_key_id = "cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-  secret_access_key = "bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-  endpoint_url = "https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++  access_key_id = "<REDACTED_ACCESS_KEY_ID>"
++  secret_access_key = "<REDACTED_SECRET_ACCESS_KEY>"
++  endpoint_url = "https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+   bucket_name = "bangzhengli"
+   region_name = "us-ashburn-1"
+   ```
+@@ -367,17 +367,17 @@ To achieve an unassailable `VERDICT: PASS (0 MISTAKES)` in Round 3, `forensic-bu
+    Replace lines 384–390 with two separate blocks:
+    Bash export in [`scripts/vanilla_sft_7b.sh` lines 8–12](file:///home/devraj/MTok/external_models/lvr/repo/scripts/vanilla_sft_7b.sh#L8-L12):
+    ```bash
+-   export ACCESS_KEY_ID="cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-   export SECRET_ACCESS_KEY="bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-   export ENDPOINT_URL="https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++   export ACCESS_KEY_ID="<REDACTED_ACCESS_KEY_ID>"
++   export SECRET_ACCESS_KEY="<REDACTED_SECRET_ACCESS_KEY>"
++   export ENDPOINT_URL="https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+    export BUCKET_NAME="bangzhengli"
+    export REGION_NAME="us-ashburn-1"
+    ```
+    Python assignments in [`evaluation/evaluation.py` lines 17–21](file:///home/devraj/MTok/external_models/lvr/repo/evaluation/evaluation.py#L17-L21):
+    ```python
+-   access_key_id = "cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-   secret_access_key = "bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-   endpoint_url = "https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++   access_key_id = "<REDACTED_ACCESS_KEY_ID>"
++   secret_access_key = "<REDACTED_SECRET_ACCESS_KEY>"
++   endpoint_url = "https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+    bucket_name = "bangzhengli"
+    region_name = "us-ashburn-1"
+    ```
+diff --git a/external_models/lvr/CODE_VS_PAPER_TRACE.md b/external_models/lvr/CODE_VS_PAPER_TRACE.md
+index b22aafb..f89672a 100644
+--- a/external_models/lvr/CODE_VS_PAPER_TRACE.md
++++ b/external_models/lvr/CODE_VS_PAPER_TRACE.md
+@@ -1,5 +1,9 @@
+ # LVR (`arXiv:2509.24251`) — Forensic Code-vs-Paper Mathematical & Tensor Trace
+ 
++> [!WARNING]
++> **Verification status (2026-11-03):** several code blocks are reformatted or reconstructed rather than verbatim (`verification/verify_snippets.py`: 7 lines not verbatim, 1 mis-cited). See [`VERIFICATION_REPORT.md`](VERIFICATION_REPORT.md) §4.
++
++
+ **Document Type**: Forensic Mathematical and Tensor-Level Execution Trace  
+ **Subject Model**: Latent Visual Reasoning (LVR)  
+ **Primary Paper**: *Latent Visual Reasoning*, arXiv:2509.24251 (`v2` revised 2025-10-07)  
+diff --git a/external_models/lvr/Gaps_LVR.md b/external_models/lvr/Gaps_LVR.md
+index 7ef2d84..4c71424 100644
+--- a/external_models/lvr/Gaps_LVR.md
++++ b/external_models/lvr/Gaps_LVR.md
+@@ -1,5 +1,9 @@
+ # Critical Review and Forensic Gap Analysis: Latent Visual Reasoning (LVR)
+ 
++> [!WARNING]
++> **Verification status (2026-11-03):** superseded by [`VERIFICATION_REPORT.md`](VERIFICATION_REPORT.md). Claims in §1.2, §3.1, §3.3 ("every single benchmark"), §4.1 (root cause), §4.2 (mechanism) and §6.1 ("paper claims 4,096") are **false or overstated**; §5.1 contamination is **not supported** (0/51 image matches). See report §2 for per-claim verdicts and §3 for issues this document missed.
++
++
+ **Target Paper**: *Latent Visual Reasoning* (`arXiv:2509.24251v2`, ICLR 2026 Submission)  
+ **Target Repository**: `/home/devraj/MTok/external_models/lvr/repo/`  
+ **LaTeX Source**: `/home/devraj/MTok/external_models/lvr/paper_src/`  
+@@ -387,9 +391,9 @@ Answer with the option's letter from the given choices directly."
+   - [`evaluation/evaluation.py` lines 17–21](file:///home/devraj/MTok/external_models/lvr/repo/evaluation/evaluation.py#L17-L21)
+   The author's active Oracle Cloud Infrastructure (OCI) credentials are hardcoded in plaintext:
+   ```bash
+-  export ACCESS_KEY_ID="cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-  export SECRET_ACCESS_KEY="bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-  export ENDPOINT_URL="https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++  export ACCESS_KEY_ID="<REDACTED_ACCESS_KEY_ID>"
++  export SECRET_ACCESS_KEY="<REDACTED_SECRET_ACCESS_KEY>"
++  export ENDPOINT_URL="https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+   export BUCKET_NAME="bangzhengli"
+   export REGION_NAME="us-ashburn-1"
+   ```
+diff --git a/external_models/lvr/PREREGISTRATION_LVR.md b/external_models/lvr/PREREGISTRATION_LVR.md
+index b53ab80..8baac00 100644
+--- a/external_models/lvr/PREREGISTRATION_LVR.md
++++ b/external_models/lvr/PREREGISTRATION_LVR.md
+@@ -1,5 +1,9 @@
+ # Pre-Registration: Mechanistic Adjudication of Latent Visual Reasoning (LVR)
+ 
++> [!WARNING]
++> **Verification status (2026-11-03):** none of these tests was run; `diagnostics/test_adaptive_exit_entropy.py` does not exist, and the two existing diagnostics are tautological. Replacement experiments E-L1…E-L6 are in [`VERIFICATION_REPORT.md`](VERIFICATION_REPORT.md) §6.
++
++
+ **Target Model**: LVR (`vincentleebang/LVR-7B`, `arXiv:2509.24251`)  
+ **Backbone**: `Qwen2.5-VL-7B-Instruct`  
+ **Theoretical Target**: Mechanistic Disentanglement of Latent Visual Reconstruction vs. Attention Copying & Evaluation Bias
+diff --git a/external_models/lvr/STEP1_INGESTION_MANIFEST.md b/external_models/lvr/STEP1_INGESTION_MANIFEST.md
+index 5803882..b163c33 100644
+--- a/external_models/lvr/STEP1_INGESTION_MANIFEST.md
++++ b/external_models/lvr/STEP1_INGESTION_MANIFEST.md
+@@ -1,5 +1,9 @@
+ # LVR (`arXiv:2509.24251`) — Step 1 Forensic Ingestion Manifest
+ 
++> [!WARNING]
++> **Verification status (2026-11-03):** all 87 checksums/byte/line counts verified exact. **Errors:** rows 6–7 misstate the stage-1 script parameters (actual: `MAX_PACKED_TOKENS`=16384, `MAX_INSTANCE_PER_BATCH`=4, `GRAD_ACCUM_STEPS`=8); the `compute_loss` block at L292–301 is not the real code (different gating logic). See [`VERIFICATION_REPORT.md`](VERIFICATION_REPORT.md) §1, §4.
++
++
+ **Audit Target**: Paper 1 — *Latent Visual Reasoning* (`arXiv:2509.24251`)  
+ **Workspace Directory**: `/home/devraj/MTok/external_models/lvr/`  
+ **Manifest Scope**: Step 1 Only (Complete Paper PDF, Official LaTeX Source, GitHub Codebase & HuggingFace Checkpoint Metadata Ingestion)
+diff --git a/external_models/lvr/SYNTHESIS_LVR.md b/external_models/lvr/SYNTHESIS_LVR.md
+index b951abc..bea2915 100644
+--- a/external_models/lvr/SYNTHESIS_LVR.md
++++ b/external_models/lvr/SYNTHESIS_LVR.md
+@@ -1,5 +1,9 @@
+ # Master Synthesis Report: Latent Visual Reasoning (LVR)
+ 
++> [!WARNING]
++> **Verification status (2026-11-03):** points 2 ("zero policy gradient") and 5 ("4× larger than paper claim of 4,096") are **incorrect**; point 1 is an untested interpretation. See [`VERIFICATION_REPORT.md`](VERIFICATION_REPORT.md) §2–§3.
++
++
+ **Paper**: *Latent Visual Reasoning* (`arXiv:2509.24251`, ICLR 2026 Submission)  
+ **Authors**: Bangzheng Li et al. (VincentLeebang/lvr)  
+ **Model**: `vincentleebang/LVR-7B`  
+diff --git a/external_models/lvr/VERIFICATION_REPORT.md b/external_models/lvr/VERIFICATION_REPORT.md
+new file mode 100644
+index 0000000..2d88ae6
+--- /dev/null
++++ b/external_models/lvr/VERIFICATION_REPORT.md
+@@ -0,0 +1,256 @@
++# LVR Folder: Independent Verification Report
++
++**Scope:** every file in `external_models/lvr/`, checked against the primary sources:
++- the official repo `VincentLeebang/lvr`, re-cloned at the audited HEAD `637a9f7e17e865b1372b65f182197fbc4a5a1449`;
++- the arXiv v2 PDF and e-print;
++- the HF checkpoint `vincentleebang/LVR-7B`;
++- Visual-CoT metadata and BLINK.
++
++**Date:** 2026-11-03.
++
++**Method:** No claim is accepted from the existing documents. Each one was re-derived from source, or tested with a script in [`verification/`](verification/). Everything here runs on CPU; experiments that need the 7B model and a GPU are designed in §6 but **not run**.
++
++---
++
++## 0. Bottom line
++
++1. **Ingestion is exact.**
++   - All 87 present files listed in `STEP1_INGESTION_MANIFEST.md` match their recorded SHA256, byte count and line counts.
++   - The 6 gitignored artifacts I re-downloaded (arXiv PDF + e-print, `trainer_state.json`, `vocab.json`, `merges.txt`, `tokenizer.json`) also match their recorded hashes.
++2. **The analysis layer (`Gaps_LVR.md`, `CODE_VS_PAPER_TRACE.md`, `SYNTHESIS_LVR.md`) is a mix.**
++   - Some findings are correct and useful: RL learning-rate and resolution discrepancies, the missing 3B base reference, the fragile answer parser, reliance on fixed steps, and leaked credentials.
++   - Several headline claims are wrong or overstated: "interleaving is impossible", "RL gradient is identically zero / only the LM head is tuned", "worse than base on every single benchmark", "paper claims 4,096 packed tokens", the latent-end root cause, contamination.
++   - Some code blocks presented as verbatim are not in the code. One has different logic.
++3. **None of the "experiments" in this folder tests anything about LVR.**
++   - `diagnostics/test_roi_copying.py` builds `reconstruction = ground truth + 0.001·noise` and asserts cosine > 0.95.
++   - `diagnostics/test_grpo_zero_grad.py` re-implements a mask loop on a hand-written 7-token tensor.
++   - The pre-registered `test_adaptive_exit_entropy.py` does not exist.
++   - 16 of the 20 `.py` files generate or patch Markdown.
++   - "Certified PASS (0 MISTAKES)" therefore reflects formatting rounds, not factual verification.
++4. **The most important problems in LVR are ones the audit missed.** I verified these:
++   - **N1:** the GRPO_latent loss forward does **not** restore the rollout's latent context. Answer-token log-probs deviate by 0.20–0.37 nats in a controlled harness. A two-change fix makes them exact.
++   - **N2:** `<|lvr_start|>` is excluded from the policy loss, which contradicts the paper's mechanism for "encouraging LVR".
++   - **N3:** training latent length is the ROI size (median 28, mean 66, max 5,096 tokens over 434,265 Visual-CoT samples), but inference truncates at K ∈ {4, 8, 16}.
++   - **N4/N5:** between the commented draft and the published Table 1, only baseline cells changed. Two of those changes turn LVR losses into ties or wins. The final Vision-R1 numbers are far below chance on binary tasks, which is consistent with answer-parsing failure.
++
++---
++
++## 1. Verification of artifacts (positive results)
++
++| Check | Result | Evidence |
++|---|---|---|
++| Manifest SHA256 / bytes / `wc -l` / `nl -ba` | **87/87 match** | `verification/verify_manifest.py` |
++| Gitignored artifacts re-downloaded from arXiv/HF | **6/6 hashes match** | `sha256sum` vs manifest |
++| Released checkpoint config vs launch script | `training_args.bin` matches `scripts/finetune_lvr_stage1_7b.sh` **exactly**: LR 1e-5, 2,500 steps, λ_LVR 0.1, MSE, `max_packed_tokens` 16384 = 4×4096, `max_instance_per_batch` 4, grad-accum 8, `mode_switch_loss` False, `stage_2` False | `verification/safe_args.py` (stub unpickler, executes no pickled code) |
++| Paper vs checkpoint (SFT) | LR 1e-5 and 2,500 steps match `4_experimetns.tex` L23 | — |
++| Every LVR/baseline number in Table 1 (draft and final) is achievable as k/N | yes; 3 final cells are double-rounded upward (e.g. 97/115 = 84.348% → draft 84.35 → final 84.4) | `verification/table_draft_vs_final.py` |
++| Training pool size | 434,265 Visual-CoT train bboxes, consistent with the paper's "438k" | `verification/roi_lengths.py` |
++
++---
++
++## 2. Claim-by-claim verdicts on `Gaps_LVR.md`
++
++Legend: ✅ verified · ⚠️ partly true / overstated · ❌ false · ❓ unsupported (no evidence either way)
++
++| § | Claim | Verdict | What the source actually shows |
++|---|---|---|---|
++| 1.1 | SFT is an "identity copy" of ROI patches already in context | ⚠️ | **Mechanics correct.** `monkey_patch_forward_lvr.py` L241–244 overwrites LVR inputs with ROI ViT embeddings, and L329–334 applies MSE between the hidden state at s−1 and the embedding at s. **The interpretation is untested.** Targets are a *question-dependent subset* of the image tokens, so choosing them is localization, which is the non-trivial part. The paper itself names Argus (re-injection of ROI tokens) as its closest comparator (L43). The diagnostic offered as proof is tautological (§5). |
++| 1.2 | Interleaving is "architecturally impossible"; regex allows only one block; inference is single-stage | ❌ (mostly) | `data_utils.py` L36–51 builds one LVR block **per placeholder**, each followed by its text segment, so multi-bbox data interleaves. The format regex (`reward_funcs.py` L53) uses lazy `.*?`, which **does** match several LVR blocks. Its real defects are different: it is anchored at `^` (any leading text → 0), and without `re.DOTALL` any newline → 0. At inference, `qwen_lvr_model.py` L1039–1043 re-enters LVR whenever `<\|lvr_start\|>` is emitted. Fair version: the data (one bbox per sample) and the reward *favour* one leading block, and the paper never demonstrates interleaving. |
++| 1.3 / 2.2 | Frozen ViT and merger contradict "unification"; LVR tokens get 1D RoPE | ⚠️ | The frozen modules are the paper's *stated* design (`4_experimetns.tex` L18). It is true that `<\|lvr\|>` tokens are text tokens for `get_rope_index`, so they get 1D positions. "Destroys 2D geometry / severely handicaps" is untested. |
++| 2.1 | Teacher forcing → "catastrophic" exposure bias that "compounds exponentially" | ⚠️ | Train/test input mismatch is real: ground-truth ViT embeddings in training, own hidden states at inference. "Catastrophic" is contradicted by the paper's flat 4/8/16-step results (Table 1). The bigger, unmentioned mismatch is latent *length* (N3). |
++| 2.3 | Packing "subverts efficiency"; full quadratic attention over pads | ⚠️ | The collator does split and right-pad (L880–906). But training uses FlashAttention-2 (`train_lvr.py` L132), whose HF path unpads using `attention_mask`, so pads add no attention cost. It is length-bucketed batching, with no scientific consequence. |
++| 2.4 | Dummy-image ZeRO-3 workaround | ✅ (not a gap) | Standard practice; adds negligible compute. |
++| 3.1 | `@torch.no_grad()` replay ⇒ gradient "identically ZERO"; RL "only tunes the language head"; "empirical fiction" | ❌ | `no_grad` replay is real (`grpo_trainer.py` L1482). The replayed states then enter a gradient-carrying forward (L1012–1023), and the answer-token loss backpropagates into **all** LLM weights (`freeze_llm False`). Only the path *through the generation of* the latents is cut, and the paper describes exactly that replay (`3_lvr.tex` L97–106). The real defect is that the replay is *wrong* (N1). |
++| 3.2 | LVR span masked from the loss | ✅ (design, not a flaw) | L742–757. Excluding latent-slot tokens is correct, since they are not the inputs actually used. Missed: `<\|lvr_start\|>` is masked too (N2). |
++| 3.3 | 3B base hidden; LVR-3B worse "on every single benchmark" | ⚠️ | Numbers are correctly copied from the commented draft rows. **"Every single" is false:** LVR-3B beats base-3B on IQ-Test (30.67/32.0 vs 28.0) and JigSaw (52.67 vs 50.0), the two Table 2 columns the audit's table leaves out. Valid core: the published paper has no 3B base reference, and LVR_RL-3B (8 steps) trails base-3B by 7.85 pts on V*, 3.67 on MMVP and 13.34 on Counting (draft numbers). "To conceal" is speculation about intent. |
++| 3.4 | 7B RL was run and hidden | ❓ | `finetune_lvr_stage2_7b.sh` differs from the 3B script only in names. A script's existence is not evidence it was run. The released checkpoint has `stage_2 = False`. |
++| 3.5 | RL LR 5e-6 vs paper 1e-5; RL max pixels 2560 vs 5120 | ✅ | `finetune_lvr_stage2_{3b,7b}.sh` L19 and L51 vs `4_experimetns.tex` L27 and L18. |
++| 4.1 | Latent-End collapse because the loop runs "until max_new_tokens = 512" | ⚠️ / ❌ | Numbers verified (`ablation.tex` L37). **Root cause contradicted by the code:** `_lvr_deocding_with_latentend` has a hard budget exit (`qwen_lvr_model.py` L796, L804). The failure to terminate is reported by the paper itself (L74). "Curse of dimensionality" is speculation. |
++| 4.2 | Mode-switch BCE pushed `<lvr_end>` to 0 so the model "immediately emitted `<lvr_end>`" | ❌ (mechanism) | The explanation contradicts itself. The paper reports the collapse. The real design flaw is that the BCE acts on a raw logit through a sigmoid while inference uses softmax argmax (N6). |
++| 4.3 | Fixed 4/8/16 step budgets | ✅ (disclosed) | It is the paper's declared method (`3_lvr.tex` L124, L129). |
++| 4.4 | Argmax "garbage" tokens are appended to `input_ids` | ✅ | L1013 and L1055. The sharper consequence is in N3: after K steps, the next *real* input is whatever was predicted at the last latent step. |
++| 5.1 | Benchmark contamination via Visual-CoT | ❓ → tested | `verification/blink_vsr_overlap.py`: 51/143 BLINK Spatial-Relation *questions* appear verbatim in Visual-CoT's VSR train subset (0/143 in GQA), but **0/51 images** are near-duplicates (min dHash distance 90/256; duplicates ≤ 20). This is in-domain template overlap, not leakage. (Heavy crops are not excluded.) |
++| 5.2 | Fragile answer parser | ✅ | `evaluation.py` L52–61. See N5 for evidence that it matters. |
++| 5.3 | "Standardized LMMs-Eval" is false | ⚠️ | The harness is custom (no `lmms_eval` import) and its parser differs from lmms-eval's. The paper says it follows LMMs-Eval *metrics* (accuracy), so "false" is too strong. |
++| 5.4 | Evaluation prompts rewritten | ✅ | L63–71, L262–264. Routine for the model's own evaluation; it matters when applied to chain-of-thought baselines (N5). |
++| 5.5 | Multi-image regression | ✅ | Admitted by the paper (L58). |
++| 6.1 | "Paper claims 4,096 packed tokens" (4× discrepancy) | ❌ **fabricated** | The paper never states a packing length (`grep 4096\|4,096` over `paper_src/` finds nothing). 4096 is `LST`, the long-sequence *threshold* variable in the script. |
++| 6.1 | Other matrix rows | mixed | LR and pixel rows ✅; 7B-RL row ❓; "zero policy gradient" ❌ (3.1); packing ⚠️ (2.3). |
++| 6.2 | Plaintext cloud credentials in the upstream repo | ✅ | `scripts/vanilla_sft_7b.sh` L8–11, `evaluation/evaluation.py` L17–20. **MTok re-published the full secrets in 7 files.** They are now redacted in the working tree but remain in git history (commit `60f9d67`). |
++
++---
++
++## 3. New findings (verified, missed by the existing audit)
++
++### N1. GRPO_latent's loss forward does not reproduce the rollout context (severity: high)
++
++The paper (`3_lvr.tex` L97–106) says recorded latent states are "patched into the latent-reasoning positions … restoring the exact context preceding text generation and ensuring consistent conditional log-probabilities."
++
++**How generation works.** In `_lvr_deocding_by_steps`, input position *j* ∈ {s+1, …, s+K} receives *h*<sub>j−1</sub>, where *s* is the index of `<|lvr_start|>`.
++
++**How the replay differs.** `_replay_lvr_to_collect_states` (L1524–1570) runs the forward for position `pos−1` but gates it with `in_span(pos)`, and stores the state *before* that forward. This has two effects:
++
++1. The input embedding at the `<|lvr_start|>` position itself gets overwritten. Generation never does this.
++2. Every patched state is taken one step too early. The first patched state is exactly *h*(token before `<|lvr_start|>`).
++
++**Harness.** `verification/lvr_rl_replay_harness.py` takes the repo's **own** `generate`/`_lvr_deocding_by_steps`, `_replay_lvr_to_collect_states`, `score_with_lvr_replay`, the L742–757 mask block and the L996–1034 loss block, all loaded from source text. It also uses the RL forward's patch rules from `monkey_patch_forward_lvr_rl.py` L129–142 verbatim. These run on a tiny random Qwen2 decoder under transformers 4.51.3, the RL environment in `environment.yaml`.
++
++| K | max \|Δ log p\| on loss tokens: repo loss path vs rollout | `score_with_lvr_replay` | proposed fix |
++|---|---|---|---|
++| 4 (3 seeds) | 0.20 / 0.26 / 0.33 | 0.0 | 4.8e-7 |
++| 8 (3 seeds) | 0.24 / 0.25 / 0.31 | 0.0 | 4.8e-7 |
++| 16 (3 seeds) | 0.30 / 0.27 / 0.37 | 0.0 | 4.8e-7 |
++
++Cosine similarity between the repo-patched states and the true rollout states at the 8 latent positions (K=8) is 0.43–0.50.
++
++**Consequence.** The policy-gradient term is ∇ log π(y | a context that never occurred). Two separate effects make the objective inconsistent:
++- **Context:** old and ref log-probs are computed with the exact `score_with_lvr_replay`, while the policy uses the faulty path.
++- **Temperature:** see N7.
++
++The magnitude on the real 3B model is unknown; it is cheap to measure (§6, E-L6).
++
++**Fix (two changes, verified exact in the harness):**
++1. Pass `lvr_mode_switch = ((pos-1 > lvr_start_idx) & (pos-1 <= configured_end_idx))` to the forward.
++2. Move the `if update_mask.any(): … lvr_states[update_mask, step] = …` block to *after* `last_position_hidden_state` is updated.
++
++### N2. `<|lvr_start|>` is never in the policy loss (severity: medium-high)
++
++In the mask loop (L746–752), `active = True` is set *before* `if active: lvr_mask[b,t] = False`, so the `<|lvr_start|>` position itself is masked. The harness confirms this for all 9 configurations.
++
++The paper credits GRPO with "encouraging the generation of the `<|lvr_start|>` token" (`3_lvr.tex` L77; `4_experimetns.tex` L61). With that token's log-prob excluded, the format reward cannot raise P(`<|lvr_start|>`) directly; it can only do so through side effects on shared weights.
++
++### N3. Training latent length ≠ inference latent length (severity: high, conceptual)
++
++Training uses one `<|lvr|>` per ROI ViT token (`data_utils.py` L49), and `fixed_num_of_lvr_tokens` is never passed by any caller. Running the repo's own `bbox_to_token_idxs` over all Visual-CoT train bboxes, with the training pixel limits (min 128×28², max 5120×28²), gives:
++
++| Statistic | T_v |
++|---|---|
++| N | 434,265 |
++| median | 28 |
++| mean | 66 |
++| 10th percentile | 6 |
++| 90th percentile | 143 |
++| max | 5,096 |
++
++| K at inference | Training samples with T_v ≤ K | Median share of the ROI that K steps cover |
++|---|---|---|
++| 4 | 9.7% | 14.3% |
++| 8 | 21.4% | 28.6% |
++| 16 | 38.0% | 57.1% |
++
++By source, median T_v ranges from 8 (InfographicsVQA) to 130 (VSR).
++
++Two consequences:
++- Targets are in raster order, so K steps can at most reconstruct the **top rows** of the ROI.
++- The model is trained to emit `<|lvr_end|>` only after T_v steps. At step K it is usually at a position where the next-token label was masked during training, and that predicted token becomes the next real input.
++
++The fact that accuracy is flat across K = 4/8/16 (Table 1), with most of each ROI never reconstructed, is itself evidence against "mental reconstruction of ROI semantics" as the operative mechanism. E-L1 and E-L4 in §6 test this directly.
++
++### N4. Draft vs published Table 1: only baselines changed (severity: medium)
++
++`paper_src/tables/main_table.tex` keeps the earlier 7B table as comments (L33–40, 2-decimal values). Comparing it to the published table (L71–80) with `verification/table_draft_vs_final.py`:
++
++- No LVR cell changed beyond rounding. Nine baseline cells changed:
++  - Qwen2.5-VL JigSaw: 53.33 → 52.0 (−2 items of 150).
++  - PAPO IQ-Test: 30.00 → 29.3 (−1 item).
++  - All seven Vision-R1 cells moved by 14–23 points.
++- These two baseline changes flip the column winners:
++  - **IQ-Test:** draft best is PAPO 30.0 vs LVR 29.33. Final is a tie at 29.3, with only LVR bolded.
++  - **JigSaw:** draft best is base 53.33 vs LVR 52.67. Final is LVR 52.7, tied with PixelReasoner 52.7, with only LVR bolded.
++- The text claims "leading results on Counting, IQ-Test, JigSaw" (L56).
++
++The changes may well be legitimate re-evaluations, but they are undocumented. Either way, differences of 1–2 items out of 150 cannot support "leading" claims.
++
++### N5. Final Vision-R1 numbers are below chance on binary tasks (severity: medium)
++
++| Benchmark (2 options) | Draft | Final | Chance |
++|---|---|---|---|
++| JigSaw | 50.0 | **27.3** | 50 |
++| MMVP | 61.33 | **46.7** | 50 |
++| Spatial Relation | 83.22 | 66.4 | 50 |
++
++A 7B model scoring well below chance on 2-way tasks points to answer extraction or formatting, not perception.
++
++`evaluation.py` L55–60 returns the **first character** of the output when no `<answer>` tag is present, and `skip_special_tokens=False` keeps tokens such as `<think>`. So a tag-less chain-of-thought answer often parses as `<`, `T`, `B`, and so on. This is a hypothesis consistent with the numbers; test it with E-L5.
++
++### N6. Mode-switch BCE trains a raw logit, but inference uses argmax (severity: low-medium)
++
++`monkey_patch_forward_lvr.py` L1344–1350 applies `binary_cross_entropy_with_logits` to `logits[..., lvr_end_id]` alone. Exit at inference is decided by softmax argmax over the whole vocabulary, so the sigmoid of one raw logit can be driven to the target without changing the argmax. This is a plausible contributor to the reported collapse (paper L74) that the audit did not identify.
++
++### N7. KL term compares two temperatures (severity: low)
++
++`score_with_lvr_replay` uses `apply_temperature = 1.0` by default, and no caller overrides it; this produces the ref and old log-probs. The policy log-probs use `logits / self.temperature`, which is 0.9 in the scripts (L1033).
++
++As a result, `per_token_kl` (L1072) is nonzero even when policy == ref (≈8e-4 nats/token in the harness). With β = 0.04 this is a small but systematic bias.
++
++### N8. Reconstruction loss is the paper's Eq. 1 divided by H (severity: low)
++
++The paper's Eq. 1 is (1/T_v) Σ_t ‖h_t − v_t‖². The code uses `nn.MSELoss()`, which averages over all T_v·H elements, so code = paper / H (verified: ratio 2.790e-4 = 1/3584). With λ = 0.1, the effective weight relative to the paper's equation is ≈ 2.8e-5. This matters for anyone reimplementing from the paper.
++
++### N9. Two transformers versions (severity: low, reproducibility)
++
++- `environment.yaml` pins 4.51.3; `requirements.txt` pins 4.54.0.
++- The RL forward (`monkey_patch_forward_lvr_rl.py`) uses the <4.52 API (`self.visual`, `self.model` as the text model, `get_rope_index` on the model class), and `_replay_lvr_to_collect_states` uses the 4.51 signature of `_get_initial_cache_position`.
++- Yet the README (L210) says RL may require ≥ 4.54.
++
++---
++
++## 4. Errors in the MTok LVR documents themselves
++
++| # | Document | Error |
++|---|---|---|
++| D1 | `STEP1_INGESTION_MANIFEST.md` rows 6–7 | Lists `MAX_PACKED_TOKENS=8192`, `MAX_INSTANCE_PER_BATCH=8`, `GRAD_ACCUM_STEPS=4` for both stage-1 scripts. Both actually use 4×4096 = 16384, 4, and 8, even though the SHA256s in the same rows are correct. |
++| D2 | `STEP1_INGESTION_MANIFEST.md` L291–301 | The "verbatim" `compute_loss` block is invented and has **different logic**: it gates on `loss_mode_switch is not None` and `loss_lvr is not None`, whereas the real `lvr_trainer.py` L240–243 gates on `self.args.mode_switch_loss` and `loss_lvr_lambda > 0`. |
++| D3 | All three analysis docs | Snippet fidelity (`verification/verify_snippets.py`): many cited code lines are not present verbatim. Most are reformatted (joined lines, changed spacing, `export` added to Python assignments). Counts are in the table below. |
++| D4 | `Gaps_LVR.md` §6.1 | "Paper claims 4,096 packed tokens": fabricated (see §2). |
++| D5 | `Gaps_LVR.md` §3.3 | "On every single benchmark… substantially worse": false, because the table omits the two columns where LVR-3B wins. |
++| D6 | `Gaps_LVR.md` §3.1, `SYNTHESIS_LVR.md` §2, `UNIFIED_THEORY_OF_LATENT_TOKENS.md` | "Zero policy gradient", "only tunes the language head": false (see §2). |
++| D7 | `Gaps_LVR.md` §4.1 | Root cause contradicted by the hard budget exit at L796/L804. |
++| D8 | `diagnostics/*.py` | Tautological. Neither imports the LVR code nor measures a gradient or a model state. |
++| D9 | `PREREGISTRATION_LVR.md` | References a script that does not exist; none of the H1–H3 tests were run. H2's quantity (∂J/∂z_latent ≡ 0) is the wrong target; the right question is whether the replayed context equals the rollout's (N1). |
++| D10 | `PIPELINE_STATE.md`, `AUDIT_STEP_*` | "Certified PASS (0 MISTAKES)": the audit rounds track formatting, links and LaTeX escapes. The Round-2 report body is a hard-coded string in `generate_round2_audit.py`. |
++| D11 | `Gaps_LVR.md`, `AUDIT_STEP_2_ROUND_{1,2}.md`, five `.py` patch scripts | Re-published third-party cloud secrets in full (now redacted in the working tree; still in history). |
++| D12 | `Gaps_LVR.md` paths | All links point to `/home/devraj/...`, and `repo/` is gitignored, so no reader of MTok could check any code claim. `verification/` now documents how to re-create `repo/` at the audited commit. |
++
++D3 counts:
++
++| Document | Snippet lines verbatim in cited range | Mis-cited lines | Not verbatim |
++|---|---|---|---|
++| `Gaps_LVR.md` | 44 | 2 | 17 |
++| `CODE_VS_PAPER_TRACE.md` | 19 | 1 | 7 |
++| Manifest | — | — | 18 |
++
++---
++
++## 5. What the folder's "experiments" actually test
++
++| File | What it does | What it tests |
++|---|---|---|
++| `diagnostics/test_roi_copying.py` | Random vectors; sets "reconstruction" = target + 0.001·noise; asserts cosine > 0.95 | Nothing about LVR. The conclusion is built into the input. |
++| `diagnostics/test_grpo_zero_grad.py` | Re-types the mask loop and runs it on a 7-token tensor | That a copy of the loop masks the span. (It also shows the `<\|lvr_start\|>` position masked, i.e. N2, without noticing.) No gradient is computed. |
++| `check_*.py`, `scratch_audit*.py` | String/citation checks against `/home/devraj/...` | Document formatting |
++| `make_*.py`, `fix_*.py`, `patch_*.py`, `apply_r2_fixes.py`, `clean_final_fixes.py`, `insert_aux.py`, `generate_round2_audit.py` | Write or patch Markdown from hard-coded strings | — |
++
++---
++
++## 6. Experiments designed (require LVR-7B or 3B and a GPU; **not run**)
++
++Run each with fp32 scoring of option letters (or bf16 with a reported precision floor), N = all items, paired McNemar with exact binomial p (capped at 1), and 10k-bootstrap CIs.
++
++| ID | Question | Protocol | Decision rule |
++|---|---|---|---|
++| **E-L1** | Do latent *contents* matter? | At inference, with K ∈ {4, 8, 16}, replace the K latent states with: (a) the model's own (baseline); (b) the oracle first-K ROI ViT tokens; (c) random non-ROI image tokens; (d) the mean image token; (e) zeros; (f) K=0 (`<\|lvr_start\|><\|lvr_end\|>` forced). Data: V* (has bboxes) and BLINK. | If (c), (d), (e), (f) ≈ (a) within ±2 pts (TOST), the contents are not the operative mechanism. If (b) > (a) significantly, reconstruction quality limits performance. |
++| **E-L2** | Is information routed through the latents? | Attention knockout per layer band: answer→latent, and latent→image. | No change from answer→latent knockout means the latents are bypassed. |
++| **E-L3** | Do latents *localize*? | For each latent state, find the nearest image token (cosine). Score the hit rate inside the gold V* bbox against the bbox's area fraction (chance). | A hit rate above chance supports "re-attention/localization", the reframed form of the "copy" hypothesis. |
++| **E-L4** | Is truncation (N3) costly? | Oracle injection of the first-K vs the full-T_v ROI tokens, followed by a forced `<\|lvr_end\|>`. | Full > first-K means the K-step decoder discards useful content. |
++| **E-L5** | Is the baseline gap partly parsing? | Re-score every baseline's raw outputs with (i) the LVR parser, (ii) strict `<answer>` extraction, (iii) lmms-eval's BLINK extraction. Report parse-failure rates. | If Vision-R1's binary-task scores rise above chance under (ii)/(iii), N5 is confirmed. |
++| **E-L6** | How large is N1 on the real model? | For about 200 RL rollouts from LVR-3B, compare per-token log-probs from the rollout logits vs the repo loss path vs the fixed path. One forward per rollout, no training. | A mean \|Δ\| clearly above the bf16 floor means the published GRPO_latent gradients were computed on corrupted contexts. Optionally retrain GRPO-3B with the fix and compare against Table 2. |
++
++---
++
++## 7. Honest assessment
++
++- **Strongest part of the folder:** the ingestion. It is bit-exact and makes everything above reproducible.
++- **Weakest part:** the step from code reading to conclusions. Several headline claims are rhetorical ("paradox", "illusion", "lie", "empirical fiction", "conceal"), several are wrong, and nothing was tested on the model. The same over-claiming carried into `UNIFIED_THEORY_OF_LATENT_TOKENS.md` and `MASTER_RESEARCH_PLAN.md`.
++- **What I'd lead with in a paper or review:** N1 (RL replay faithfulness), N3 (train/test latent-length mismatch, together with flat-in-K accuracy), and E-L1/E-L5 once run. These are concrete, verifiable and new. N4/N5 belong in a careful, neutral "reporting and evaluation" note, not as allegations of intent.
++- **Recommendation:** treat `Gaps_LVR.md` as superseded by this report. Rewrite its conclusions from §2–§3, delete or replace the two diagnostics with E-L1/E-L6, and re-run the pre-registration with the corrected hypotheses.
+diff --git a/external_models/lvr/apply_r2_fixes.py b/external_models/lvr/apply_r2_fixes.py
+index 753fb0a..0def9c3 100644
+--- a/external_models/lvr/apply_r2_fixes.py
++++ b/external_models/lvr/apply_r2_fixes.py
+@@ -29,17 +29,17 @@ g = g.replace("`finetune_lvr_stage2_7b.sh`", "[`scripts/finetune_lvr_stage2_7b.s
+ # Fix credentials block
+ cred_block = '''Bash environment variables in [`scripts/vanilla_sft_7b.sh` lines 8–12](file:///home/devraj/MTok/external_models/lvr/repo/scripts/vanilla_sft_7b.sh#L8-L12):
+ ```bash
+-export ACCESS_KEY_ID="cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-export SECRET_ACCESS_KEY="bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-export ENDPOINT_URL="https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++export ACCESS_KEY_ID="<REDACTED_ACCESS_KEY_ID>"
++export SECRET_ACCESS_KEY="<REDACTED_SECRET_ACCESS_KEY>"
++export ENDPOINT_URL="https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+ export BUCKET_NAME="bangzhengli"
+ export REGION_NAME="us-ashburn-1"
+ ```
+ Python variable assignments in [`evaluation/evaluation.py` lines 17–21](file:///home/devraj/MTok/external_models/lvr/repo/evaluation/evaluation.py#L17-L21):
+ ```python
+-access_key_id = "cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-secret_access_key = "bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-endpoint_url = "https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++access_key_id = "<REDACTED_ACCESS_KEY_ID>"
++secret_access_key = "<REDACTED_SECRET_ACCESS_KEY>"
++endpoint_url = "https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+ bucket_name = "bangzhengli"
+ region_name = "us-ashburn-1"
+ ```'''
+diff --git a/external_models/lvr/diagnostics/README.md b/external_models/lvr/diagnostics/README.md
+new file mode 100644
+index 0000000..bf17d9c
+--- /dev/null
++++ b/external_models/lvr/diagnostics/README.md
+@@ -0,0 +1,11 @@
++# diagnostics/: status
++
++Neither script tests LVR. Keep them only as historical record.
++
++- **`test_roi_copying.py`** creates random vectors, defines the "LVR reconstruction" as `target + 0.001·noise`, and asserts cosine > 0.95. The conclusion is in the input. It does not load the LVR model or code.
++- **`test_grpo_zero_grad.py`** re-types the masking loop from `grpo_trainer.py` and runs it on a hand-written 7-token tensor. It computes no gradient. Its output shows that the `<|lvr_start|>` position is masked too. That observation is real and is reported as N2 in `../VERIFICATION_REPORT.md`.
++
++## Replacements
++
++- **`../verification/lvr_rl_replay_harness.py`** runs the repo's actual generation, replay and loss code on a small model (CPU).
++- **Experiments E-L1 to E-L6** in `../VERIFICATION_REPORT.md` §6 need the LVR checkpoint and a GPU.
+diff --git a/external_models/lvr/fix_all_r3.py b/external_models/lvr/fix_all_r3.py
+index b567458..0bf9a7f 100644
+--- a/external_models/lvr/fix_all_r3.py
++++ b/external_models/lvr/fix_all_r3.py
+@@ -24,18 +24,18 @@ g = re.sub(r'```python\s*def get_task_instruction\(bench_name\):.*?```', clean_i
+ # Fix 9: Differentiate Cloud Credentials
+ cloud_block = """Bash environment variable exports in [`scripts/vanilla_sft_7b.sh` lines 8–12](file:///home/devraj/MTok/external_models/lvr/repo/scripts/vanilla_sft_7b.sh#L8-L12):
+ ```bash
+-export ACCESS_KEY_ID="cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-export SECRET_ACCESS_KEY="bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-export ENDPOINT_URL="https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++export ACCESS_KEY_ID="<REDACTED_ACCESS_KEY_ID>"
++export SECRET_ACCESS_KEY="<REDACTED_SECRET_ACCESS_KEY>"
++export ENDPOINT_URL="https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+ export BUCKET_NAME="bangzhengli"
+ export REGION_NAME="us-ashburn-1"
+ ```
+ 
+ Python variable assignments in [`evaluation/evaluation.py` lines 17–21](file:///home/devraj/MTok/external_models/lvr/repo/evaluation/evaluation.py#L17-L21):
+ ```python
+-access_key_id = "cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-secret_access_key = "bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-endpoint_url = "https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++access_key_id = "<REDACTED_ACCESS_KEY_ID>"
++secret_access_key = "<REDACTED_SECRET_ACCESS_KEY>"
++endpoint_url = "https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+ bucket_name = "bangzhengli"
+ region_name = "us-ashburn-1"
+ ```"""
+diff --git a/external_models/lvr/generate_round2_audit.py b/external_models/lvr/generate_round2_audit.py
+index 298e144..802768f 100644
+--- a/external_models/lvr/generate_round2_audit.py
++++ b/external_models/lvr/generate_round2_audit.py
+@@ -250,18 +250,18 @@ In Round 2 of the adversarial re-audit, `forensic-builder` attempted remediation
+   - [`evaluation/evaluation.py` lines 17–21](file:///home/devraj/MTok/external_models/lvr/repo/evaluation/evaluation.py#L17-L21)
+   The author's active Oracle Cloud Infrastructure (OCI) credentials are hardcoded in plaintext:
+   ```bash
+-  export ACCESS_KEY_ID="cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-  export SECRET_ACCESS_KEY="bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-  export ENDPOINT_URL="https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++  export ACCESS_KEY_ID="<REDACTED_ACCESS_KEY_ID>"
++  export SECRET_ACCESS_KEY="<REDACTED_SECRET_ACCESS_KEY>"
++  export ENDPOINT_URL="https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+   export BUCKET_NAME="bangzhengli"
+   export REGION_NAME="us-ashburn-1"
+   ```
+   ```
+   `evaluation/evaluation.py` lines 17–21 is a Python script and does NOT contain bash `export` statements or capitalized variable names. It contains lowercase Python variable definitions:
+   ```python
+-  access_key_id = "cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-  secret_access_key = "bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-  endpoint_url = "https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++  access_key_id = "<REDACTED_ACCESS_KEY_ID>"
++  secret_access_key = "<REDACTED_SECRET_ACCESS_KEY>"
++  endpoint_url = "https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+   bucket_name = "bangzhengli"
+   region_name = "us-ashburn-1"
+   ```
+@@ -369,17 +369,17 @@ To achieve an unassailable `VERDICT: PASS (0 MISTAKES)` in Round 3, `forensic-bu
+    Replace lines 384–390 with two separate blocks:
+    Bash export in [`scripts/vanilla_sft_7b.sh` lines 8–12](file:///home/devraj/MTok/external_models/lvr/repo/scripts/vanilla_sft_7b.sh#L8-L12):
+    ```bash
+-   export ACCESS_KEY_ID="cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-   export SECRET_ACCESS_KEY="bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-   export ENDPOINT_URL="https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++   export ACCESS_KEY_ID="<REDACTED_ACCESS_KEY_ID>"
++   export SECRET_ACCESS_KEY="<REDACTED_SECRET_ACCESS_KEY>"
++   export ENDPOINT_URL="https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+    export BUCKET_NAME="bangzhengli"
+    export REGION_NAME="us-ashburn-1"
+    ```
+    Python assignments in [`evaluation/evaluation.py` lines 17–21](file:///home/devraj/MTok/external_models/lvr/repo/evaluation/evaluation.py#L17-L21):
+    ```python
+-   access_key_id = "cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-   secret_access_key = "bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-   endpoint_url = "https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++   access_key_id = "<REDACTED_ACCESS_KEY_ID>"
++   secret_access_key = "<REDACTED_SECRET_ACCESS_KEY>"
++   endpoint_url = "https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+    bucket_name = "bangzhengli"
+    region_name = "us-ashburn-1"
+    ```
+diff --git a/external_models/lvr/make_gaps_lvr.py b/external_models/lvr/make_gaps_lvr.py
+index 635a1be..1a82dfa 100644
+--- a/external_models/lvr/make_gaps_lvr.py
++++ b/external_models/lvr/make_gaps_lvr.py
+@@ -394,9 +394,9 @@ sections.append("""
+   - [`evaluation/evaluation.py` lines 17–21](file:///home/devraj/MTok/external_models/lvr/repo/evaluation/evaluation.py#L17-L21)
+   The author's active Oracle Cloud Infrastructure (OCI) credentials are hardcoded in plaintext:
+   ```bash
+-  export ACCESS_KEY_ID="cd2fce68e7166482654fe48ad7a49a2edf12b7ec"
+-  export SECRET_ACCESS_KEY="bLInsfvXCRP1T8GhAL89BrZ24b6w+aKD3rjxkXsSgIQ="
+-  export ENDPOINT_URL="https://idhpuomb10ix.compat.objectstorage.us-ashburn-1.oraclecloud.com"
++  export ACCESS_KEY_ID="<REDACTED_ACCESS_KEY_ID>"
++  export SECRET_ACCESS_KEY="<REDACTED_SECRET_ACCESS_KEY>"
++  export ENDPOINT_URL="https://<REDACTED_NAMESPACE>.compat.objectstorage.us-ashburn-1.oraclecloud.com"
+   export BUCKET_NAME="bangzhengli"
+   export REGION_NAME="us-ashburn-1"
+   ```
+diff --git a/external_models/lvr/verification/README.md b/external_models/lvr/verification/README.md
+new file mode 100644
+index 0000000..b3b8b10
+--- /dev/null
++++ b/external_models/lvr/verification/README.md
+@@ -0,0 +1,43 @@
++# `verification/`: reproducible checks behind `../VERIFICATION_REPORT.md`
++
++Everything here runs on CPU.
++
++## Setup
++
++**1. Re-create the audited LVR repo.** `../repo/` is gitignored, so clone it:
++
++```bash
++git clone https://github.com/VincentLeebang/lvr.git ../repo
++```
++
++```bash
++git -C ../repo checkout 637a9f7e17e865b1372b65f182197fbc4a5a1449
++```
++
++**2. Create the Python environment.** This is needed for the harness and the ROI script. `transformers==4.51.3` matches the RL environment in the upstream `environment.yaml`.
++
++```bash
++python3 -m venv .venv && . .venv/bin/activate
++```
++
++```bash
++pip install --index-url https://download.pytorch.org/whl/cpu torch
++```
++
++```bash
++pip install "transformers==4.51.3" numpy pillow
++```
++
++## Scripts
++
++| Script | Checks | Command (from `external_models/lvr/`) | Result (2026-11-03) |
++|---|---|---|---|
++| `verify_manifest.py` | SHA256, bytes and line counts of every manifest row | `python3 verification/verify_manifest.py STEP1_INGESTION_MANIFEST.md . repo` | 87/87 present files match; 8 gitignored |
++| `verify_snippets.py` | Code blocks under each `repo/...#Lx-Ly` citation are verbatim in that range | `python3 verification/verify_snippets.py Gaps_LVR.md repo .` | Gaps 44/2/17 · Trace 19/1/7 · Manifest 18 not verbatim |
++| `safe_args.py` | Reads `training_args.bin` with a stub unpickler that never imports pickled classes | `python3 verification/safe_args.py hf_metadata/LVR-7B/training_args.bin lvr packed learning_rate` | Matches `finetune_lvr_stage1_7b.sh` exactly |
++| `table_draft_vs_final.py` | Commented draft Table 1 vs published Table 1; k/N feasibility | `python3 verification/table_draft_vs_final.py paper_src` | 9 baseline-only changes; IQ-Test and JigSaw winners flip |
++| `roi_lengths.py` | Training latent length T_v from the repo's own `bbox_to_token_idxs` over Visual-CoT metadata | `python verification/roi_lengths.py repo <dir with *_cot_train.jsonl>` | N = 434,265; median 28; mean 66; max 5,096 |
++| `blink_vsr_overlap.py` | BLINK Spatial-Relation vs Visual-CoT/VSR: question overlap and image near-duplicates (dHash) | `python verification/blink_vsr_overlap.py <metadata dir> <out dir>` | 51/143 questions match; 0/51 images match |
++| `lvr_rl_replay_harness.py` | Runs the repo's own generation loop, replay functions, mask block and loss block on a tiny random Qwen2 model; compares log-probs with the rollout; tests the proposed fix | `python verification/lvr_rl_replay_harness.py repo <K> <seed>` | Repo loss path deviates 0.20–0.37 nats; fixed path ≤ 5e-7 |
++
++Visual-CoT metadata comes from <https://huggingface.co/datasets/deepcs233/Visual-CoT/tree/main/metadata>. Use the 12 `*_cot_train.jsonl` files, renamed to `<source>.jsonl` (e.g. `vsr.jsonl`).
+diff --git a/external_models/lvr/verification/blink_vsr_overlap.py b/external_models/lvr/verification/blink_vsr_overlap.py
+new file mode 100644
+index 0000000..b63b65c
+--- /dev/null
++++ b/external_models/lvr/verification/blink_vsr_overlap.py
+@@ -0,0 +1,67 @@
++"""
++Contamination check for Gaps_LVR.md §5.1: does BLINK Spatial Relation (val, 143 items) overlap with
++the VSR subset of Visual-CoT, which is part of LVR's SFT data?
++
++Step 1: normalized exact question-string overlap.
++Step 2: for question matches, compare the BLINK image against every COCO image of the matching
++        Visual-CoT/VSR training item with a 256-bit difference hash (dHash). Near-duplicates are <= ~20.
++
++Usage: python3 blink_vsr_overlap.py <dir with Visual-CoT metadata vsr.jsonl and gqa.jsonl> <out_dir>
++  metadata:  https://huggingface.co/datasets/deepcs233/Visual-CoT/tree/main/metadata  (*_cot_train.jsonl)
++  BLINK:     fetched from the HF datasets-server rows API (config Spatial_Relation, split val)
++Needs: numpy, pillow, network access to huggingface.co and images.cocodataset.org
++"""
++import io, json, os, re, sys, urllib.request
++import numpy as np
++from PIL import Image
++
++meta, out = sys.argv[1], sys.argv[2]
++os.makedirs(out, exist_ok=True)
++
++def fetch(url):
++    with urllib.request.urlopen(url, timeout=60) as r:
++        return r.read()
++
++rows = []
++for off in (0, 100):
++    url = ("https://datasets-server.huggingface.co/rows?dataset=BLINK-Benchmark/BLINK"
++           f"&config=Spatial_Relation&split=val&offset={off}&length=100")
++    rows += [r["row"] for r in json.loads(fetch(url))["rows"]]
++assert len(rows) == 143, len(rows)
++
++norm = lambda s: re.sub(r"[^a-z ]", "", s.lower()).strip()
++vsr = [json.loads(l) for l in open(f"{meta}/vsr.jsonl")]
++gqa_q = {norm(json.loads(l)["question"]) for l in open(f"{meta}/gqa.jsonl")}
++by_q = {}
++for d in vsr:
++    by_q.setdefault(norm(d["question"]), []).append(d)
++matched = [r for r in rows if norm(r["question"]) in by_q]
++print(f"question overlap with Visual-CoT/VSR train: {len(matched)}/143; with Visual-CoT/GQA: "
++      f"{sum(norm(r['question']) in gqa_q for r in rows)}/143")
++
++def dhash(im, n=16):
++    a = np.asarray(im.convert("L").resize((n + 1, n), Image.BILINEAR), dtype=np.float32)
++    return (a[:, 1:] > a[:, :-1]).flatten()
++
++results = []
++for r in matched:
++    bh = dhash(Image.open(io.BytesIO(fetch(r["image_1"]["src"]))))
++    best = None
++    for d in by_q[norm(r["question"])]:
++        im = None
++        for split in ("train2017", "val2017"):
++            try:
++                im = Image.open(io.BytesIO(fetch(f"http://images.cocodataset.org/{split}/{d['image']}")))
++                break
++            except Exception:
++                pass
++        if im is not None:
++            dist = int((dhash(im) != bh).sum())
++            if best is None or dist < best[0]:
++                best = (dist, d["image"], d["answer"])
++    results.append({"blink_idx": r["idx"], "question": r["question"], "nearest_vsr_train": best})
++
++dists = sorted(x["nearest_vsr_train"][0] for x in results if x["nearest_vsr_train"])
++print(f"image near-duplicates (dHash Hamming <= 20 of 256): {sum(d <= 20 for d in dists)}/{len(results)}")
++print("nearest-image Hamming distances:", dists)
++json.dump(results, open(f"{out}/blink_vsr_overlap.json", "w"), indent=1)
+diff --git a/external_models/lvr/verification/lvr_rl_replay_harness.py b/external_models/lvr/verification/lvr_rl_replay_harness.py
+new file mode 100644
+index 0000000..b97551b
+--- /dev/null
++++ b/external_models/lvr/verification/lvr_rl_replay_harness.py
+@@ -0,0 +1,237 @@
++"""
++Faithfulness test for LVR's GRPO_latent replay (repo VincentLeebang/lvr @ 637a9f7).
++
++Question: does the RL loss forward condition the answer tokens on the SAME latent
++context that the rollout produced (paper 3_lvr.tex L97-L106: "restoring the exact
++context preceding text generation")?
++
++Method: a tiny random Qwen2 decoder gets the repo's LVR forward semantics
++(monkey_patch_forward_lvr_rl.py L129-L142, copied verbatim) and the repo's own
++generation loop (qwen_lvr_model.py: generate + _lvr_deocding_by_steps) and replay
++functions (grpo_trainer.py: _compute_lvr_spans, _replay_lvr_to_collect_states,
++score_with_lvr_replay, the L742-L757 mask loop and the L996-L1034 loss forward),
++all loaded from the repo source text. We then compare per-token log-probs of the
++generated completion under (a) the rollout itself and (b) each replay path.
++"""
++import ast, sys, textwrap, types, math, json
++import torch, torch.nn.functional as F
++from typing import Optional, Tuple, List
++from transformers import Qwen2Config, Qwen2ForCausalLM, GenerationConfig, LogitsProcessor, LogitsProcessorList
++from transformers.utils import ModelOutput
++from dataclasses import dataclass
++
++REPO = sys.argv[1]
++K = int(sys.argv[2]) if len(sys.argv) > 2 else 8
++SEED = int(sys.argv[3]) if len(sys.argv) > 3 else 0
++torch.manual_seed(SEED)
++sys.path.insert(0, REPO)
++
++def src_lines(path, a, b):
++    with open(f"{REPO}/{path}") as f:
++        return "".join(f.readlines()[a - 1:b])
++
++def method_src(path, name):
++    tree = ast.parse(open(f"{REPO}/{path}").read())
++    for node in ast.walk(tree):
++        if isinstance(node, ast.FunctionDef) and node.name == name:
++            seg = ast.get_source_segment(open(f"{REPO}/{path}").read(), node)
++            # keep decorators (e.g. @torch.no_grad())
++            deco = "".join("@" + ast.get_source_segment(open(f"{REPO}/{path}").read(), d) + "\n" for d in node.decorator_list)
++            return deco + textwrap.dedent(seg)
++    raise KeyError(name)
++
++# ---- repo generation loop (verbatim) ----
++from src.model import qwen_lvr_model as QLM
++gen_fn = QLM.QwenWithLVR.generate
++steps_fn = QLM.QwenWithLVR._lvr_deocding_by_steps
++
++# ---- repo trainer functions (verbatim source) ----
++ns = {"torch": torch, "F": F, "Tuple": Tuple, "Optional": Optional, "List": List}
++for name in ["_compute_lvr_spans", "_replay_lvr_to_collect_states", "score_with_lvr_replay"]:
++    exec(method_src("src/trainer/grpo_trainer.py", name), ns)
++mask_block = textwrap.dedent(src_lines("src/trainer/grpo_trainer.py", 742, 757))
++assert "lvr_mask[b, t] = False" in mask_block and "final_mask = attention_mask.bool() & lvr_mask" in mask_block
++loss_fwd_block = textwrap.dedent(src_lines("src/trainer/grpo_trainer.py", 996, 1034))
++assert "_replay_lvr_to_collect_states" in loss_fwd_block and "selective_log_softmax" in loss_fwd_block
++rl_patch_block = textwrap.dedent(src_lines("src/train/monkey_patch_forward_lvr_rl.py", 129, 142))
++assert "inputs_embeds[lvr_mode_switch,-1,:] = last_position_hidden_state[lvr_mode_switch]" in rl_patch_block
++assert "comp_embeds = torch.where(" in rl_patch_block
++
++@dataclass
++class Out(ModelOutput):
++    logits: torch.FloatTensor = None
++    past_key_values: Optional[object] = None
++    last_position_hidden_state: Optional[torch.FloatTensor] = None
++
++class ToyLVR(Qwen2ForCausalLM):
++    generate = gen_fn
++    _lvr_deocding_by_steps = steps_fn
++    def forward(self, input_ids=None, attention_mask=None, position_ids=None, past_key_values=None,
++                inputs_embeds=None, use_cache=None, cache_position=None, lvr_mode_switch=None,
++                last_position_hidden_state=None, lvr_states=None, lvr_mask=None, prompt_length=None,
++                return_dict=True, logits_to_keep=None, **kw):
++        if inputs_embeds is None:
++            inputs_embeds = self.model.embed_tokens(input_ids).clone()
++        loc = dict(inputs_embeds=inputs_embeds, lvr_mode_switch=lvr_mode_switch,
++                   last_position_hidden_state=last_position_hidden_state, lvr_states=lvr_states,
++                   lvr_mask=lvr_mask, prompt_length=prompt_length, torch=torch)
++        exec(rl_patch_block, loc)            # repo's exact patching rules
++        inputs_embeds = loc["inputs_embeds"]
++        o = self.model(inputs_embeds=inputs_embeds, attention_mask=attention_mask, position_ids=position_ids,
++                       past_key_values=past_key_values, use_cache=use_cache, cache_position=cache_position)
++        h = o.last_hidden_state
++        return Out(logits=self.lm_head(h), past_key_values=o.past_key_values, last_position_hidden_state=h[:, -1, :])
++
++V, H = 96, 64
++cfg = Qwen2Config(vocab_size=V, hidden_size=H, intermediate_size=128, num_hidden_layers=2,
++                  num_attention_heads=4, num_key_value_heads=2, max_position_embeddings=512,
++                  tie_word_embeddings=False, use_cache=True)
++model = ToyLVR(cfg).eval()
++LS, LE, LVR_ID, EOS = 90, 91, 92, 95
++model.config.lvr_start_id, model.config.lvr_end_id, model.config.lvr_id = LS, LE, LVR_ID
++model.config.is_encoder_decoder = False
++model.config.lvr_head = False
++
++class Force(LogitsProcessor):
++    """Force LS as 1st completion token and LE right after the K-step quota, else free (greedy)."""
++    def __init__(self, P, K): self.P, self.K = P, K
++    def __call__(self, ids, scores):
++        c = ids.shape[1] - self.P
++        s = scores.clone()
++        if c == 0: s[:] = -1e9; s[:, LS] = 0
++        elif c == self.K + 1: s[:] = -1e9; s[:, LE] = 0
++        else: s[:, [LS, LE, LVR_ID, EOS]] = -1e9
++        return s
++
++B, P, NEW = 3, 12, K + 14
++prompt = torch.randint(0, 80, (B, P))
++gc = GenerationConfig(max_new_tokens=NEW, do_sample=False, output_logits=True, return_dict_in_generate=True,
++                      pad_token_id=0, eos_token_id=EOS)
++gc.lvr_steps = K
++with torch.no_grad():
++    out = model.generate(input_ids=prompt, attention_mask=torch.ones_like(prompt), generation_config=gc,
++                         logits_processor=LogitsProcessorList([Force(P, K)]),
++                         decoding_strategy="steps", lvr_steps=[K] * B)
++seq = out.sequences
++comp = seq[:, P:]
++C = comp.shape[1]
++roll_logp = torch.stack([F.log_softmax(l.float(), -1) for l in out.logits], 1)   # (B, C, V)
++roll_tok_logp = roll_logp.gather(-1, comp.unsqueeze(-1)).squeeze(-1)
++
++# ---- trainer-side objects -----------------------------------------------------
++trainer = types.SimpleNamespace(model=model, generation_config=gc, temperature=1.0)
++for name in ["_compute_lvr_spans", "_replay_lvr_to_collect_states", "score_with_lvr_replay"]:
++    setattr(trainer, name, types.MethodType(ns[name], trainer))
++
++prompt_completion_ids = seq
++prompt_mask = torch.ones_like(prompt)
++completion_mask = torch.ones_like(comp)
++loc = dict(torch=torch, prompt_completion_ids=prompt_completion_ids, self=trainer,
++           prompt_mask=prompt_mask, completion_mask=completion_mask)
++exec(mask_block, loc)
++final_mask = loc["final_mask"][:, -C:]
++
++def selective_log_softmax(logits, idx):
++    return F.log_softmax(logits.float(), -1).gather(-1, idx.unsqueeze(-1)).squeeze(-1)
++
++# (1) repo loss-forward path (no_grad replay + patched teacher-forcing forward), verbatim L996-L1034
++loc = dict(self=trainer, model=model, prompt_ids=prompt, prompt_mask=prompt_mask,
++           prompt_completion_ids=prompt_completion_ids, multimodal_inputs={}, logits_to_keep=C,
++           selective_log_softmax=selective_log_softmax, torch=torch)
++with torch.no_grad():
++    exec(loss_fwd_block, loc)
++loss_path_logp = loc["per_token_logps"]
++lvr_states, lvr_mask_rep = loc["lvr_states"], loc["lvr_mask"]
++
++# (2) repo score_with_lvr_replay path (used for old/ref log-probs)
++with torch.no_grad():
++    srep = trainer.score_with_lvr_replay(model, input_ids=prompt, attention_mask=prompt_mask, target_ids=seq,
++                                         generation_config=gc, lvr_steps=[K] * B, enable_grad=False)
++
++# (3) corrected replay: patch input position j with h_{j-1} from a faithful replay of the rollout
++def corrected_states():
++    st = torch.zeros(B, C, H); m = torch.zeros(B, C, dtype=torch.bool)
++    with torch.no_grad():
++        start = (comp == LS).float().argmax(1)
++        cache = None; inp = seq[:, :P]; lphs = None; mode = torch.zeros(B, dtype=torch.bool)
++        o = model(input_ids=inp, use_cache=True); cache = o.past_key_values; lphs = o.last_position_hidden_state
++        for c in range(C - 1):
++            pos = P + c
++            sw = (c > start) & (c <= start + K)         # input positions start+1..start+K carry h_{pos-1}
++            if sw.any():
++                st[sw, c] = lphs[sw]; m[sw, c] = True
++            o = model(input_ids=seq[:, pos:pos + 1], past_key_values=cache, use_cache=True,
++                      lvr_mode_switch=sw, last_position_hidden_state=lphs if sw.any() else None,
++                      cache_position=torch.tensor([pos]))
++            cache, lphs = o.past_key_values, o.last_position_hidden_state
++    return st, m
++cst, cm = corrected_states()
++with torch.no_grad():
++    lo = model(input_ids=seq, lvr_states=cst, lvr_mask=cm, prompt_length=P).logits[:, :-1][:, -C:]
++corr_logp = selective_log_softmax(lo, seq[:, 1:][:, -C:])
++
++# ---- report --------------------------------------------------------------------
++fm = final_mask.bool()
++def maxdiff(a): return (a - roll_tok_logp).abs()[fm].max().item()
++lat_pos_rep = [torch.nonzero(lvr_mask_rep[b]).flatten().tolist() for b in range(B)]
++lat_pos_cor = [torch.nonzero(cm[b]).flatten().tolist() for b in range(B)]
++ls_idx = (comp == LS).float().argmax(1).tolist()
++ls_in_loss = [bool(final_mask[b, ls_idx[b]]) for b in range(B)]
++le_idx = (comp == LE).float().argmax(1).tolist()
++res = {
++  "K": K, "seed": SEED, "completion_len": C,
++  "LS_completion_index": ls_idx, "LE_completion_index": le_idx,
++  "rollout_latent_input_positions(start+1..start+K)": [list(range(s + 1, s + K + 1)) for s in ls_idx],
++  "repo_replay_patched_positions": lat_pos_rep,
++  "corrected_patched_positions": lat_pos_cor,
++  "lvr_start_token_included_in_policy_loss": ls_in_loss,
++  "n_tokens_in_loss_per_sample": fm.sum(1).tolist(),
++  "max|logp_repo_loss_forward - logp_rollout| (loss tokens)": maxdiff(loss_path_logp),
++  "max|logp_score_with_lvr_replay - logp_rollout| (loss tokens)": maxdiff(srep[:, -C:]),
++  "max|logp_corrected_replay - logp_rollout| (loss tokens)": maxdiff(corr_logp),
++}
++print(json.dumps(res, indent=1))
++
++# ---- diagnostics: which state does the repo patch at each latent position? ----
++with torch.no_grad():
++    full = model(input_ids=seq[:, :P + 1])           # prompt + LS, no patching
++    h_before_LS = model(input_ids=seq[:, :P]).last_position_hidden_state   # h_{P-1}
++b0 = 0; s0 = ls_idx[b0]
++def cos(a, b): return F.cosine_similarity(a, b, dim=-1).item()
++diag = {
++ "repo_state@first_latent_pos == h(position before LS)": torch.allclose(lvr_states[b0, s0 + 1].float(), h_before_LS[b0], atol=1e-5),
++ "repo_state@first_latent_pos == rollout state (h at LS)": torch.allclose(lvr_states[b0, s0 + 1].float(), cst[b0, s0 + 1], atol=1e-5),
++ "cos(repo_state, rollout_state) per latent position": [round(cos(lvr_states[b0, j].float(), cst[b0, j]), 4) for j in range(s0 + 1, s0 + K + 1)],
++ "cos(repo_state[j], rollout_state[j-1]) j>=2": [round(cos(lvr_states[b0, j].float(), cst[b0, j - 1]), 4) for j in range(s0 + 2, s0 + K + 1)],
++}
++# temperature mismatch: ref/old scored at apply_temperature=1.0 (default, never overridden),
++# policy loss logits divided by self.temperature (=0.9 in finetune_lvr_stage2_*.sh) -> KL at policy==ref
++T = 0.9
++with torch.no_grad():
++    lo_pol = model(input_ids=seq, lvr_states=cst, lvr_mask=cm, prompt_length=P).logits[:, :-1][:, -C:] / T
++pol = selective_log_softmax(lo_pol, seq[:, 1:][:, -C:])
++ref = srep[:, -C:]
++kl = torch.exp(ref - pol) - (ref - pol) - 1        # repo L1072 formula
++diag["mean per-token KL at init (policy==ref), T_policy=0.9 vs T_ref=1.0"] = (kl * final_mask).sum().item() / final_mask.sum().item()
++print(json.dumps(diag))
++
++# ---- proposed minimal fix to _replay_lvr_to_collect_states, verified here ----
++fixed_src = method_src("src/trainer/grpo_trainer.py", "_replay_lvr_to_collect_states")
++old_switch = '''                    "lvr_mode_switch": in_span, '''
++assert old_switch in fixed_src
++# (a) the forward at this step processes position pos-1, so gate it on pos-1 being a latent input position
++fixed_src = fixed_src.replace(old_switch, '''                    "lvr_mode_switch": ((pos - 1 > lvr_start_idx) & (pos - 1 <= configured_end_idx)).to(device=device), ''')
++# (b) the state fed into input position pos is the output at pos-1, i.e. THIS step's output: collect after the forward
++old_collect = fixed_src[fixed_src.index("            if update_mask.any():"):fixed_src.index("            # prepare model inputs for this step")]
++fixed_src = fixed_src.replace(old_collect, "")
++anchor = "            last_position_hidden_state = getattr(outputs, \"last_position_hidden_state\", last_position_hidden_state)\n"
++assert anchor in fixed_src
++fixed_src = fixed_src.replace(anchor, anchor + old_collect)
++ns2 = dict(ns); exec(fixed_src, ns2)
++trainer.__dict__["_replay_lvr_to_collect_states"] = types.MethodType(ns2["_replay_lvr_to_collect_states"], trainer)
++loc = dict(self=trainer, model=model, prompt_ids=prompt, prompt_mask=prompt_mask,
++           prompt_completion_ids=prompt_completion_ids, multimodal_inputs={}, logits_to_keep=C,
++           selective_log_softmax=selective_log_softmax, torch=torch)
++with torch.no_grad():
++    exec(loss_fwd_block, loc)
++print(json.dumps({"FIXED repo loss-forward: max|logp - logp_rollout|": maxdiff(loc["per_token_logps"])}))
+diff --git a/external_models/lvr/verification/roi_lengths.py b/external_models/lvr/verification/roi_lengths.py
+new file mode 100644
+index 0000000..5467442
+--- /dev/null
++++ b/external_models/lvr/verification/roi_lengths.py
+@@ -0,0 +1,33 @@
++import json, math, sys, glob, ast, textwrap, os
++import numpy as np
++REPO, DATA = sys.argv[1], sys.argv[2]
++src = open(f"{REPO}/src/dataset/lvr_sft_dataset_packed.py").read()
++fn = [n for n in ast.walk(ast.parse(src)) if isinstance(n, ast.FunctionDef) and n.name == "bbox_to_token_idxs"][0]
++ns = {"np": np}; exec(textwrap.dedent(ast.get_source_segment(src, fn)), ns)
++bbox_to_token_idxs = ns["bbox_to_token_idxs"]
++class G:  # image_grid_thw[0].tolist() -> [t,h,w]
++    def __init__(s, h, w): s.v = [1, h, w]
++    def tolist(s): return s.v
++def smart_resize(h, w, factor=28, min_pixels=128*28*28, max_pixels=5120*28*28):   # qwen_vl_utils formula
++    hb, wb = max(factor, round(h/factor)*factor), max(factor, round(w/factor)*factor)
++    if hb*wb > max_pixels:
++        b = math.sqrt(h*w/max_pixels); hb, wb = math.floor(h/b/factor)*factor, math.floor(w/b/factor)*factor
++    elif hb*wb < min_pixels:
++        b = math.sqrt(min_pixels/(h*w)); hb, wb = math.ceil(h*b/factor)*factor, math.ceil(w*b/factor)*factor
++    return hb, wb
++allL, per = [], {}
++for f in sorted(glob.glob(f"{DATA}/*.jsonl")):
++    L = []
++    for line in open(f):
++        d = json.loads(line); W, H = d["width"], d["height"]
++        hb, wb = smart_resize(H, W)
++        grid = [G(hb // 14, wb // 14)]
++        for (x0, y0, x1, y1) in d["bboxs"][:1]:     # first bbox (LVR example has one bbox per sample)
++            n = len(bbox_to_token_idxs(None, [[x0/W, y0/H, x1/W, y1/H]], grid)[0])
++            L.append(n)
++    per[os.path.basename(f)[:-6]] = L; allL += L
++a = np.array(allL)
++print(f"N={len(a)}  mean={a.mean():.1f}  median={np.median(a):.0f}  p10={np.percentile(a,10):.0f}  p90={np.percentile(a,90):.0f}  max={a.max()}")
++for K in (4, 8, 16): print(f"  share of training samples with T_v <= {K:2d}: {np.mean(a<=K)*100:5.1f}%   (fraction of ROI covered by K steps, median: {np.median(np.minimum(K/a,1))*100:.1f}%)")
++for k, L in per.items():
++    L = np.array(L); print(f"  {k:16s} n={len(L):6d} median={np.median(L):5.0f} mean={L.mean():7.1f}")
+diff --git a/external_models/lvr/verification/safe_args.py b/external_models/lvr/verification/safe_args.py
+new file mode 100644
+index 0000000..4f1aa9f
+--- /dev/null
++++ b/external_models/lvr/verification/safe_args.py
+@@ -0,0 +1,22 @@
++import zipfile,pickle,sys,io
++class Stub:
++    def __init__(self,*a,**k): self.args=a
++    def __setstate__(self,s): self.state=s
++    def __call__(self,*a,**k): return Stub(*a)
++class SafeU(pickle.Unpickler):
++    def find_class(self,mod,name):
++        return type(f"{mod}.{name}",(Stub,),{})
++    def persistent_load(self,pid): return ('persistent',pid)
++f=sys.argv[1]
++if zipfile.is_zipfile(f):
++    z=zipfile.ZipFile(f); n=[x for x in z.namelist() if x.endswith('data.pkl')][0]; data=z.read(n)
++else: data=open(f,'rb').read()
++o=SafeU(io.BytesIO(data)).load()
++st=o.state if hasattr(o,'state') else o.__dict__
++print(type(o).__name__)
++keys=sys.argv[2:]
++for k in sorted(st):
++    if not keys or any(q in k for q in keys):
++        v=st[k]
++        if isinstance(v,Stub): v=f"<{type(v).__name__} {getattr(v,'args',None)} {getattr(v,'state','')}>"
++        print(f"{k} = {v!r}"[:200])
+diff --git a/external_models/lvr/verification/table_draft_vs_final.py b/external_models/lvr/verification/table_draft_vs_final.py
+new file mode 100644
+index 0000000..f4e76ae
+--- /dev/null
++++ b/external_models/lvr/verification/table_draft_vs_final.py
+@@ -0,0 +1,67 @@
++"""
++Compare the commented-out draft Table 1 (paper_src/tables/main_table.tex L20-L40, 2-decimal values)
++with the published Table 1 (L71-L80, 1-decimal values), and check that every reported
++percentage is achievable as k/N on the benchmark split sizes.
++
++Usage: python3 table_draft_vs_final.py <path to external_models/lvr/paper_src>
++"""
++import re, sys
++
++COLS = ['V*', 'DA', 'RP', 'MMVP', 'Count', 'IQ', 'Jig', 'RelRef', 'SpRel']
++# split sizes: V* = 115 direct-attribute + 76 relative-position; MMVP = 300; BLINK val splits
++N = {'V*': 191, 'DA': 115, 'RP': 76, 'MMVP': 300, 'Count': 120, 'IQ': 150, 'Jig': 150, 'RelRef': 134, 'SpRel': 143}
++
++def rows(tex, commented):
++    out = {}
++    for line in tex.splitlines():
++        s = line.strip()
++        if commented != s.startswith('%'):
++            continue
++        s = s.lstrip('%').strip()
++        cells = [c.strip() for c in s.rstrip('\\').strip().rstrip('\\').split('&')]
++        if len(cells) != 10:
++            continue
++        name = re.sub(r'\\cellcolor\{[^}]*\}', '', cells[0]).strip()
++        try:
++            vals = [float(re.sub(r'[^0-9.]', '', c)) for c in cells[1:]]
++        except ValueError:
++            continue
++        out[name] = vals
++    return out
++
++tex = open(f"{sys.argv[1]}/tables/main_table.tex").read()
++seven_b = tex[tex.index('7B Open Models'):tex.index('\\caption{\\small \\textbf{Main Table}')]
++draft = rows(seven_b, commented=True)
++final = rows(tex[tex.index('Open Models based on Qwen2.5-VL-7B'):], commented=False)
++alias = {'VISION-R1': 'Vision-R1'}
++draft = {alias.get(k, k): v for k, v in draft.items()}
++lvr = lambda k: k.replace('\\modelname', 'LVR')
++draft = {lvr(k): v for k, v in draft.items()}
++final = {lvr(k): v for k, v in final.items()}
++
++print("Cells where final != 1-decimal rounding of the draft value:")
++for m in final:
++    if m not in draft:
++        continue
++    for c, d, f in zip(COLS, draft[m], final[m]):
++        if abs(round(d + 1e-9, 1) - f) > 0.051:
++            print(f"  {m:16s} {c:6s} draft={d:6.2f} final={f:5.1f}  delta={f - d:+.2f}  (= {round((f - d) / 100 * N[c], 1):+} items of {N[c]})")
++
++def winners(t):
++    return {c: sorted(k for k, v in t.items() if abs(v[i] - max(x[i] for x in t.values())) < 1e-9) for i, c in enumerate(COLS)}
++wd, wf = winners({k: v for k, v in draft.items() if k in final}), winners(final)
++print("\nBest open 7B model per column (draft -> final):")
++for c in COLS:
++    flag = "   <-- changed" if wd[c] != wf[c] else ""
++    print(f"  {c:6s} {wd[c]} -> {wf[c]}{flag}")
++
++print("\nFeasibility (value == round(k/N*100) for some integer k), LVR + baseline rows of both tables:")
++for label, t in (("draft", draft), ("final", final)):
++    for m, vals in t.items():
++        for c, x in zip(COLS, vals):
++            dec = 1 if label == "final" else 2
++            ok = any(abs(round(k / N[c] * 100, dec) - x) < 1e-9 for k in range(N[c] + 1))
++            if not ok:
++                exact2 = [k for k in range(N[c] + 1) if abs(round(k / N[c] * 100, 2) - (x - 0.05)) < 0.051]
++                print(f"  {label:5s} {m:16s} {c:6s} {x} not k/{N[c]} at {dec} dp "
++                      f"(consistent with double rounding of a 2-dp draft value)" if exact2 or label == "final" else "")
+diff --git a/external_models/lvr/verification/verify_manifest.py b/external_models/lvr/verification/verify_manifest.py
+new file mode 100644
+index 0000000..d7435b5
+--- /dev/null
++++ b/external_models/lvr/verification/verify_manifest.py
+@@ -0,0 +1,24 @@
++import re,hashlib,os,sys
++man,base_lvr,repo=sys.argv[1:4]
++txt=open(man).read()
++rows=re.findall(r'^\s*\|[^\n]*?\[`([^`]+)`\]\(file://[^)]*?/external_models/lvr/([^)#]+)[^)]*\)\s*\|\s*([^|]*)\|\s*([^|]*)\|\s*([^|]*)\|\s*`([0-9a-f]{64})`',txt,re.M)
++ok=bad=miss=0
++for disp,path,wc,nl,by,sha in rows:
++    if path.startswith('repo/'): fp=os.path.join(repo,path[5:])
++    else: fp=os.path.join(base_lvr,path)
++    if not os.path.exists(fp): miss+=1; print('MISSING',path); continue
++    data=open(fp,'rb').read()
++    h=hashlib.sha256(data).hexdigest()
++    errs=[]
++    if h!=sha: errs.append('sha')
++    b=by.strip().replace(',','')
++    if b.isdigit() and int(b)!=len(data): errs.append(f'bytes {b}!={len(data)}')
++    w=wc.strip().replace(',','')
++    if w.isdigit() and int(w)!=data.count(b'\n'): errs.append(f'wc {w}!={data.count(b"\n")}')
++    n=nl.strip().replace(',','')
++    if n.isdigit():
++        real=data.count(b'\n')+(0 if data.endswith(b'\n') or not data else 1)
++        if int(n)!=real: errs.append(f'nl {n}!={real}')
++    if errs: bad+=1; print('MISMATCH',path,errs)
++    else: ok+=1
++print('rows',len(rows),'ok',ok,'bad',bad,'missing',miss)
+diff --git a/external_models/lvr/verification/verify_snippets.py b/external_models/lvr/verification/verify_snippets.py
+new file mode 100644
+index 0000000..7621eed
+--- /dev/null
++++ b/external_models/lvr/verification/verify_snippets.py
+@@ -0,0 +1,44 @@
++import re, sys, os, collections
++doc, repo, lvr = sys.argv[1], sys.argv[2], sys.argv[3]
++L = open(doc).read().splitlines()
++link = re.compile(r'external_models/lvr/((?:repo|paper_src|hf_metadata)/[^)#\s]+)#L(\d+)(?:-L?(\d+))?')
++def resolve(p): return os.path.join(repo, p[5:]) if p.startswith('repo/') else os.path.join(lvr, p)
++stats = collections.Counter(); bad = []
++cites = 0; range_bad = []
++for i, line in enumerate(L):
++    for m in link.finditer(line):
++        cites += 1
++        fp = resolve(m.group(1)); a = int(m.group(2)); b = int(m.group(3) or a)
++        if not os.path.exists(fp): range_bad.append((i+1, m.group(1), 'missing file')); continue
++        n = len(open(fp, errors='ignore').read().splitlines())
++        if b > n or a > b: range_bad.append((i+1, m.group(1), f'L{a}-{b} > {n} lines'))
++    ms = list(link.finditer(line))
++    if not ms: continue
++    # code block within next 12 lines
++    blk = []; j = i + 1; inside = False
++    while j < min(len(L), i + 14):
++        s = L[j].strip()
++        if s.startswith('```'):
++            if inside: break
++            inside = True; j += 1; continue
++        if inside: blk.append(L[j])
++        elif s.startswith('- **') or s.startswith('#'): break
++        j += 1
++    if not blk: continue
++    m = ms[-1]; fp = resolve(m.group(1))
++    if not os.path.exists(fp): continue
++    src = open(fp, errors='ignore').read().splitlines()
++    a = int(m.group(2)); b = int(m.group(3) or a)
++    rng = "\n".join(src[max(0, a-3):b+2]); full = "\n".join(src)
++    for cl in blk:
++        c = cl.strip()
++        if not c or c.startswith(('#', '...', '//', '%')) or c in ('...', ')', ']', '}', '):'): continue
++        if c in rng: stats['in_range'] += 1
++        elif c in full:
++            stats['in_file_wrong_lines'] += 1
++            bad.append((i+1, m.group(1), f'L{a}-{b}', 'actual L' + ",".join(str(k+1) for k, x in enumerate(src) if c in x)[:40], c[:70]))
++        else:
++            stats['not_in_file'] += 1; bad.append((i+1, m.group(1), f'L{a}-{b}', 'ABSENT', c[:70]))
++print(os.path.basename(doc), 'citations:', cites, 'bad ranges:', len(range_bad), dict(stats))
++for r in range_bad[:15]: print('  RANGE', r)
++for r in bad[:40]: print('  SNIP', r)
+-- 
+2.43.0
+

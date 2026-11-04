@@ -14,13 +14,36 @@ __pycache__/
 Video-R1/
 
 # Large execution logs and runtime monitors
+# LaTeX build artifacts
+*.aux
+*.nav
+*.out
+*.snm
+*.toc
 *.log
-eval_outputs/**/*.log
-eval_outputs/*.log
+eval_outputs/**/# LaTeX build artifacts
+*.aux
+*.nav
+*.out
+*.snm
+*.toc
+*.log
+eval_outputs/# LaTeX build artifacts
+*.aux
+*.nav
+*.out
+*.snm
+*.toc
+*.log
 eval_outputs/watchdog.out
 eval_outputs/watchdog_status.json
 eval_outputs/exp5_latent_dynamics/Gitingest.txt
 eval_outputs/examples_MMLatentDiscrete*.jsonl
+external_models/*/ablation_study/logs/
+external_models/*/ablation_study/outputs/latents/
+external_models/*/ablation_study/outputs/*.COMPLETE
+external_models/*/ablation_study/outputs/*.jsonl
+external_models/*/ablation_study/outputs/*.meta.json
 
 # OS and Editor artifacts
 .DS_Store

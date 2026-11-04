@@ -1,0 +1,24 @@
+# Python deps for the Mirage ablation (tested on CPU with Python 3.13; Mirage's README specifies Python 3.10).
+# transformers is NOT installed from PyPI: model_loader.py puts the Mirage fork (repo/transformers/src,
+# transformers 4.50.0.dev0) first on sys.path. Do not `pip install transformers` into this env.
+# Install a CUDA build of torch/torchvision for your driver first, e.g.:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+tokenizers>=0.21,<0.22
+huggingface_hub>=0.26,<1.0
+safetensors>=0.4.3
+accelerate>=1.0
+regex
+pyyaml
+requests
+tqdm
+packaging
+filelock
+numpy<2.3
+Pillow
+scipy
+datasets>=3,<4
+qwen_vl_utils
+mathruler
+pylatexenc
+trl==0.15.2          # only needed by the CPU diagnostic (repo/src/trainer.py imports it); pins Mirage's requirements.txt
+rich
